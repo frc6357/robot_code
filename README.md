@@ -1,2 +1,2 @@
 # frc6357/robot_code
-Links from TrumpetDude's repo are in the wiki main page.
+Files from TrumpetDude's Repository are now in the "Stuff From Other Repository" folder.
