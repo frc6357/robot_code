@@ -112,8 +112,8 @@ public class Robot extends IterativeRobot
     public void teleopPeriodic() 
     {
         Scheduler.getInstance().run();
-        driveBaseSystem.setLeftMotors(driver.getRawAxis(0));
-        driveBaseSystem.setRightMotors(driver.getRawAxis(3)); 
+        driveBaseSystem.setLeftMotors(-1 * driver.getRawAxis(1));
+        driveBaseSystem.setRightMotors(driver.getRawAxis(5)); 
     }
 
     /**

@@ -44,22 +44,22 @@ public class RobotMap
         climbingSolenoid1 = new Solenoid(0, 0);
         LiveWindow.addActuator("Climbing", "Solenoid 1", climbingSolenoid1);
         
-        baseFrontLeft = new Talon(5);
+        baseFrontLeft = new Talon(4);
         LiveWindow.addActuator("Base", "FrontLeft", (Talon) baseFrontLeft);
         
-        baseCenterLeft = new Talon(3);
+        baseCenterLeft = new Talon(2);
         LiveWindow.addActuator("Base", "Center Left", (Talon) baseCenterLeft);
         
-        baseBackLeft = new Talon(1);
+        baseBackLeft = new Talon(0);
         LiveWindow.addActuator("Base", "Back Left", (Talon) baseBackLeft);
         
-        baseFrontRight = new Talon(4);
+        baseFrontRight = new Talon(5);
         LiveWindow.addActuator("Base", "FrontRight", (Talon) baseFrontRight);
         
-        baseCenterRight = new Talon(2);
+        baseCenterRight = new Talon(3);
         LiveWindow.addActuator("Base", "CetnerRight", (Talon) baseCenterRight);
         
-        baseBackRight = new Talon(0);
+        baseBackRight = new Talon(1);
         LiveWindow.addActuator("Base", "Back Right", (Talon) baseBackRight);
         
 
