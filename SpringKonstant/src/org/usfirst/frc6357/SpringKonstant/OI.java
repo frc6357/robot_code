@@ -13,6 +13,7 @@ package org.usfirst.frc6357.SpringKonstant;
 
 import org.usfirst.frc6357.SpringKonstant.commands.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.*;
 import org.usfirst.frc6357.SpringKonstant.subsystems.*;
@@ -57,23 +58,27 @@ public class OI
     public JoystickButton a;
     public JoystickButton b;
     public Joystick operator;
+    public Encoder leftEncoder;
+    public Encoder rightEncoder;
 
     public OI() 
     {
 
         operator = new Joystick(1);
+        driver = new Joystick(0);
         
         b = new JoystickButton(operator, 1);
         b.whileHeld(new GearDeployment());
+        
         a = new JoystickButton(operator, 1);
         a.whileHeld(new GearPlacement());
+        
         x = new JoystickButton(operator, 1);
         x.whileHeld(new RopeClimb());
+        
         y = new JoystickButton(operator, 1);
         y.whileHeld(new RopeCatch());
-        driver = new Joystick(0);
         
-
 
         // SmartDashboard Buttons
         SmartDashboard.putData("GearDeployment", new GearDeployment());

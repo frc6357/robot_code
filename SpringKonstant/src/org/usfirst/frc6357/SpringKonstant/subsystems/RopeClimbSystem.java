@@ -24,7 +24,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class RopeClimbSystem extends Subsystem 
 {
 	
-    private final Solenoid solenoid1 = RobotMap.climbingSolenoid1;
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
