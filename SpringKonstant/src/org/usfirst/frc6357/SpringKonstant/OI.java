@@ -67,16 +67,16 @@ public class OI
         operator = new Joystick(1);
         driver = new Joystick(0);
         
-        b = new JoystickButton(operator, 1);
+        b = new JoystickButton(driver, 1);
         b.whileHeld(new GearDeployment());
         
-        a = new JoystickButton(operator, 1);
+        a = new JoystickButton(driver, 0);
         a.whileHeld(new GearPlacement());
         
-        x = new JoystickButton(operator, 1);
+        x = new JoystickButton(operator, 2);
         x.whileHeld(new RopeClimb());
         
-        y = new JoystickButton(operator, 1);
+        y = new JoystickButton(operator, 3);
         y.whileHeld(new RopeCatch());
         
 
@@ -107,6 +107,11 @@ public class OI
     public JoystickButton getButtonA()
     {
     	return a;
+    }
+    
+    public JoystickButton getButtonB()
+    {
+    	return b;
     }
 }
 

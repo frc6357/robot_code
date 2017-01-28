@@ -10,6 +10,7 @@
 
 
 package org.usfirst.frc6357.SpringKonstant.commands;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc6357.SpringKonstant.Robot;
@@ -21,10 +22,8 @@ import org.usfirst.frc6357.SpringKonstant.RobotMap;
 public class GearPlacement extends Command 
 {
 	
-	private final Solenoid solenoid1 = RobotMap.gearSolenoid1;
-	private final Solenoid solenoid2 = RobotMap.gearSolenoid2;
-	private final Solenoid solenoid3 = RobotMap.gearSolenoid3;
-	private final Solenoid solenoid4 = RobotMap.gearSolenoid4;
+	private final DoubleSolenoid gearDoubleSolenoid = RobotMap.doubleSolenoid1;
+	public static final DoubleSolenoid.Value kForward;
 	
     public GearPlacement() 
     {
@@ -40,7 +39,7 @@ public class GearPlacement extends Command
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
-    	solenoid1.set(true);															//Solenoids should go off in the different time
+    	gearDoubleSolenoid.set(DoubleSolenoid.Value valueOf(kForward));													//Solenoids should go off in the different time
     }
 
     // Make this return true when this Command no longer needs to run execute()

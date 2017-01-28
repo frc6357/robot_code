@@ -10,18 +10,22 @@
 
 
 package org.usfirst.frc6357.SpringKonstant.commands;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc6357.SpringKonstant.Robot;
+import org.usfirst.frc6357.SpringKonstant.RobotMap;
 
 /**
  *
  */
 public class GearDeployment extends Command 
 {
-
+	
+	private final DoubleSolenoid gearDoubleSolenoid = RobotMap.doubleSolenoid1;
+	
     public GearDeployment() 
     {
-
         requires(Robot.gearDeploymentSystem);
     }
 
@@ -34,7 +38,7 @@ public class GearDeployment extends Command
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
-    	
+    														//Solenoids should go off in the different time
     }
 
     // Make this return true when this Command no longer needs to run execute()

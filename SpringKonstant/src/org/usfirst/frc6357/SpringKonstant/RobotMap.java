@@ -11,6 +11,8 @@
 
 package org.usfirst.frc6357.SpringKonstant;
 
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
@@ -26,33 +28,35 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 public class RobotMap
 {
    
-    public static Solenoid gearSolenoid1;
-    public static Solenoid gearSolenoid2;
-    public static Solenoid gearSolenoid3;
-    public static Solenoid gearSolenoid4;
+    public static DoubleSolenoid doubleSolenoid1;
     public static SpeedController baseFrontLeft;
     public static SpeedController baseCenterLeft;
     public static SpeedController baseBackLeft;
     public static SpeedController baseFrontRight;
     public static SpeedController baseCenterRight;
     public static SpeedController baseBackRight;
-
+    public static Compressor compressor1;
 
     public static void init() 
     {
     	
-        gearSolenoid1 = new Solenoid(0, 0);											//Solenoid (int moduelNumber, int channel);
-        LiveWindow.addActuator("Gear Placement", "Solenoid 1", gearSolenoid1);
+    	compressor1 = new Compressor(0);
+    	//LiveWindow.addActuator("Compressor", "Compressor", compressor1);
+    	
+    	
+       // doubleSolenoid1 = new DoubleSolenoid(0, 1);										//Solenoid (int moduelNumber, int channel);
+        //LiveWindow.addActuator("Gear Placement", "Double Solenoid 1", doubleSolenoid1);
+       
         
-        gearSolenoid2 = new Solenoid(0, 0);
-        LiveWindow.addActuator("Gear Placement", "Solenoid 2", gearSolenoid2);
-        
+        //gearSolenoid2 = new Solenoid(0, 0);
+        //LiveWindow.addActuator("Gear Placement", "Solenoid 2", gearSolenoid2);
+        /*
         gearSolenoid3 = new Solenoid(0, 0);
         LiveWindow.addActuator("Gear Placement", "Solenoid 3", gearSolenoid3);
         
         gearSolenoid4 = new Solenoid(0, 0);
         LiveWindow.addActuator("Gear Placement", "Solenoid 4", gearSolenoid4);
-        
+        */
         baseFrontLeft = new Talon(4);
         LiveWindow.addActuator("Base", "FrontLeft", (Talon) baseFrontLeft);
         

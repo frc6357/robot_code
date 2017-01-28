@@ -11,8 +11,11 @@
 
 package org.usfirst.frc6357.SpringKonstant;
 
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -38,7 +41,10 @@ public class Robot extends IterativeRobot
     public static DriveBaseSystem driveBaseSystem;
     public Joystick driver;
     public JoystickButton a;
-
+    public JoystickButton b;
+    public Compressor compressor1;
+    public DoubleSolenoid doubleSolenoid1;
+    
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -49,7 +55,9 @@ public class Robot extends IterativeRobot
     	gearDeploymentSystem = new GearDeploymentSystem();
     	ropeClimbSystem = new RopeClimbSystem();
     	driveBaseSystem = new DriveBaseSystem();
-
+    	compressor1 = new Compressor();
+    	doubleSolenoid1 = new DoubleSolenoid(0, 1);
+    	
         // OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be
         // constructed yet. Thus, their requires() statements may grab null
@@ -96,8 +104,8 @@ public class Robot extends IterativeRobot
         if (autonomousCommand != null) autonomousCommand.cancel();
         
         driver = oi.getDriver();
-        a = oi.getButtonA();
-        
+        compressor1.start();
+        compressor1.enabled();
     }
 
     /**
@@ -107,7 +115,9 @@ public class Robot extends IterativeRobot
     {
         Scheduler.getInstance().run();
         driveBaseSystem.setLeftMotors(-1 * driver.getRawAxis(1));
-        driveBaseSystem.setRightMotors(driver.getRawAxis(5)); 
+        driveBaseSystem.setRightMotors(driver.getRawAxis(5));
+        a = oi.getButtonA();
+        b = oi.getButtonB();
     }
 
     /**
