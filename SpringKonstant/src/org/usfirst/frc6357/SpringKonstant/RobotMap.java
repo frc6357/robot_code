@@ -23,10 +23,13 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  * the wiring easier and significantly reduces the number of magic numbers
  * floating around.
  */
-public class RobotMap 
+public class RobotMap
 {
    
-    public static Solenoid climbingSolenoid1;
+    public static Solenoid gearSolenoid1;
+    public static Solenoid gearSolenoid2;
+    public static Solenoid gearSolenoid3;
+    public static Solenoid gearSolenoid4;
     public static SpeedController baseFrontLeft;
     public static SpeedController baseCenterLeft;
     public static SpeedController baseBackLeft;
@@ -38,8 +41,17 @@ public class RobotMap
     public static void init() 
     {
     	
-        climbingSolenoid1 = new Solenoid(0, 0);
-        LiveWindow.addActuator("Climbing", "Solenoid 1", climbingSolenoid1);
+        gearSolenoid1 = new Solenoid(0, 0);
+        LiveWindow.addActuator("Gear Placement", "Solenoid 1", gearSolenoid1);
+        
+        gearSolenoid2 = new Solenoid(0, 0);
+        LiveWindow.addActuator("Gear Placement", "Solenoid 2", gearSolenoid2);
+        
+        gearSolenoid3 = new Solenoid(0, 0);
+        LiveWindow.addActuator("Gear Placement", "Solenoid 3", gearSolenoid3);
+        
+        gearSolenoid4 = new Solenoid(0, 0);
+        LiveWindow.addActuator("Gear Placement", "Solenoid 4", gearSolenoid4);
         
         baseFrontLeft = new Talon(4);
         LiveWindow.addActuator("Base", "FrontLeft", (Talon) baseFrontLeft);

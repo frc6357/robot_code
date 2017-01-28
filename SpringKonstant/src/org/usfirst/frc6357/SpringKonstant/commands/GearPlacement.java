@@ -21,7 +21,10 @@ import org.usfirst.frc6357.SpringKonstant.RobotMap;
 public class GearPlacement extends Command 
 {
 	
-	private final Solenoid solenoid1 = RobotMap.climbingSolenoid1;
+	private final Solenoid solenoid1 = RobotMap.gearSolenoid1;
+	private final Solenoid solenoid2 = RobotMap.gearSolenoid2;
+	private final Solenoid solenoid3 = RobotMap.gearSolenoid3;
+	private final Solenoid solenoid4 = RobotMap.gearSolenoid4;
 	
     public GearPlacement() 
     {
