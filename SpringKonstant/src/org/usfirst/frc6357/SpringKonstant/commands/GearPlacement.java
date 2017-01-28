@@ -40,7 +40,7 @@ public class GearPlacement extends Command
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
-    	solenoid1.set(true);
+    	solenoid1.set(true);															//Solenoids should go off in the different time
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -41,7 +41,7 @@ public class RobotMap
     public static void init() 
     {
     	
-        gearSolenoid1 = new Solenoid(0, 0);
+        gearSolenoid1 = new Solenoid(0, 0);											//Solenoid (int moduelNumber, int channel);
         LiveWindow.addActuator("Gear Placement", "Solenoid 1", gearSolenoid1);
         
         gearSolenoid2 = new Solenoid(0, 0);
