@@ -41,22 +41,11 @@ public class RobotMap
     {
     	
     	compressor1 = new Compressor(0);
-    	//LiveWindow.addActuator("Compressor", "Compressor", compressor1);
+    	LiveWindow.addActuator("Compressor", "Compressor", compressor1);
     	
-    	
-       // doubleSolenoid1 = new DoubleSolenoid(0, 1);										//Solenoid (int moduelNumber, int channel);
-        //LiveWindow.addActuator("Gear Placement", "Double Solenoid 1", doubleSolenoid1);
+        doubleSolenoid1 = new DoubleSolenoid(0, 1);										
+        LiveWindow.addActuator("Gear Placement", "Double Solenoid 1", doubleSolenoid1);
        
-        
-        //gearSolenoid2 = new Solenoid(0, 0);
-        //LiveWindow.addActuator("Gear Placement", "Solenoid 2", gearSolenoid2);
-        /*
-        gearSolenoid3 = new Solenoid(0, 0);
-        LiveWindow.addActuator("Gear Placement", "Solenoid 3", gearSolenoid3);
-        
-        gearSolenoid4 = new Solenoid(0, 0);
-        LiveWindow.addActuator("Gear Placement", "Solenoid 4", gearSolenoid4);
-        */
         baseFrontLeft = new Talon(4);
         LiveWindow.addActuator("Base", "FrontLeft", (Talon) baseFrontLeft);
         
@@ -75,6 +64,5 @@ public class RobotMap
         baseBackRight = new Talon(1);
         LiveWindow.addActuator("Base", "Back Right", (Talon) baseBackRight);
         
-
     }
 }

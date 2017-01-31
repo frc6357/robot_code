@@ -68,10 +68,10 @@ public class OI
         driver = new Joystick(0);
         
         b = new JoystickButton(driver, 1);
-        b.whileHeld(new GearDeployment());
+        b.whenPressed(new GearDeployment());
         
         a = new JoystickButton(driver, 0);
-        a.whileHeld(new GearPlacement());
+        a.whenPressed(new GearPlacement());
         
         x = new JoystickButton(operator, 2);
         x.whileHeld(new RopeClimb());

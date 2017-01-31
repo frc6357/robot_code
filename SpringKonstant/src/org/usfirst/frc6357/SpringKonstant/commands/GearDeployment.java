@@ -38,7 +38,7 @@ public class GearDeployment extends Command
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
-    														//Solenoids should go off in the different time
+    	gearDoubleSolenoid.set(DoubleSolenoid.Value.kReverse);												//Solenoids should go off in the different time
     }
 
     // Make this return true when this Command no longer needs to run execute()

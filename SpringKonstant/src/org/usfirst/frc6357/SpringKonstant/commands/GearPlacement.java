@@ -23,7 +23,6 @@ public class GearPlacement extends Command
 {
 	
 	private final DoubleSolenoid gearDoubleSolenoid = RobotMap.doubleSolenoid1;
-	public static final DoubleSolenoid.Value kForward;
 	
     public GearPlacement() 
     {
@@ -39,7 +38,7 @@ public class GearPlacement extends Command
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
-    	gearDoubleSolenoid.set(DoubleSolenoid.Value valueOf(kForward));													//Solenoids should go off in the different time
+    	gearDoubleSolenoid.set(DoubleSolenoid.Value.kForward);													//Solenoids should go off in the different time
     }
 
     // Make this return true when this Command no longer needs to run execute()
