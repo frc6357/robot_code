@@ -64,20 +64,19 @@ public class OI
     public OI() 
     {
 
-        operator = new Joystick(1);
+        //operator = new Joystick(1);
         driver = new Joystick(0);
+
+        a = new JoystickButton(driver, 1);
+        b = new JoystickButton(driver, 2);
+        x = new JoystickButton(driver, 3);
+        y = new JoystickButton(driver, 4);
         
-        b = new JoystickButton(driver, 1);
-        b.whenPressed(new GearDeployment());
         
-        a = new JoystickButton(driver, 0);
         a.whenPressed(new GearPlacement());
-        
-        x = new JoystickButton(operator, 2);
-        x.whileHeld(new RopeClimb());
-        
-        y = new JoystickButton(operator, 3);
-        y.whileHeld(new RopeCatch());
+        b.whenPressed(new GearDeployment());
+        x.whenPressed(new GearPlacement());
+        y.whenPressed(new GearDeployment());
         
 
         // SmartDashboard Buttons
@@ -102,16 +101,6 @@ public class OI
     public Joystick getOperator() 
     {
         return operator;
-    }
-    
-    public JoystickButton getButtonA()
-    {
-    	return a;
-    }
-    
-    public JoystickButton getButtonB()
-    {
-    	return b;
     }
 }
 

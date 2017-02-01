@@ -43,7 +43,7 @@ public class RobotMap
     	compressor1 = new Compressor(0);
     	LiveWindow.addActuator("Compressor", "Compressor", compressor1);
     	
-        doubleSolenoid1 = new DoubleSolenoid(0, 1);										
+        doubleSolenoid1 = new DoubleSolenoid(0, 0, 1);										
         LiveWindow.addActuator("Gear Placement", "Double Solenoid 1", doubleSolenoid1);
        
         baseFrontLeft = new Talon(4);

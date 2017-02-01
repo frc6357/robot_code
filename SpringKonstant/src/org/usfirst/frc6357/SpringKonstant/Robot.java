@@ -40,8 +40,6 @@ public class Robot extends IterativeRobot
     public static RopeClimbSystem ropeClimbSystem;
     public static DriveBaseSystem driveBaseSystem;
     public Joystick driver;
-    public JoystickButton a;
-    public JoystickButton b;
     public Compressor compressor1;
     public DoubleSolenoid doubleSolenoid1;
     
@@ -56,7 +54,7 @@ public class Robot extends IterativeRobot
     	ropeClimbSystem = new RopeClimbSystem();
     	driveBaseSystem = new DriveBaseSystem();
     	compressor1 = new Compressor();
-    	doubleSolenoid1 = new DoubleSolenoid(0, 1);
+    	//doubleSolenoid1 = new DoubleSolenoid(0, 1);
     	
         // OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be
@@ -116,8 +114,7 @@ public class Robot extends IterativeRobot
         Scheduler.getInstance().run();
         driveBaseSystem.setLeftMotors(-1 * driver.getRawAxis(1));
         driveBaseSystem.setRightMotors(driver.getRawAxis(5));
-        a = oi.getButtonA();
-        b = oi.getButtonB();
+    
     }
 
     /**
