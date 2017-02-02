@@ -52,19 +52,13 @@ public class OI
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new ExampleCommand());
 
-    public Joystick driver;
-    public JoystickButton y;
-    public JoystickButton x;
-    public JoystickButton a;
-    public JoystickButton b;
-    public Joystick operator;
-    public Encoder leftEncoder;
-    public Encoder rightEncoder;
-
+	public Joystick driver, operator;
+    public JoystickButton a, b, x, y;
+    
     public OI() 
     {
 
-        //operator = new Joystick(1);
+        operator = new Joystick(1);
         driver = new Joystick(0);
 
         a = new JoystickButton(driver, 1);

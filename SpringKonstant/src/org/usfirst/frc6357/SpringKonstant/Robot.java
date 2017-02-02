@@ -38,10 +38,17 @@ public class Robot extends IterativeRobot
     Command autonomousCommand;
 
     public static OI oi;
+    
+    // Subsystems
     public static GearDeploymentSystem gearDeploymentSystem;
     public static RopeClimbSystem ropeClimbSystem;
     public static DriveBaseSystem driveBaseSystem;
+    
+    // Joysticks
     public static Joystick driver;
+    public static Joystick operator;
+    
+    // Actuators
     public static DoubleSolenoid doubleSolenoid1;
     public static SpeedController baseFrontLeft;
     public static SpeedController baseCenterLeft;
@@ -57,7 +64,7 @@ public class Robot extends IterativeRobot
      */
     public void robotInit() 
     {
-    	RobotMap.init();
+    	//RobotMap.init();
     	
     	// Subsystems
     	gearDeploymentSystem = new GearDeploymentSystem();
@@ -135,6 +142,7 @@ public class Robot extends IterativeRobot
         if (autonomousCommand != null) autonomousCommand.cancel();
         
         driver = oi.getDriver();
+        operator = oi.getOperator();
         compressor1.start();
         compressor1.enabled();
     }
