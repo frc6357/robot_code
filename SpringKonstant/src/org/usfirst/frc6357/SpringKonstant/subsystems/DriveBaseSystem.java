@@ -24,16 +24,28 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
 {
-    private final SpeedController frontLeft = Robot.baseFrontLeft;
-    private final SpeedController centerLeft = Robot.baseCenterLeft;
-    private final SpeedController backLeft = Robot.baseBackLeft;
-    private final SpeedController frontRight = Robot.baseFrontRight;
-    private final SpeedController centerRight = Robot.baseCenterRight;
-    private final SpeedController backRight = Robot.baseBackRight;
+    private final SpeedController frontLeft;
+    private final SpeedController centerLeft;
+    private final SpeedController backLeft;
+    private final SpeedController frontRight;
+    private final SpeedController centerRight;
+    private final SpeedController backRight;
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-
+    
+    public DriveBaseSystem(SpeedController baseFrontLeft, SpeedController baseCenterLeft, 
+    		SpeedController baseBackLeft, SpeedController baseFrontRight,SpeedController baseBackRight)
+    {
+    	super();
+        frontLeft = Robot.baseFrontLeft;
+        centerLeft = Robot.baseCenterLeft;
+        backLeft = Robot.baseBackLeft;
+        frontRight = Robot.baseFrontRight;
+        centerRight = Robot.baseCenterRight;
+        backRight = Robot.baseBackRight;
+    }
+    
     public void initDefaultCommand() 
     {
         // Set the default command for a subsystem here.

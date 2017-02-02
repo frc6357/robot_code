@@ -66,11 +66,6 @@ public class Robot extends IterativeRobot
     {
     	//RobotMap.init();
     	
-    	// Subsystems
-    	gearDeploymentSystem = new GearDeploymentSystem();
-    	ropeClimbSystem = new RopeClimbSystem();
-    	driveBaseSystem = new DriveBaseSystem();
-    	
     	// Actuators
     	compressor1 = new Compressor(0);
     	LiveWindow.addActuator("Compressor", "Compressor", compressor1);
@@ -96,6 +91,11 @@ public class Robot extends IterativeRobot
         baseBackRight = new Talon(1);
         LiveWindow.addActuator("Base", "Back Right", (Talon) baseBackRight);
     	
+    	// Subsystems
+    	gearDeploymentSystem = new GearDeploymentSystem();
+    	ropeClimbSystem = new RopeClimbSystem();
+    	driveBaseSystem = new DriveBaseSystem(baseFrontLeft,  baseCenterLeft, baseBackLeft, baseFrontRight, baseBackRight);
+        
         // OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be
         // constructed yet. Thus, their requires() statements may grab null
