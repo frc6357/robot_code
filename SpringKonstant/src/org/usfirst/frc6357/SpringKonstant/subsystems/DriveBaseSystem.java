@@ -11,7 +11,7 @@
 
 package org.usfirst.frc6357.SpringKonstant.subsystems;
 
-import org.usfirst.frc6357.SpringKonstant.RobotMap;
+import org.usfirst.frc6357.SpringKonstant.Robot;
 import org.usfirst.frc6357.SpringKonstant.commands.*;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
@@ -24,12 +24,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
 {
-    private final SpeedController frontLeft = RobotMap.baseFrontLeft;
-    private final SpeedController centerLeft = RobotMap.baseCenterLeft;
-    private final SpeedController backLeft = RobotMap.baseBackLeft;
-    private final SpeedController frontRight = RobotMap.baseFrontRight;
-    private final SpeedController centerRight = RobotMap.baseCenterRight;
-    private final SpeedController backRight = RobotMap.baseBackRight;
+    private final SpeedController frontLeft = Robot.baseFrontLeft;
+    private final SpeedController centerLeft = Robot.baseCenterLeft;
+    private final SpeedController backLeft = Robot.baseBackLeft;
+    private final SpeedController frontRight = Robot.baseFrontRight;
+    private final SpeedController centerRight = Robot.baseCenterRight;
+    private final SpeedController backRight = Robot.baseBackRight;
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.

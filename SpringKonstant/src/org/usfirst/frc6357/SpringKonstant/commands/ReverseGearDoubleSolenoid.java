@@ -14,17 +14,15 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc6357.SpringKonstant.Robot;
-import org.usfirst.frc6357.SpringKonstant.RobotMap;
-
 /**
  *
  */
-public class GearDeployment extends Command 
+public class ReverseGearDoubleSolenoid extends Command 
 {
 	
-	private final DoubleSolenoid gearDoubleSolenoid = RobotMap.doubleSolenoid1;
+	private final DoubleSolenoid gearDoubleSolenoid = Robot.doubleSolenoid1;
 	
-    public GearDeployment() 
+    public ReverseGearDoubleSolenoid() 
     {
         requires(Robot.gearDeploymentSystem);
     }
@@ -38,7 +36,7 @@ public class GearDeployment extends Command
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
-    	gearDoubleSolenoid.set(DoubleSolenoid.Value.kReverse);												//Solenoids should go off in the different time
+    	gearDoubleSolenoid.set(DoubleSolenoid.Value.kReverse);	
     }
 
     // Make this return true when this Command no longer needs to run execute()

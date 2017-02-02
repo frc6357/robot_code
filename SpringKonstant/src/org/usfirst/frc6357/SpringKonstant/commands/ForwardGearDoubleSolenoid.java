@@ -14,17 +14,15 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc6357.SpringKonstant.Robot;
-import org.usfirst.frc6357.SpringKonstant.RobotMap;
-
 /**
  *
  */
-public class GearPlacement extends Command 
+public class ForwardGearDoubleSolenoid extends Command 
 {
 	
-	private final DoubleSolenoid gearDoubleSolenoid = RobotMap.doubleSolenoid1;
+	private final DoubleSolenoid gearDoubleSolenoid = Robot.doubleSolenoid1;
 	
-    public GearPlacement() 
+    public ForwardGearDoubleSolenoid() 
     {
         requires(Robot.gearDeploymentSystem);
     }

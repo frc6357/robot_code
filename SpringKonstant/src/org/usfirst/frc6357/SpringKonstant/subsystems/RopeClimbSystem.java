@@ -11,7 +11,6 @@
 
 package org.usfirst.frc6357.SpringKonstant.subsystems;
 
-import org.usfirst.frc6357.SpringKonstant.RobotMap;
 import org.usfirst.frc6357.SpringKonstant.commands.*;
 import edu.wpi.first.wpilibj.Solenoid;
 

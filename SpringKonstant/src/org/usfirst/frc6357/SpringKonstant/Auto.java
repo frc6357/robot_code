@@ -5,6 +5,16 @@ public class Auto
 
 	public void driveDistance(double distance)
 	{
+	
+	}
+	
+	public void rotate(double distance)
+	{
+		
+	}
+	
+	public void stop()
+	{
 		
 	}
 	

@@ -11,7 +11,6 @@
 
 package org.usfirst.frc6357.SpringKonstant.subsystems;
 
-import org.usfirst.frc6357.SpringKonstant.RobotMap;
 import org.usfirst.frc6357.SpringKonstant.commands.*;
 
 import edu.wpi.first.wpilibj.Solenoid;
@@ -33,12 +32,6 @@ public class GearDeploymentSystem extends Subsystem
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());
     }
-    
-    public void pneumatics()
-    {
-    	
-    }
-    
     
 }
 

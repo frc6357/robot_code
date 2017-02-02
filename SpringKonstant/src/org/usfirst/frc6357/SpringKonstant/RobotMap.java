@@ -27,7 +27,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class RobotMap
 {
-   
+   /*
     public static DoubleSolenoid doubleSolenoid1;
     public static SpeedController baseFrontLeft;
     public static SpeedController baseCenterLeft;
@@ -36,10 +36,10 @@ public class RobotMap
     public static SpeedController baseCenterRight;
     public static SpeedController baseBackRight;
     public static Compressor compressor1;
-
+*/
     public static void init() 
     {
-    	
+    	/*
     	compressor1 = new Compressor(0);
     	LiveWindow.addActuator("Compressor", "Compressor", compressor1);
     	
@@ -63,6 +63,6 @@ public class RobotMap
         
         baseBackRight = new Talon(1);
         LiveWindow.addActuator("Base", "Back Right", (Talon) baseBackRight);
-        
+        */
     }
 }

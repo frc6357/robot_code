@@ -73,15 +73,15 @@ public class OI
         y = new JoystickButton(driver, 4);
         
         
-        a.whenPressed(new GearPlacement());
-        b.whenPressed(new GearDeployment());
-        x.whenPressed(new GearPlacement());
-        y.whenPressed(new GearDeployment());
+        a.whenPressed(new ForwardGearDoubleSolenoid());
+        b.whenPressed(new ReverseGearDoubleSolenoid());
+        x.whenPressed(new ForwardGearDoubleSolenoid());
+        y.whenPressed(new ReverseGearDoubleSolenoid());
         
 
         // SmartDashboard Buttons
-        SmartDashboard.putData("GearDeployment", new GearDeployment());
-        SmartDashboard.putData("GearPlacement", new GearPlacement());
+        SmartDashboard.putData("GearDeployment", new ReverseGearDoubleSolenoid());
+        SmartDashboard.putData("GearPlacement", new ForwardGearDoubleSolenoid());
         SmartDashboard.putData("RopeCatch", new RopeCatch());
         SmartDashboard.putData("RopeClimb", new RopeClimb());
         SmartDashboard.putData("AutoPlan1", new AutoPlan1());

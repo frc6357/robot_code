@@ -16,6 +16,8 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -39,9 +41,15 @@ public class Robot extends IterativeRobot
     public static GearDeploymentSystem gearDeploymentSystem;
     public static RopeClimbSystem ropeClimbSystem;
     public static DriveBaseSystem driveBaseSystem;
-    public Joystick driver;
-    public Compressor compressor1;
-    public DoubleSolenoid doubleSolenoid1;
+    public static Joystick driver;
+    public static DoubleSolenoid doubleSolenoid1;
+    public static SpeedController baseFrontLeft;
+    public static SpeedController baseCenterLeft;
+    public static SpeedController baseBackLeft;
+    public static SpeedController baseFrontRight;
+    public static SpeedController baseCenterRight;
+    public static SpeedController baseBackRight;
+    public static Compressor compressor1;
     
     /**
      * This function is run when the robot is first started up and should be
@@ -50,11 +58,36 @@ public class Robot extends IterativeRobot
     public void robotInit() 
     {
     	RobotMap.init();
+    	
+    	// Subsystems
     	gearDeploymentSystem = new GearDeploymentSystem();
     	ropeClimbSystem = new RopeClimbSystem();
     	driveBaseSystem = new DriveBaseSystem();
-    	compressor1 = new Compressor();
-    	//doubleSolenoid1 = new DoubleSolenoid(0, 1);
+    	
+    	// Actuators
+    	compressor1 = new Compressor(0);
+    	LiveWindow.addActuator("Compressor", "Compressor", compressor1);
+    	
+        doubleSolenoid1 = new DoubleSolenoid(0, 0, 1);										
+        LiveWindow.addActuator("Gear Placement", "Double Solenoid 1", doubleSolenoid1);
+       
+        baseFrontLeft = new Talon(4);
+        LiveWindow.addActuator("Base", "FrontLeft", (Talon) baseFrontLeft);
+        
+        baseCenterLeft = new Talon(2);
+        LiveWindow.addActuator("Base", "Center Left", (Talon) baseCenterLeft);
+        
+        baseBackLeft = new Talon(0);
+        LiveWindow.addActuator("Base", "Back Left", (Talon) baseBackLeft);
+        
+        baseFrontRight = new Talon(5);
+        LiveWindow.addActuator("Base", "FrontRight", (Talon) baseFrontRight);
+        
+        baseCenterRight = new Talon(3);
+        LiveWindow.addActuator("Base", "CetnerRight", (Talon) baseCenterRight);
+        
+        baseBackRight = new Talon(1);
+        LiveWindow.addActuator("Base", "Back Right", (Talon) baseBackRight);
     	
         // OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be
