@@ -94,7 +94,7 @@ public class Robot extends IterativeRobot
     	// Subsystems
     	gearDeploymentSystem = new GearDeploymentSystem();
     	ropeClimbSystem = new RopeClimbSystem();
-    	driveBaseSystem = new DriveBaseSystem(baseFrontLeft,  baseCenterLeft, baseBackLeft, baseFrontRight, baseBackRight);
+    	driveBaseSystem = new DriveBaseSystem(baseFrontLeft,  baseCenterLeft, baseBackLeft, baseFrontRight, baseCenterRight, baseBackRight);
         
         // OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be

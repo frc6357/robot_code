@@ -35,15 +35,15 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
     // here. Call these from Commands.
     
     public DriveBaseSystem(SpeedController baseFrontLeft, SpeedController baseCenterLeft, 
-    		SpeedController baseBackLeft, SpeedController baseFrontRight,SpeedController baseBackRight)
+    		SpeedController baseBackLeft, SpeedController baseFrontRight, SpeedController baseCenterRight, SpeedController baseBackRight)
     {
     	super();
-        frontLeft = Robot.baseFrontLeft;
-        centerLeft = Robot.baseCenterLeft;
-        backLeft = Robot.baseBackLeft;
-        frontRight = Robot.baseFrontRight;
-        centerRight = Robot.baseCenterRight;
-        backRight = Robot.baseBackRight;
+        frontLeft = baseFrontLeft;
+        centerLeft = baseCenterLeft;
+        backLeft = baseBackLeft;
+        frontRight = baseFrontRight;
+        centerRight = baseCenterRight;
+        backRight = baseBackRight;
     }
     
     public void initDefaultCommand() 
