@@ -11,8 +11,11 @@
 
 package org.usfirst.frc6357.SpringKonstant;
 
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.GyroBase;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -57,6 +60,12 @@ public class Robot extends IterativeRobot
     public static SpeedController baseCenterRight;
     public static SpeedController baseBackRight;
     public static Compressor compressor1;
+    //encoders
+    public static Encoder encoderLeft;
+	public static Encoder encoderRight;
+	//gyroscope
+	public static AnalogGyro gyro1;
+ 
     
     /**
      * This function is run when the robot is first started up and should be
@@ -103,6 +112,13 @@ public class Robot extends IterativeRobot
         oi = new OI();
 
         // instantiate the command used for the autonomous period
+        
+        //Encoders 
+        encoderLeft = new Encoder(4, 0);
+        encoderRight = new Encoder(5, 1);
+        //GyroScope 
+        gyro1 = new AnalogGyro(1);
+        
     }
 
     /**
@@ -118,13 +134,37 @@ public class Robot extends IterativeRobot
     {
         Scheduler.getInstance().run();
     }
+    /*
+    public void encoderdistace()
+    {
+    	encoderLeft.setDistancePerPulse(5.00);
+    	encoderRight.setDistancePerPulse(5.00);
+    	encoderLeft.getDistance();
+    	encoderRight.getDistance();
+    	
+    }
+    
+    public void encoderdirection()
+    {
+    	encoderLeft.setReverseDirection(false);
+    	encoderRight.setReverseDirection(false);
+    	encoderLeft.getDirection();
+    	encoderRight.getDirection();
+    }
 
     public void autonomousInit() 
     {
         // schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
+        
     }
-
+    */
+    public void initGyro()
+    {
+    	
+    	AnalogGyro gryo1;
+		gryo1.calibrate();
+    }
     /**
      * This function is called periodically during autonomous
      */
