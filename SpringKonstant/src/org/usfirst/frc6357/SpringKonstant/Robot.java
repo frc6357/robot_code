@@ -163,7 +163,7 @@ public class Robot extends IterativeRobot
     {
     	
     	AnalogGyro gryo1;
-		gryo1.calibrate();
+		gyro1.calibrate();
     }
     /**
      * This function is called periodically during autonomous
