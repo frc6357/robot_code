@@ -65,6 +65,9 @@ public class Robot extends IterativeRobot
 	public static Encoder encoderRight;
 	//gyroscope
 	public static AnalogGyro gyro1;
+	
+	//Auto
+	public static Auto auto;
  
     
     /**
@@ -105,6 +108,10 @@ public class Robot extends IterativeRobot
     	ropeClimbSystem = new RopeClimbSystem();
     	driveBaseSystem = new DriveBaseSystem(baseFrontLeft,  baseCenterLeft, baseBackLeft, baseFrontRight, baseCenterRight, baseBackRight);
         
+    	//Auto
+        auto = new Auto(encoderRight, encoderLeft, driveBaseSystem);
+
+    	
         // OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be
         // constructed yet. Thus, their requires() statements may grab null
@@ -134,37 +141,14 @@ public class Robot extends IterativeRobot
     {
         Scheduler.getInstance().run();
     }
-    /*
-    public void encoderdistace()
-    {
-    	encoderLeft.setDistancePerPulse(5.00);
-    	encoderRight.setDistancePerPulse(5.00);
-    	encoderLeft.getDistance();
-    	encoderRight.getDistance();
-    	
-    }
-    
-    public void encoderdirection()
-    {
-    	encoderLeft.setReverseDirection(false);
-    	encoderRight.setReverseDirection(false);
-    	encoderLeft.getDirection();
-    	encoderRight.getDirection();
-    }
 
     public void autonomousInit() 
     {
         // schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
-        
+        gyro1.calibrate();
     }
-    */
-    public void initGyro()
-    {
-    	
-    	AnalogGyro gryo1;
-		gyro1.calibrate();
-    }
+
     /**
      * This function is called periodically during autonomous
      */
