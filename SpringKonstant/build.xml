@@ -20,6 +20,13 @@
   <!-- <property name="target" value=""/> -->
 
   <!-- Any other property in build.properties can also be overridden. -->
+	
+  <exec executable="git" outputproperty="git.revision">
+  	<arg value="log" />
+  	<arg value="-1" />
+  	<arg value="--pretty=format:%H" />
+  </exec>
+  <echo>$${git.revision}=${git.revision}</echo>
 
   <property file="${user.home}/wpilib/wpilib.properties"/>
   <property file="build.properties"/>
