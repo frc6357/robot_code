@@ -17,17 +17,15 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc6357.SpringKonstant.Robot;
 import org.usfirst.frc6357.SpringKonstant.subsystems.DriveBaseSystem;
 
+import com.google.gson.Gson;
+
 /**
  *
  */
-public class AutoPlan1 extends Command 
+public class AutoPlan1 extends Command
 {
-
-    public static DriveBaseSystem driveBaseSystem;
-    public static Encoder encoderLeft;
-	public static Encoder encoderRight;
-	public static AnalogGyro gyro1;
-	private final DoubleSolenoid gearDoubleSolenoid = Robot.doubleSolenoid1;
+	
+	Gson gson = new Gson();		// GSON
 	
     public AutoPlan1() 
     {
@@ -39,72 +37,12 @@ public class AutoPlan1 extends Command
     // Called just before this Command runs the first time
     protected void initialize() 
     {
-    	
+    
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
-    {
-    	driveBaseSystem.setLeftMotors(1);
-    	driveBaseSystem.setRightMotors(1);
-    	boolean turn1 = false;
-    	int visionplaceholder = 49;
-    	if (encoderLeft.getDistance() == 85 || encoderRight.getDistance() == 85)
-    	{
-    		encoderRight.reset();
-    		encoderLeft.reset();
-    		driveBaseSystem.setLeftMotors(0);
-			driveBaseSystem.setRightMotors(0);
-    		while(gyro1.getAngle() < 85)
-    		{
-    			driveBaseSystem.setRightMotors(0.5);
-    			driveBaseSystem.setLeftMotors(0.2);
-    		}
-    		
-    		turn1 = true; 
-    	}
-    	else if(encoderLeft.getDistance() > 85 || encoderRight.getDistance() > 85)
-    	{
-    		while(encoderLeft.getDistance() > 85 || encoderRight.getDistance() > 85)
-    		{
-    			encoderLeft.setReverseDirection(true);
-        		encoderRight.setReverseDirection(true);
-    			driveBaseSystem.setLeftMotors(-0.7);
-    			driveBaseSystem.setRightMotors(-0.7);
-    		}
-    		encoderLeft.setReverseDirection(false);
-    		encoderRight.setReverseDirection(false);
-    		encoderRight.reset();
-    		encoderLeft.reset();
-    	}
-    	else if(turn1 = true)
-    	{
-    		while(encoderLeft.getDistance() < 25 || encoderRight.getDistance() < 25 || visionplaceholder < 50 )
-    		{
-    			driveBaseSystem.setLeftMotors(0.45);
-    			driveBaseSystem.setRightMotors(0.45);
-    			
-    		}
-    		gearDoubleSolenoid.set(DoubleSolenoid.Value.kForward);
-    		//waits for one second 
-    		try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e){
-				e.printStackTrace();
-			}
-    		gearDoubleSolenoid.set(DoubleSolenoid.Value.kReverse);
-    		encoderRight.reset();
-    		encoderLeft.reset();
-    		encoderLeft.setReverseDirection(true);
-    		encoderRight.setReverseDirection(true);
-    		while(encoderLeft.getDistance() < 5 || encoderRight.getDistance() < 5 || visionplaceholder < 50)
-    		{
-    			driveBaseSystem.setLeftMotors(-0.45);
-    			driveBaseSystem.setLeftMotors(-0.45);
-    		}
-    			
-    	}
-    		
+    {		
     	
     }
 

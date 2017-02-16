@@ -2,13 +2,19 @@ package org.usfirst.frc6357.SpringKonstant;
 
 import org.usfirst.frc6357.SpringKonstant.subsystems.DriveBaseSystem;
 
+
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Timer;
 
 public class Auto 
 {
-	
 	private final Encoder encoderRight, encoderLeft;
 	private final DriveBaseSystem driveBaseSystem;
+	
+	
+	Timer timer = new Timer(); 		// Creates the timer used in auto
+	
+	double speed = 5.0;		//  ****  TEMPORY  ****   This is the speed the robot goes at the motors set at 1.0
 	
 	public Auto(Encoder leftEncoder, Encoder rightEncoder, DriveBaseSystem driveSystem)
 	{
@@ -19,13 +25,38 @@ public class Auto
 
 	public void driveDistance(double distance)
 	{
-		driveBaseSystem.setLeftMotors(1.0);
-		driveBaseSystem.setRightMotors(1.0);
+		double time = distance / speed;
+		
+		timer.start();
+		
+		while(timer.get() < time)
+		{
+			driveBaseSystem.setLeftMotors(1.0);
+			driveBaseSystem.setRightMotors(1.0);
+		}
+		timer.reset();
 	}
 	
-	public void rotate(double distance)
+	public void rotateLeft(double degree)
 	{
+		double time = 5.0;			// **** TEMPORY VALUE NEED TO TEST ROTATION TIME ****
 		
+		while(timer.get() < time)
+		{
+			driveBaseSystem.setLeftMotors(-0.5);
+			driveBaseSystem.setRightMotors(0.5);
+		}
+	}
+	
+	public void rotateRight(double degree)
+	{
+		double time = degree * 0.05;		// **** TEMPORY VALUE NEED TO TEST ROTATION TIME ****
+		
+		while(timer.get() < time)
+		{
+			driveBaseSystem.setLeftMotors(0.5);
+			driveBaseSystem.setRightMotors(-0.5);
+		}
 	}
 	
 	public void stop()

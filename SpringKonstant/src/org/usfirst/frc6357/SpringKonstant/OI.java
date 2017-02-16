@@ -13,7 +13,6 @@ package org.usfirst.frc6357.SpringKonstant;
 
 import org.usfirst.frc6357.SpringKonstant.commands.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.*;
 import org.usfirst.frc6357.SpringKonstant.subsystems.*;

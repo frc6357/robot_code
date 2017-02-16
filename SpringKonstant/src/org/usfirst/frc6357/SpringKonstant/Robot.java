@@ -28,6 +28,8 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc6357.SpringKonstant.commands.*;
 import org.usfirst.frc6357.SpringKonstant.subsystems.*;
 
+import com.google.gson.Gson;
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -75,9 +77,7 @@ public class Robot extends IterativeRobot
      * used for any initialization code.
      */
     public void robotInit() 
-    {
-    	//RobotMap.init();
-    	
+    {	
     	// Actuators
     	compressor1 = new Compressor(0);
     	LiveWindow.addActuator("Compressor", "Compressor", compressor1);
@@ -123,6 +123,7 @@ public class Robot extends IterativeRobot
         //Encoders 
         encoderLeft = new Encoder(4, 0);
         encoderRight = new Encoder(5, 1);
+       
         //GyroScope 
         gyro1 = new AnalogGyro(1);
         

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="SpringKonstant/src"/>
+	<classpathentry kind="lib" path="SpringKonstant/build/jars/cscore.jar"/>
+	<classpathentry kind="lib" path="SpringKonstant/build/jars/NetworkTables.jar"/>
+	<classpathentry kind="lib" path="SpringKonstant/build/jars/opencv.jar"/>
+	<classpathentry kind="lib" path="SpringKonstant/build/jars/WPILib.jar"/>
+	<classpathentry kind="lib" path="SpringKonstant/dist/FRCUserProgram.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/Users/magnahoo761/workspace/robot_code/gson-2.8.0-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/magnahoo761/workspace/robot_code/gson-2.8.0.jar"/>
+	<classpathentry kind="output" path="SpringKonstant/bin"/>
+</classpath>
