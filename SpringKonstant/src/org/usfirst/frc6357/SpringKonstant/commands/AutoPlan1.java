@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Command;
+
 import org.usfirst.frc6357.SpringKonstant.Robot;
 import org.usfirst.frc6357.SpringKonstant.subsystems.DriveBaseSystem;
 
@@ -25,19 +26,15 @@ import com.google.gson.Gson;
 public class AutoPlan1 extends Command
 {
 	
-	Gson gson = new Gson();		// GSON
-	
     public AutoPlan1() 
     {
-
-    
     	
     }
 
     // Called just before this Command runs the first time
     protected void initialize() 
     {
-    
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -64,4 +61,5 @@ public class AutoPlan1 extends Command
     {
     	
     }
+    
 }

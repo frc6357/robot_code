@@ -29,11 +29,11 @@ public class Auto
 		
 		timer.start();
 		
-		while(timer.get() < time)
+	/*	while(timer.get() < time)
 		{
 			driveBaseSystem.setLeftMotors(1.0);
 			driveBaseSystem.setRightMotors(1.0);
-		}
+		} */
 		timer.reset();
 	}
 	
@@ -41,22 +41,22 @@ public class Auto
 	{
 		double time = 5.0;			// **** TEMPORY VALUE NEED TO TEST ROTATION TIME ****
 		
-		while(timer.get() < time)
+	/*	while(timer.get() < time)
 		{
 			driveBaseSystem.setLeftMotors(-0.5);
 			driveBaseSystem.setRightMotors(0.5);
-		}
+		}*/
 	}
 	
 	public void rotateRight(double degree)
 	{
 		double time = degree * 0.05;		// **** TEMPORY VALUE NEED TO TEST ROTATION TIME ****
 		
-		while(timer.get() < time)
+	/*	while(timer.get() < time)
 		{
 			driveBaseSystem.setLeftMotors(0.5);
 			driveBaseSystem.setRightMotors(-0.5);
-		}
+		}*/
 	}
 	
 	public void stop()
@@ -90,4 +90,24 @@ public class Auto
 		return distance;
 	}
 	
+	public void update(int time, boolean drive, boolean rotateLeft, boolean rotateRight)
+	{
+		if(timer.get() < time && drive)		// Used for rotateRight method
+		{
+			driveBaseSystem.setLeftMotors(0.5);
+			driveBaseSystem.setRightMotors(-0.5);
+		}
+		
+		if(timer.get() < time && rotateLeft)		// Used for the rotateLeft method
+		{
+			driveBaseSystem.setLeftMotors(-0.5);
+			driveBaseSystem.setRightMotors(0.5);
+		}
+		
+		if(timer.get() < time && rotateRight)		// Used for the drive distance method
+		{
+			driveBaseSystem.setLeftMotors(1.0);
+			driveBaseSystem.setRightMotors(1.0);
+		}
+	}
 }
