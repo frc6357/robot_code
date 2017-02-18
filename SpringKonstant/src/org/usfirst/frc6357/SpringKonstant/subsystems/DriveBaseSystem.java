@@ -13,6 +13,10 @@ package org.usfirst.frc6357.SpringKonstant.subsystems;
 
 import org.usfirst.frc6357.SpringKonstant.Robot;
 import org.usfirst.frc6357.SpringKonstant.commands.*;
+
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 
@@ -25,25 +29,36 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
 {
     private final SpeedController frontLeft;
-    private final SpeedController centerLeft;
-    private final SpeedController backLeft;
     private final SpeedController frontRight;
-    private final SpeedController centerRight;
-    private final SpeedController backRight;
+    private final Encoder leftEncoder;
+    private final Encoder rightEncoder;
+    private PIDController leftController;
+    private PIDController rightController;
+    
+    private final double Kp = 1.0;
+    private final double Kd = 0.0;
+    private final double Ki = 0.0;
+    
+    private final double maxRobotSpeed = 9.5; //feet per second
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     
-    public DriveBaseSystem(SpeedController baseFrontLeft, SpeedController baseCenterLeft, 
-    		SpeedController baseBackLeft, SpeedController baseFrontRight, SpeedController baseCenterRight, SpeedController baseBackRight)
+    public DriveBaseSystem(SpeedController baseFrontLeft, SpeedController baseFrontRight, 
+    					   Encoder baseLeftEncoder, Encoder baseRightEncoder)
     {
     	super();
         frontLeft = baseFrontLeft;
-        centerLeft = baseCenterLeft;
-        backLeft = baseBackLeft;
         frontRight = baseFrontRight;
-        centerRight = baseCenterRight;
-        backRight = baseBackRight;
+
+        leftEncoder = baseLeftEncoder;
+        rightEncoder = baseRightEncoder;
+        
+        leftEncoder.setPIDSourceType(PIDSourceType.kRate);
+        rightEncoder.setPIDSourceType(PIDSourceType.kRate);
+        
+        leftController = new PIDController(Kp, Ki, Kd, leftEncoder, frontLeft);
+        rightController = new PIDController(Kp, Ki, Kd, rightEncoder, frontRight);
     }
     
     public void initDefaultCommand() 
@@ -52,19 +67,22 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
         // setDefaultCommand(new MySpecialCommand());
     }
     
+    public void setLeftMotorsPercent(double percent){
+    	setLeftMotors(maxRobotSpeed*percent);
+    }
+    
+    public void setRightMotorsPercent(double percent){
+    	setRightMotors(maxRobotSpeed*percent);
+    }
+    
     public void setLeftMotors(double speed)
     {
-    	frontLeft.set(speed);
-    	centerLeft.set(speed);
-    	backLeft.set(speed);
+    	leftController.setSetpoint(speed);
     }
     
     public void setRightMotors(double speed)
     {
-    	frontRight.set(speed);
-    	centerRight.set(speed);
-    	backRight.set(speed);
-    	
+    	rightController.setSetpoint(speed);
     }
 }
 

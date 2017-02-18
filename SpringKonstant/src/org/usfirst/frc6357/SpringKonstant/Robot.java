@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.TalonSRX;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -29,6 +30,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc6357.SpringKonstant.commands.*;
 import org.usfirst.frc6357.SpringKonstant.subsystems.*;
+
+import com.ctre.CANTalon;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -85,28 +88,43 @@ public class Robot extends IterativeRobot
         doubleSolenoid1 = new DoubleSolenoid(0, 0, 1);										
         LiveWindow.addActuator("Gear Placement", "Double Solenoid 1", doubleSolenoid1);
        
-        baseFrontLeft = new Talon(4);
-        LiveWindow.addActuator("Base", "FrontLeft", (Talon) baseFrontLeft);
         
-        baseCenterLeft = new Talon(2);
-        LiveWindow.addActuator("Base", "Center Left", (Talon) baseCenterLeft);
+        //TALON SRX ASSIGNMENTS:
+        // LEFT 10,11,15
+        // RIGHT 12,14,16
+        // THE TALONS ARE SET UP TO USE FOLLOWING, so we only need the front left and front right
         
-        baseBackLeft = new Talon(0);
-        LiveWindow.addActuator("Base", "Back Left", (Talon) baseBackLeft);
+        baseFrontLeft = new CANTalon(10);
+        baseCenterLeft = new CANTalon(11);
+        ((CANTalon)baseCenterLeft).changeControlMode(CANTalon.TalonControlMode.Follower);
+        ((CANTalon)baseCenterLeft).set(((CANTalon)baseFrontLeft).getDeviceID());
+        baseBackLeft = new CANTalon(15);
+        ((CANTalon)baseBackLeft).changeControlMode(CANTalon.TalonControlMode.Follower);
+        ((CANTalon)baseBackLeft).set(((CANTalon)baseFrontLeft).getDeviceID());
         
-        baseFrontRight = new Talon(5);
-        LiveWindow.addActuator("Base", "FrontRight", (Talon) baseFrontRight);
-        
-        baseCenterRight = new Talon(3);
-        LiveWindow.addActuator("Base", "CetnerRight", (Talon) baseCenterRight);
-        
-        baseBackRight = new Talon(1);
-        LiveWindow.addActuator("Base", "Back Right", (Talon) baseBackRight);
+        baseFrontRight = new CANTalon(12);
+        baseFrontRight.setInverted(true);
+        baseCenterRight = new CANTalon(14);
+        ((CANTalon)baseCenterRight).changeControlMode(CANTalon.TalonControlMode.Follower);
+        ((CANTalon)baseCenterRight).set(((CANTalon)baseFrontRight).getDeviceID());
+        baseBackRight = new CANTalon(16);
+        ((CANTalon)baseBackRight).changeControlMode(CANTalon.TalonControlMode.Follower);
+        ((CANTalon)baseBackRight).set(((CANTalon)baseFrontRight).getDeviceID());
     	
+        //Encoders 
+        encoderLeft = new Encoder(2, 3);
+        encoderRight = new Encoder(0, 1);
+        
+        // IMPORTANT CONVENTION: ALWYAS FEET PER SECOND
+        final double DistancePerPulse = (3.1415926539*4.0/12.0)/384.0;
+        
+        encoderLeft.setDistancePerPulse(DistancePerPulse);
+        encoderRight.setDistancePerPulse(DistancePerPulse);
+        
     	// Subsystems
     	gearDeploymentSystem = new GearDeploymentSystem();
     	ropeClimbSystem = new RopeClimbSystem();
-    	driveBaseSystem = new DriveBaseSystem(baseFrontLeft,  baseCenterLeft, baseBackLeft, baseFrontRight, baseCenterRight, baseBackRight);
+    	driveBaseSystem = new DriveBaseSystem(baseFrontLeft, baseFrontRight, encoderLeft, encoderRight);
         
     	//Auto
         auto = new Auto(encoderRight, encoderLeft, driveBaseSystem);
@@ -120,15 +138,7 @@ public class Robot extends IterativeRobot
 
         // instantiate the command used for the autonomous period
         
-        //Encoders 
-        encoderLeft = new Encoder(2, 3);
-        encoderRight = new Encoder(0, 1);
-        
-        // IMPORTANT CONVENTION: ALWYAS FEET PER SECOND
-        final double DistancePerPulse = (3.1415926539*4.0/12.0)/384.0;
-        
-        encoderLeft.setDistancePerPulse(DistancePerPulse);
-        encoderRight.setDistancePerPulse(DistancePerPulse);
+
         
         
     
@@ -153,13 +163,17 @@ public class Robot extends IterativeRobot
         SmartDashboard.putNumber("lvel", encoderLeft.getRate());
         SmartDashboard.putNumber("rpos", encoderRight.getDistance());
         SmartDashboard.putNumber("lpos", encoderLeft.getDistance());
+        driveBaseSystem.setLeftMotors(0.0f);
+        driveBaseSystem.setRightMotors(0.0f);
     }
 
     public void autonomousInit() 
     {
         // schedule the autonomous command (example)
-        if (autonomousCommand != null) autonomousCommand.start();
-        gyro1.calibrate();
+        //if (autonomousCommand != null) autonomousCommand.start();
+        //gyro1.calibrate();
+    	encoderRight.reset();
+    	encoderLeft.reset();
     }
 
     /**
@@ -168,6 +182,12 @@ public class Robot extends IterativeRobot
     public void autonomousPeriodic() 
     {
         Scheduler.getInstance().run();
+        driveBaseSystem.setLeftMotors(1.0f);
+        driveBaseSystem.setRightMotors(1.0f);
+        SmartDashboard.putNumber("rvel", encoderRight.getRate());
+        SmartDashboard.putNumber("lvel", encoderLeft.getRate());
+        SmartDashboard.putNumber("rpos", encoderRight.getDistance());
+        SmartDashboard.putNumber("lpos", encoderLeft.getDistance());
     }
 
     public void teleopInit() 
@@ -180,8 +200,10 @@ public class Robot extends IterativeRobot
         
         driver = oi.getDriver();
         operator = oi.getOperator();
-        compressor1.start();
-        compressor1.enabled();
+        //compressor1.start();
+        //compressor1.enabled();
+        driveBaseSystem.setLeftMotors(0.0f);
+        driveBaseSystem.setRightMotors(0.0f);
     }
 
     /**
