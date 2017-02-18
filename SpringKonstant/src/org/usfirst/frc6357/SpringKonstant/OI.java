@@ -73,16 +73,16 @@ public class OI
         
 
         // SmartDashboard Buttons
-        SmartDashboard.putData("GearDeployment", new ReverseGearDoubleSolenoid());
-        SmartDashboard.putData("GearPlacement", new ForwardGearDoubleSolenoid());
-        SmartDashboard.putData("RopeCatch", new RopeCatch());
-        SmartDashboard.putData("RopeClimb", new RopeClimb());
-        SmartDashboard.putData("AutoPlan1", new AutoPlan1());
-        SmartDashboard.putData("AutoPlan2", new AutoPlan2());
-        SmartDashboard.putData("AutoPlan3", new AutoPlan3());
-        SmartDashboard.putData("AutoPlan4", new AutoPlan4());
-        SmartDashboard.putData("AutoPlan5", new AutoPlan5());
-        SmartDashboard.putData("AutoPlan6", new AutoPlan6());
+        //SmartDashboard.putData("GearDeployment", new ReverseGearDoubleSolenoid());
+        //SmartDashboard.putData("GearPlacement", new ForwardGearDoubleSolenoid());
+        //SmartDashboard.putData("RopeCatch", new RopeCatch());
+        //SmartDashboard.putData("RopeClimb", new RopeClimb());
+        //SmartDashboard.putData("AutoPlan1", new AutoPlan1());
+        //SmartDashboard.putData("AutoPlan2", new AutoPlan2());
+        //SmartDashboard.putData("AutoPlan3", new AutoPlan3());
+        //SmartDashboard.putData("AutoPlan4", new AutoPlan4());
+        //SmartDashboard.putData("AutoPlan5", new AutoPlan5());
+        //SmartDashboard.putData("AutoPlan6", new AutoPlan6());
 
     }
 

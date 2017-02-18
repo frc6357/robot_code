@@ -25,10 +25,10 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.usfirst.frc6357.SpringKonstant.commands.*;
 import org.usfirst.frc6357.SpringKonstant.subsystems.*;
-
-import com.google.gson.Gson;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -121,9 +121,17 @@ public class Robot extends IterativeRobot
         // instantiate the command used for the autonomous period
         
         //Encoders 
-        encoderLeft = new Encoder(4, 0);
-        encoderRight = new Encoder(5, 1);
-       
+        encoderLeft = new Encoder(2, 3);
+        encoderRight = new Encoder(0, 1);
+        
+        // IMPORTANT CONVENTION: ALWYAS FEET PER SECOND
+        final double DistancePerPulse = (3.1415926539*4.0/12.0)/384.0;
+        
+        encoderLeft.setDistancePerPulse(DistancePerPulse);
+        encoderRight.setDistancePerPulse(DistancePerPulse);
+        
+        
+    
         //GyroScope 
         gyro1 = new AnalogGyro(1);
         
@@ -141,6 +149,10 @@ public class Robot extends IterativeRobot
     public void disabledPeriodic() 
     {
         Scheduler.getInstance().run();
+        SmartDashboard.putNumber("rvel", encoderRight.getRate());
+        SmartDashboard.putNumber("lvel", encoderLeft.getRate());
+        SmartDashboard.putNumber("rpos", encoderRight.getDistance());
+        SmartDashboard.putNumber("lpos", encoderLeft.getDistance());
     }
 
     public void autonomousInit() 
@@ -180,6 +192,11 @@ public class Robot extends IterativeRobot
         Scheduler.getInstance().run();
         driveBaseSystem.setLeftMotors(-1 * driver.getRawAxis(1));
         driveBaseSystem.setRightMotors(driver.getRawAxis(5));
+        
+        SmartDashboard.putNumber("rvel", encoderRight.getRate());
+        SmartDashboard.putNumber("lvel", encoderLeft.getRate());
+        SmartDashboard.putNumber("rpos", encoderRight.getDistance());
+        SmartDashboard.putNumber("lpos", encoderLeft.getDistance());
     
     }
 
