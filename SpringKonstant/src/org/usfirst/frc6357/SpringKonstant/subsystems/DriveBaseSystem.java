@@ -35,7 +35,7 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
     private PIDController leftController;
     private PIDController rightController;
     
-    private final double Kp = 1.0;
+    private final double Kp = 0.1;
     private final double Kd = 0.0;
     private final double Ki = 0.0;
     
@@ -59,6 +59,9 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
         
         leftController = new PIDController(Kp, Ki, Kd, leftEncoder, frontLeft);
         rightController = new PIDController(Kp, Ki, Kd, rightEncoder, frontRight);
+        
+        leftController.enable();
+        rightController.enable();
     }
     
     public void initDefaultCommand() 
