@@ -67,7 +67,7 @@ public class Robot extends IterativeRobot
 	public static ADIS16448_IMU myIMU;
 	
 	//Auto
-	public static Auto auto;
+	public static AutonomousMatchController auto;
  
     
     /**
@@ -119,10 +119,10 @@ public class Robot extends IterativeRobot
     	// Subsystems
     	gearDeploymentSystem = new GearDeploymentSystem();
     	ropeClimbSystem = new RopeClimbSystem();
-    	driveBaseSystem = new DriveBaseSystem(baseFrontLeft, baseFrontRight, encoderLeft, encoderRight);
+    	driveBaseSystem = new DriveBaseSystem(baseFrontLeft, baseFrontRight, encoderLeft, encoderRight, myIMU);
         
     	//Auto
-        auto = new Auto(encoderRight, encoderLeft, driveBaseSystem);
+        auto = new AutonomousMatchController(encoderRight, encoderLeft, driveBaseSystem);
 
     	
         // OI must be constructed after subsystems. If the OI creates Commands
@@ -159,6 +159,7 @@ public class Robot extends IterativeRobot
         SmartDashboard.putNumber("rpos", encoderRight.getDistance());
         SmartDashboard.putNumber("lpos", encoderLeft.getDistance());
         SmartDashboard.putString("git revision", GitRevisionEvaluator.GetGitRevision());
+        SmartDashboard.putData("IMU", myIMU);
         driveBaseSystem.setLeftMotorSpeedPercent(0.0f);
         driveBaseSystem.setRightMotorSpeedPercent(0.0f);
     }

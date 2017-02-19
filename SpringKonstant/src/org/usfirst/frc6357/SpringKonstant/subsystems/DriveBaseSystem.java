@@ -11,6 +11,8 @@
 
 package org.usfirst.frc6357.SpringKonstant.subsystems;
 
+import com.analog.adis16448.frc.ADIS16448_IMU;
+
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -23,18 +25,20 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
 {
     private final PositionAndVelocityControlledDrivetrainSide leftSide;
     private final PositionAndVelocityControlledDrivetrainSide rightSide;
+    private final ADIS16448_IMU myIMU;
 
     private boolean isInVelocityMode;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     
     public DriveBaseSystem(SpeedController baseFrontLeft, SpeedController baseFrontRight, 
-    					   Encoder baseLeftEncoder, Encoder baseRightEncoder)
+    					   Encoder baseLeftEncoder, Encoder baseRightEncoder, ADIS16448_IMU inIMU)
     {
     	super();
         leftSide = new PositionAndVelocityControlledDrivetrainSide(baseFrontLeft, baseLeftEncoder);
         rightSide = new PositionAndVelocityControlledDrivetrainSide(baseFrontRight, baseRightEncoder);
         isInVelocityMode = true;
+        myIMU = inIMU;
     }
     
     public void SetPositionMode(){
@@ -77,6 +81,13 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
     	return rightSide.SetSpeedAbsolute(speed);
     }
     
+    public void Update(){
+    	// If we are in velocity mode, we don't update here
+    	// But if we are not, then we are in position mode and need to correct for drift
+    	if(!isInVelocityMode){
+    		
+    	}
+    }
     
 }
 
