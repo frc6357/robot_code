@@ -11,26 +11,21 @@
 
 package org.usfirst.frc6357.SpringKonstant;
 
-import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.GyroBase;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.TalonSRX;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc6357.SpringKonstant.commands.*;
 import org.usfirst.frc6357.SpringKonstant.subsystems.*;
+import org.usfirst.frc6357.SpringKonstant.utility.GitRevisionEvaluator;
 
+import com.analog.adis16448.frc.ADIS16448_IMU;
 import com.ctre.CANTalon;
 
 /**
@@ -69,7 +64,7 @@ public class Robot extends IterativeRobot
     public static Encoder encoderLeft;
 	public static Encoder encoderRight;
 	//gyroscope
-	public static AnalogGyro gyro1;
+	public static ADIS16448_IMU myIMU;
 	
 	//Auto
 	public static Auto auto;
@@ -143,7 +138,7 @@ public class Robot extends IterativeRobot
         
     
         //GyroScope 
-        gyro1 = new AnalogGyro(1);
+        myIMU = new ADIS16448_IMU();
         
     }
 
@@ -163,6 +158,7 @@ public class Robot extends IterativeRobot
         SmartDashboard.putNumber("lvel", encoderLeft.getRate());
         SmartDashboard.putNumber("rpos", encoderRight.getDistance());
         SmartDashboard.putNumber("lpos", encoderLeft.getDistance());
+        SmartDashboard.putString("git revision", GitRevisionEvaluator.GetGitRevision());
         driveBaseSystem.setLeftMotorSpeedPercent(0.0f);
         driveBaseSystem.setRightMotorSpeedPercent(0.0f);
     }
