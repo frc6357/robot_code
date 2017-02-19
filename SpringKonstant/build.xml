@@ -22,9 +22,7 @@
   <!-- Any other property in build.properties can also be overridden. -->
 	
   <exec executable="git" outputproperty="git.revision">
-  	<arg value="log" />
-  	<arg value="-1" />
-  	<arg value="--pretty=format:%H" />
+  	<arg value="describe" />
   </exec>
   <echo>$${git.revision}=${git.revision}</echo>
 

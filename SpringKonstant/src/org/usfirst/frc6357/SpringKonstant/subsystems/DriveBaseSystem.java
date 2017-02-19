@@ -28,18 +28,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
 {
-    private final SpeedController frontLeft;
-    private final SpeedController frontRight;
-    private final Encoder leftEncoder;
-    private final Encoder rightEncoder;
-    private PIDController leftController;
-    private PIDController rightController;
-    
-    private final double Kp = 0.1;
-    private final double Kd = 0.0;
-    private final double Ki = 0.0;
-    
-    private final double maxRobotSpeed = 9.5; //feet per second
+    private final VelocityControlledDrivetrainSide leftSide;
+    private final VelocityControlledDrivetrainSide rightSide;
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -48,20 +38,9 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
     					   Encoder baseLeftEncoder, Encoder baseRightEncoder)
     {
     	super();
-        frontLeft = baseFrontLeft;
-        frontRight = baseFrontRight;
-
-        leftEncoder = baseLeftEncoder;
-        rightEncoder = baseRightEncoder;
-        
-        leftEncoder.setPIDSourceType(PIDSourceType.kRate);
-        rightEncoder.setPIDSourceType(PIDSourceType.kRate);
-        
-        leftController = new PIDController(Kp, Ki, Kd, leftEncoder, frontLeft);
-        rightController = new PIDController(Kp, Ki, Kd, rightEncoder, frontRight);
-        
-        leftController.enable();
-        rightController.enable();
+        leftSide = new VelocityControlledDrivetrainSide(baseFrontLeft, baseLeftEncoder);
+        rightSide = new VelocityControlledDrivetrainSide(baseFrontRight, baseRightEncoder);
+     
     }
     
     public void initDefaultCommand() 
@@ -71,21 +50,23 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
     }
     
     public void setLeftMotorsPercent(double percent){
-    	setLeftMotors(maxRobotSpeed*percent);
+    	leftSide.SetSpeedPercent(percent);
     }
     
     public void setRightMotorsPercent(double percent){
-    	setRightMotors(maxRobotSpeed*percent);
+    	rightSide.SetSpeedPercent(percent);
     }
     
     public void setLeftMotors(double speed)
     {
-    	leftController.setSetpoint(speed);
+    	leftSide.SetSpeedAbsoluteFps(speed);
     }
     
     public void setRightMotors(double speed)
     {
-    	rightController.setSetpoint(speed);
+    	rightSide.SetSpeedAbsoluteFps(speed);
     }
+    
+    
 }
 
