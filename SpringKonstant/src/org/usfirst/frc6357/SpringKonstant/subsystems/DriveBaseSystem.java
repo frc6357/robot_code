@@ -11,15 +11,8 @@
 
 package org.usfirst.frc6357.SpringKonstant.subsystems;
 
-import org.usfirst.frc6357.SpringKonstant.Robot;
-import org.usfirst.frc6357.SpringKonstant.commands.*;
-
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.Talon;
-
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 
@@ -28,9 +21,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
 {
-    private final VelocityControlledDrivetrainSide leftSide;
-    private final VelocityControlledDrivetrainSide rightSide;
+    private final PositionAndVelocityControlledDrivetrainSide leftSide;
+    private final PositionAndVelocityControlledDrivetrainSide rightSide;
 
+    private boolean isInVelocityMode;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     
@@ -38,9 +32,25 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
     					   Encoder baseLeftEncoder, Encoder baseRightEncoder)
     {
     	super();
-        leftSide = new VelocityControlledDrivetrainSide(baseFrontLeft, baseLeftEncoder);
-        rightSide = new VelocityControlledDrivetrainSide(baseFrontRight, baseRightEncoder);
-     
+        leftSide = new PositionAndVelocityControlledDrivetrainSide(baseFrontLeft, baseLeftEncoder);
+        rightSide = new PositionAndVelocityControlledDrivetrainSide(baseFrontRight, baseRightEncoder);
+        isInVelocityMode = true;
+    }
+    
+    public void SetPositionMode(){
+    	leftSide.SetPositionMode();
+    	rightSide.SetPositionMode();
+    	isInVelocityMode = false;
+    }
+    
+    public void SetVelocityMode(){
+    	leftSide.SetVelocityMode();
+    	rightSide.SetVelocityMode();
+    	isInVelocityMode = true;
+    }
+    
+    public boolean IsInVelocityMode(){
+    	return isInVelocityMode;
     }
     
     public void initDefaultCommand() 
@@ -49,22 +59,22 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
         // setDefaultCommand(new MySpecialCommand());
     }
     
-    public void setLeftMotorsPercent(double percent){
-    	leftSide.SetSpeedPercent(percent);
+    public boolean setLeftMotorSpeedPercent(double percent){
+    	return leftSide.SetSpeedPercent(percent);
     }
     
-    public void setRightMotorsPercent(double percent){
-    	rightSide.SetSpeedPercent(percent);
+    public boolean setRightMotorSpeedPercent(double percent){
+    	return rightSide.SetSpeedPercent(percent);
     }
     
-    public void setLeftMotors(double speed)
+    public boolean setLeftMotorSpeed(double speed)
     {
-    	leftSide.SetSpeedAbsoluteFps(speed);
+    	return leftSide.SetSpeedAbsolute(speed);
     }
     
-    public void setRightMotors(double speed)
+    public boolean setRightMotorSpeed(double speed)
     {
-    	rightSide.SetSpeedAbsoluteFps(speed);
+    	return rightSide.SetSpeedAbsolute(speed);
     }
     
     

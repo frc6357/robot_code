@@ -163,8 +163,8 @@ public class Robot extends IterativeRobot
         SmartDashboard.putNumber("lvel", encoderLeft.getRate());
         SmartDashboard.putNumber("rpos", encoderRight.getDistance());
         SmartDashboard.putNumber("lpos", encoderLeft.getDistance());
-        driveBaseSystem.setLeftMotors(0.0f);
-        driveBaseSystem.setRightMotors(0.0f);
+        driveBaseSystem.setLeftMotorSpeedPercent(0.0f);
+        driveBaseSystem.setRightMotorSpeedPercent(0.0f);
     }
 
     public void autonomousInit() 
@@ -182,8 +182,8 @@ public class Robot extends IterativeRobot
     public void autonomousPeriodic() 
     {
         Scheduler.getInstance().run();
-        driveBaseSystem.setLeftMotors(1.0f);
-        driveBaseSystem.setRightMotors(1.0f);
+        driveBaseSystem.setLeftMotorSpeed(1.0f);
+        driveBaseSystem.setRightMotorSpeed(2.0f);
         SmartDashboard.putNumber("rvel", encoderRight.getRate());
         SmartDashboard.putNumber("lvel", encoderLeft.getRate());
         SmartDashboard.putNumber("rpos", encoderRight.getDistance());
@@ -202,8 +202,9 @@ public class Robot extends IterativeRobot
         operator = oi.getOperator();
         //compressor1.start();
         //compressor1.enabled();
-        driveBaseSystem.setLeftMotors(0.0f);
-        driveBaseSystem.setRightMotors(0.0f);
+        driveBaseSystem.SetVelocityMode();
+        driveBaseSystem.setLeftMotorSpeedPercent(0.0f);
+        driveBaseSystem.setRightMotorSpeedPercent(0.0f);
     }
 
     /**
@@ -212,8 +213,8 @@ public class Robot extends IterativeRobot
     public void teleopPeriodic() 
     {
         Scheduler.getInstance().run();
-        driveBaseSystem.setLeftMotors(-1 * driver.getRawAxis(1));
-        driveBaseSystem.setRightMotors(driver.getRawAxis(5));
+        driveBaseSystem.setLeftMotorSpeedPercent(driver.getRawAxis(1));
+        driveBaseSystem.setRightMotorSpeedPercent(driver.getRawAxis(5));
         
         SmartDashboard.putNumber("rvel", encoderRight.getRate());
         SmartDashboard.putNumber("lvel", encoderLeft.getRate());

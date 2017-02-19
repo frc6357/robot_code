@@ -61,8 +61,8 @@ public class Auto
 	
 	public void stop()
 	{
-		driveBaseSystem.setLeftMotors(0.0);
-		driveBaseSystem.setRightMotors(0.0);
+		driveBaseSystem.setLeftMotorSpeed(0.0);
+		driveBaseSystem.setRightMotorSpeed(0.0);
 	}
 	
 	public void startCounting()
@@ -94,20 +94,20 @@ public class Auto
 	{
 		if(timer.get() < time && drive)		// Used for rotateRight method
 		{
-			driveBaseSystem.setLeftMotors(0.5);
-			driveBaseSystem.setRightMotors(-0.5);
+			driveBaseSystem.setLeftMotorSpeed(0.5);
+			driveBaseSystem.setRightMotorSpeed(-0.5);
 		}
 		
 		if(timer.get() < time && rotateLeft)		// Used for the rotateLeft method
 		{
-			driveBaseSystem.setLeftMotors(-0.5);
-			driveBaseSystem.setRightMotors(0.5);
+			driveBaseSystem.setLeftMotorSpeed(-0.5);
+			driveBaseSystem.setRightMotorSpeed(0.5);
 		}
 		
 		if(timer.get() < time && rotateRight)		// Used for the drive distance method
 		{
-			driveBaseSystem.setLeftMotors(1.0);
-			driveBaseSystem.setRightMotors(1.0);
+			driveBaseSystem.setLeftMotorSpeed(1.0);
+			driveBaseSystem.setRightMotorSpeed(1.0);
 		}
 	}
 }
