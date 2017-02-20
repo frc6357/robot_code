@@ -41,19 +41,22 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
         myIMU = inIMU;
     }
     
-    public void SetPositionMode(){
+    public void SetPositionMode()
+    {
     	leftSide.SetPositionMode();
     	rightSide.SetPositionMode();
     	isInVelocityMode = false;
     }
     
-    public void SetVelocityMode(){
+    public void SetVelocityMode()
+    {
     	leftSide.SetVelocityMode();
     	rightSide.SetVelocityMode();
     	isInVelocityMode = true;
     }
     
-    public boolean IsInVelocityMode(){
+    public boolean IsInVelocityMode()
+    {
     	return isInVelocityMode;
     }
     
@@ -63,11 +66,13 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
         // setDefaultCommand(new MySpecialCommand());
     }
     
-    public boolean setLeftMotorSpeedPercent(double percent){
+    public boolean setLeftMotorSpeedPercent(double percent)
+    {
     	return leftSide.SetSpeedPercent(percent);
     }
     
-    public boolean setRightMotorSpeedPercent(double percent){
+    public boolean setRightMotorSpeedPercent(double percent)
+    {
     	return rightSide.SetSpeedPercent(percent);
     }
     
@@ -81,6 +86,18 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
     	return rightSide.SetSpeedAbsolute(speed);
     }
     
+    public double getTurnDistance(double angle)
+    {
+    	return (2 * Math.PI *11.125 /(12))*(angle/360.0);
+    }
+    
+    public void RotateRobot(double angle)
+    {
+    	leftSide.SetDistanceTarget(getTurnDistance(angle));
+    	rightSide.SetDistanceTarget(-1 * getTurnDistance(angle));
+    }
+    
+        
     public void Update(){
     	// If we are in velocity mode, we don't update here
     	// But if we are not, then we are in position mode and need to correct for drift
