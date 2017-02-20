@@ -33,6 +33,7 @@ public class PositionAndVelocityControlledDrivetrainSide
 				new EncoderPositionForPID(myEncoder), 
 				myVelocityControl
 				);
+		myPidController.setOutputRange(-5.0, 5.0);
 		myMode = PositionAndVelocityControlledDrivetrainSide.DrivetrainMode.kDrivetrainVelocityMode;
 	}
 	
