@@ -171,6 +171,7 @@ public class Robot extends IterativeRobot
         //gyro1.calibrate();
     	encoderRight.reset();
     	encoderLeft.reset();
+    	driveBaseSystem.SetPositionMode();
     }
 
     /**
@@ -179,8 +180,10 @@ public class Robot extends IterativeRobot
     public void autonomousPeriodic() 
     {
         Scheduler.getInstance().run();
-        driveBaseSystem.setLeftMotorSpeed(1.0f);
-        driveBaseSystem.setRightMotorSpeed(2.0f);
+       // driveBaseSystem.setLeftMotorSpeed(1.0f);
+      //  driveBaseSystem.setRightMotorSpeed(2.0f);
+        driveBaseSystem.rotateRobot(45);
+      //  driveBaseSystem.DriveStraight(10);
         SmartDashboard.putNumber("rvel", encoderRight.getRate());
         SmartDashboard.putNumber("lvel", encoderLeft.getRate());
         SmartDashboard.putNumber("rpos", encoderRight.getDistance());

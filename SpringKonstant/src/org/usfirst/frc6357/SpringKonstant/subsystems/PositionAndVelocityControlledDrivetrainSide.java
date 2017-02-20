@@ -10,6 +10,7 @@ public class PositionAndVelocityControlledDrivetrainSide
 	private final Encoder myEncoder;
 	private final PIDController myPidController;
 	private final VelocityControlledDrivetrainSide myVelocityControl;
+
 	
     private final double Kp = 4.0;
     private final double Kd = 0.0;

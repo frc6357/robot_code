@@ -26,6 +26,7 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
     private final PositionAndVelocityControlledDrivetrainSide leftSide;
     private final PositionAndVelocityControlledDrivetrainSide rightSide;
     private final ADIS16448_IMU myIMU;
+    private final double Kp_angleChange = 0.1;
 
     private boolean isInVelocityMode;
     // Put methods for controlling this subsystem
@@ -86,17 +87,29 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
     	return rightSide.SetSpeedAbsolute(speed);
     }
     
-    public double getTurnDistance(double angle)
+    public double getTurnDistance(double angle)								//Turns angle to the distance around the circle
     {
     	return (2 * Math.PI *11.125 /(12))*(angle/360.0);
     }
     
-    public void RotateRobot(double angle)
+    public void rotateRobot(double angle)									//Assign speed to the motors to execute the turn
     {
     	leftSide.SetDistanceTarget(getTurnDistance(angle));
     	rightSide.SetDistanceTarget(-1 * getTurnDistance(angle));
     }
     
+    public void AdjustAngle(double angle)									//Makes an adjustment in robot course in case of change in course
+    {
+    	double angleError = angle - myIMU.getAngleY();
+    	
+    }
+    
+    public void DriveStraight(double distance)								//Drives straight during autonomous
+    {
+    	leftSide.SetDistanceTarget(distance);
+    	rightSide.SetDistanceTarget(distance);
+    	
+    }
         
     public void Update(){
     	// If we are in velocity mode, we don't update here
