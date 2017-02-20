@@ -24,6 +24,18 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class GearDeploymentSystem extends Subsystem 
 {
+	
+	private enum gearState
+    {
+    	GEAR_EMPTY,
+    	GEAR_RETREAVING,
+    	CARRING_GEAR,
+    	READY_TO_PLACE,
+    	GEAR_PLACED
+    };
+	
+	private gearState currentState;
+	
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
@@ -33,5 +45,16 @@ public class GearDeploymentSystem extends Subsystem
         // setDefaultCommand(new MySpecialCommand());
     }
     
+    public gearState getGearState()
+    {
+    	return currentState;
+    }
+    
+    public void setGearState(gearState state)
+    {
+    	currentState = state;
+    }
+    
 }
+
 
