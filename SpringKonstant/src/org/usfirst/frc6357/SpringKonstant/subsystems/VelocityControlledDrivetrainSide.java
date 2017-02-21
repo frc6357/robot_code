@@ -21,7 +21,14 @@ public class VelocityControlledDrivetrainSide implements PIDOutput {
 		mySpeedController = inSpeedController;
 		mySpeedMeasurement = inSpeedMeasurement;
 		myPidController = new PIDController(Kp, Ki, Kd, mySpeedMeasurement, mySpeedController);
+		
+	}
+	
+	public void Enable(){
 		myPidController.enable();
+	}
+	public void Disable(){
+		myPidController.disable();
 	}
 	
 	public void SetSpeedAbsoluteFps(double speed){
@@ -38,5 +45,10 @@ public class VelocityControlledDrivetrainSide implements PIDOutput {
 	
 	public void reset(){
 		myPidController.reset();
+		myPidController.enable();
+	}
+	
+	public double GetSetpoint(){
+		return myPidController.getSetpoint();
 	}
 }

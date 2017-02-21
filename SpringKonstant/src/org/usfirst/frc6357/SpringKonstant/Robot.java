@@ -43,7 +43,7 @@ public class Robot extends IterativeRobot
     public static OI oi;
     
     // Subsystems
-    public static GearDeploymentSystem gearDeploymentSystem;
+    //public static GearDeploymentSystem gearDeploymentSystem;
     public static RopeClimbSystem ropeClimbSystem;
     public static DriveBaseSystem driveBaseSystem;
     
@@ -64,7 +64,7 @@ public class Robot extends IterativeRobot
     public static Encoder encoderLeft;
 	public static Encoder encoderRight;
 	//gyroscope
-	public static ADIS16448_IMU myIMU;
+	//public static ADIS16448_IMU myIMU;
 	
 	//Auto
 	public static AutonomousMatchController auto;
@@ -117,12 +117,12 @@ public class Robot extends IterativeRobot
         encoderRight.setDistancePerPulse(DistancePerPulse);
         
     	// Subsystems
-    	gearDeploymentSystem = new GearDeploymentSystem();
+    	//gearDeploymentSystem = new GearDeploymentSystem();
     	ropeClimbSystem = new RopeClimbSystem();
-    	driveBaseSystem = new DriveBaseSystem(baseFrontLeft, baseFrontRight, encoderLeft, encoderRight, myIMU);
+    	driveBaseSystem = new DriveBaseSystem(baseFrontLeft, baseFrontRight, encoderLeft, encoderRight);
         
     	//Auto
-        auto = new AutonomousMatchController(encoderRight, encoderLeft, driveBaseSystem);
+        //auto = new AutonomousMatchController(encoderRight, encoderLeft, driveBaseSystem);
 
     	
         // OI must be constructed after subsystems. If the OI creates Commands
@@ -138,7 +138,8 @@ public class Robot extends IterativeRobot
         
     
         //GyroScope 
-        myIMU = new ADIS16448_IMU();
+        //myIMU = new ADIS16448_IMU();
+        //myIMU.reset();
         
     }
 
@@ -158,8 +159,10 @@ public class Robot extends IterativeRobot
         SmartDashboard.putNumber("lvel", encoderLeft.getRate());
         SmartDashboard.putNumber("rpos", encoderRight.getDistance());
         SmartDashboard.putNumber("lpos", encoderLeft.getDistance());
-        SmartDashboard.putString("git revision", GitRevisionEvaluator.GetGitRevision());
-        SmartDashboard.putData("IMU", myIMU);
+        SmartDashboard.putNumber("l_setpt", driveBaseSystem.GetLeftSpeedSetpoint());
+        SmartDashboard.putNumber("r_setpt", driveBaseSystem.GetRightSpeedSetpoint());
+        //SmartDashboard.putString("git revision", GitRevisionEvaluator.GetGitRevision());
+        //SmartDashboard.putData("IMU", myIMU);
         driveBaseSystem.setLeftMotorSpeedPercent(0.0f);
         driveBaseSystem.setRightMotorSpeedPercent(0.0f);
     }
@@ -171,6 +174,7 @@ public class Robot extends IterativeRobot
         //gyro1.calibrate();
     	encoderRight.reset();
     	encoderLeft.reset();
+    	driveBaseSystem.Enable();
     	driveBaseSystem.SetPositionMode();
     }
 
@@ -180,14 +184,19 @@ public class Robot extends IterativeRobot
     public void autonomousPeriodic() 
     {
         Scheduler.getInstance().run();
-       // driveBaseSystem.setLeftMotorSpeed(1.0f);
-      //  driveBaseSystem.setRightMotorSpeed(2.0f);
+        //driveBaseSystem.setLeftMotorSpeed(1.0f);
+        //driveBaseSystem.setRightMotorSpeed(1.0f);
         driveBaseSystem.rotateRobot(45);
-      //  driveBaseSystem.DriveStraight(10);
+        //driveBaseSystem.DriveStraight(10.0f);
+        
         SmartDashboard.putNumber("rvel", encoderRight.getRate());
         SmartDashboard.putNumber("lvel", encoderLeft.getRate());
         SmartDashboard.putNumber("rpos", encoderRight.getDistance());
         SmartDashboard.putNumber("lpos", encoderLeft.getDistance());
+        SmartDashboard.putNumber("l_setpt", driveBaseSystem.GetLeftSpeedSetpoint());
+        SmartDashboard.putNumber("r_setpt", driveBaseSystem.GetRightSpeedSetpoint());
+        SmartDashboard.putNumber("l_drive", baseFrontLeft.get());
+        SmartDashboard.putNumber("r_drive", baseFrontRight.get());
     }
 
     public void teleopInit() 

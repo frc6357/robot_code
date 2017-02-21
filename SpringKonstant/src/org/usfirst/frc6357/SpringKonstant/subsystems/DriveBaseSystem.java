@@ -25,21 +25,39 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
 {
     private final PositionAndVelocityControlledDrivetrainSide leftSide;
     private final PositionAndVelocityControlledDrivetrainSide rightSide;
-    private final ADIS16448_IMU myIMU;
+	//private final VelocityControlledDrivetrainSide leftSide;
+	//private final VelocityControlledDrivetrainSide rightSide;
+    //private final ADIS16448_IMU myIMU;
     private final double Kp_angleChange = 0.1;
+    
+    private final SpeedController leftSpeedController;
+    private final SpeedController rightSpeedController;
+    
+    private final Encoder leftEncoder;
+    private final Encoder rightEncoder;
 
     private boolean isInVelocityMode;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     
     public DriveBaseSystem(SpeedController baseFrontLeft, SpeedController baseFrontRight, 
-    					   Encoder baseLeftEncoder, Encoder baseRightEncoder, ADIS16448_IMU inIMU)
+    					   Encoder baseLeftEncoder, Encoder baseRightEncoder)
     {
     	super();
-        leftSide = new PositionAndVelocityControlledDrivetrainSide(baseFrontLeft, baseLeftEncoder);
-        rightSide = new PositionAndVelocityControlledDrivetrainSide(baseFrontRight, baseRightEncoder);
-        isInVelocityMode = true;
-        myIMU = inIMU;
+    	leftSpeedController = baseFrontLeft;
+    	rightSpeedController = baseFrontRight;
+    	leftEncoder = baseLeftEncoder;
+    	rightEncoder = baseRightEncoder;
+        leftSide = new PositionAndVelocityControlledDrivetrainSide(leftSpeedController,leftEncoder);
+        rightSide = new PositionAndVelocityControlledDrivetrainSide(rightSpeedController, rightEncoder);
+        //leftSide = new VelocityControlledDrivetrainSide(leftSpeedController, new EncoderSpeedForPID(leftEncoder));
+        //rightSide = new VelocityControlledDrivetrainSide(rightSpeedController, new EncoderSpeedForPID(rightEncoder));
+    	isInVelocityMode = true;
+    }
+    
+    public void Enable(){
+    	leftSide.Enable();
+    	rightSide.Enable();
     }
     
     public void SetPositionMode()
@@ -69,22 +87,26 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
     
     public boolean setLeftMotorSpeedPercent(double percent)
     {
-    	return leftSide.SetSpeedPercent(percent);
+    	leftSide.SetSpeedPercent(percent);
+    	return true;
     }
     
     public boolean setRightMotorSpeedPercent(double percent)
     {
-    	return rightSide.SetSpeedPercent(percent);
+    	rightSide.SetSpeedPercent(percent);
+    	return true;
     }
     
     public boolean setLeftMotorSpeed(double speed)
     {
-    	return leftSide.SetSpeedAbsolute(speed);
+    	leftSide.SetSpeedAbsolute(speed);
+    	return true;
     }
     
     public boolean setRightMotorSpeed(double speed)
     {
-    	return rightSide.SetSpeedAbsolute(speed);
+    	rightSide.SetSpeedAbsolute(speed);
+    	return true;
     }
     
     public double getTurnDistance(double angle)								//Turns angle to the distance around the circle
@@ -100,7 +122,7 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
     
     public void AdjustAngle(double angle)									//Makes an adjustment in robot course in case of change in course
     {
-    	double angleError = angle - myIMU.getAngleY();
+    	//double angleError = angle - myIMU.getAngleY();
     	
     }
     
@@ -109,6 +131,14 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
     	leftSide.SetDistanceTarget(distance);
     	rightSide.SetDistanceTarget(distance);
     	
+    }
+    
+    public double GetLeftSpeedSetpoint(){
+    	return leftSide.GetSpeedSetpoint();
+    }
+    
+    public double GetRightSpeedSetpoint(){
+    	return rightSide.GetSpeedSetpoint();
     }
         
     public void Update(){

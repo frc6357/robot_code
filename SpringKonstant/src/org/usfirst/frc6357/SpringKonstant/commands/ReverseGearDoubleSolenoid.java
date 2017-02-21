@@ -24,7 +24,7 @@ public class ReverseGearDoubleSolenoid extends Command
 	
     public ReverseGearDoubleSolenoid() 
     {
-        requires(Robot.gearDeploymentSystem);
+        //requires(Robot.gearDeploymentSystem);
     }
 
     // Called just before this Command runs the first time

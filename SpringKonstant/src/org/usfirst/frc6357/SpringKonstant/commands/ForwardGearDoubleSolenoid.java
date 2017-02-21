@@ -24,7 +24,7 @@ public class ForwardGearDoubleSolenoid extends Command
 	
     public ForwardGearDoubleSolenoid() 
     {
-        requires(Robot.gearDeploymentSystem);
+        //requires(Robot.gearDeploymentSystem);
     }
 
     // Called just before this Command runs the first time
