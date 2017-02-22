@@ -12,11 +12,13 @@
 package org.usfirst.frc6357.SpringKonstant;
 
 import edu.wpi.first.wpilibj.Compressor;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -27,7 +29,6 @@ import org.usfirst.frc6357.SpringKonstant.utility.GitRevisionEvaluator;
 
 import com.analog.adis16448.frc.ADIS16448_IMU;
 import com.ctre.CANTalon;
-
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -63,12 +64,13 @@ public class Robot extends IterativeRobot
     //encoders
     public static Encoder encoderLeft;
 	public static Encoder encoderRight;
+	private double wait;
 	//gyroscope
 	//public static ADIS16448_IMU myIMU;
 	
 	//Auto
 	public static AutonomousMatchController auto;
- 
+	private final Timer myTimer;
     
     /**
      * This function is run when the robot is first started up and should be
@@ -83,6 +85,7 @@ public class Robot extends IterativeRobot
         doubleSolenoid1 = new DoubleSolenoid(0, 0, 1);										
         LiveWindow.addActuator("Gear Placement", "Double Solenoid 1", doubleSolenoid1);
        
+        myTimer = new Timer();
         
         //TALON SRX ASSIGNMENTS:
         // LEFT 10,11,15
@@ -176,6 +179,7 @@ public class Robot extends IterativeRobot
     	encoderLeft.reset();
     	driveBaseSystem.Enable();
     	driveBaseSystem.SetPositionMode();
+    	myTimer.start();
     }
 
     /**
@@ -184,9 +188,52 @@ public class Robot extends IterativeRobot
     public void autonomousPeriodic() 
     {
         Scheduler.getInstance().run();
-        //driveBaseSystem.setLeftMotorSpeed(1.0f);
-        //driveBaseSystem.setRightMotorSpeed(1.0f);
-        driveBaseSystem.rotateRobot(45);
+        driveBaseSystem.DriveStraight(5);			//drives 5 feet forward
+        
+        if (driveBaseSystem.isRobotStopped())
+        	wait = myTimer.get() + 2;
+        
+        if (myTimer.get() > wait)
+        	driveBaseSystem.rotateRobot(90);		//rotates 90 degrees clockwise
+        
+        if (driveBaseSystem.isRobotStopped())
+        	wait = myTimer.get() + 2;
+        
+        if (myTimer.get() > wait)
+        	driveBaseSystem.DriveStraight(1);		//drives 1 foot to the right
+        
+        if (driveBaseSystem.isRobotStopped())
+        	wait = myTimer.get() + 2;
+        
+        if (myTimer.get() > wait)
+        	driveBaseSystem.rotateRobot(-450);		//rotates 450 degrees counter clockwise
+        	
+        if (driveBaseSystem.isRobotStopped())
+        	wait = myTimer.get() + 2;
+        
+        if (myTimer.get() > wait)
+        	driveBaseSystem.DriveStraight(-5);		//drives 5 feet backwards
+        
+        if (driveBaseSystem.isRobotStopped())
+        	wait = myTimer.get() + 2;
+        
+        if (myTimer.get() > wait)
+        	driveBaseSystem.rotateRobot(90);		//rotates 90 degrees clockwise
+        
+        if (driveBaseSystem.isRobotStopped())
+        	wait = myTimer.get() + 2;
+        
+        if (myTimer.get() > wait)
+        	driveBaseSystem.DriveStraight(-1);		//drives 1 foot backwards to the left
+        
+        if (driveBaseSystem.isRobotStopped())
+        	wait = myTimer.get() + 2;
+        
+        if (myTimer.get() > wait)
+        	driveBaseSystem.rotateRobot(-90);		//rotates 90 degrees counter clockwise
+        
+        	
+        //driveBaseSystem.rotateRobot(45);
         //driveBaseSystem.DriveStraight(10.0f);
         
         SmartDashboard.putNumber("rvel", encoderRight.getRate());

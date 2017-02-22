@@ -11,6 +11,8 @@
 
 package org.usfirst.frc6357.SpringKonstant.subsystems;
 
+import org.usfirst.frc6357.SpringKonstant.Robot;
+
 import com.analog.adis16448.frc.ADIS16448_IMU;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -130,15 +132,21 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
     {
     	leftSide.SetDistanceTarget(distance);
     	rightSide.SetDistanceTarget(distance);
-    	
     }
     
-    public double GetLeftSpeedSetpoint(){
+    public double GetLeftSpeedSetpoint()
+    {
     	return leftSide.GetSpeedSetpoint();
     }
     
-    public double GetRightSpeedSetpoint(){
+    public double GetRightSpeedSetpoint()
+    {
     	return rightSide.GetSpeedSetpoint();
+    }
+    
+    public boolean isRobotStopped()
+    {
+    	return (Math.abs(leftSpeedController.get()) < 0.01 && Math.abs(rightSpeedController.get()) < 0.01);
     }
         
     public void Update(){
