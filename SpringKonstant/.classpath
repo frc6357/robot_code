@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="C:/Users/User/Desktop/github-code/robot_code/SpringKonstant/gson-2.8.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/User/Desktop/github-code/robot_code/SpringKonstant/gson-2.8.0-sources.jar"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/CTRLib.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/ADIS16448.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
