@@ -98,10 +98,12 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
     }
     
         
-    public void Update(){
+    public void Update()
+    {
     	// If we are in velocity mode, we don't update here
     	// But if we are not, then we are in position mode and need to correct for drift
-    	if(!isInVelocityMode){
+    	if(!isInVelocityMode)
+    	{
     		
     	}
     }

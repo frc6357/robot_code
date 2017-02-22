@@ -17,26 +17,31 @@ public class VelocityControlledDrivetrainSide implements PIDOutput {
     
     private final double maxRobotSpeed = 9.5; //feet per second
 	
-	public VelocityControlledDrivetrainSide(SpeedController inSpeedController, PIDSource inSpeedMeasurement){
+	public VelocityControlledDrivetrainSide(SpeedController inSpeedController, PIDSource inSpeedMeasurement)
+	{
 		mySpeedController = inSpeedController;
 		mySpeedMeasurement = inSpeedMeasurement;
 		myPidController = new PIDController(Kp, Ki, Kd, mySpeedMeasurement, mySpeedController);
 		myPidController.enable();
 	}
 	
-	public void SetSpeedAbsoluteFps(double speed){
+	public void SetSpeedAbsoluteFps(double speed)
+	{
 		myPidController.setSetpoint(speed);
 	}
 	
-	public void SetSpeedPercent(double percent){
+	public void SetSpeedPercent(double percent)
+	{
 		myPidController.setSetpoint(percent * maxRobotSpeed);
 	}
 	
-	public void pidWrite(double output){
+	public void pidWrite(double output)
+	{
 		SetSpeedAbsoluteFps(output);
 	}
 	
-	public void reset(){
+	public void reset()
+	{
 		myPidController.reset();
 	}
 }
