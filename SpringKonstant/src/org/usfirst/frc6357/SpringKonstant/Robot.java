@@ -68,6 +68,9 @@ public class Robot extends IterativeRobot
 	
 	//Auto
 	public static AutonomousMatchController auto;
+	
+	private double leftJoystickOffset;
+	private double rightJoystickOffset;
  
     
     /**
@@ -214,6 +217,8 @@ public class Robot extends IterativeRobot
         driveBaseSystem.SetVelocityMode();
         driveBaseSystem.setLeftMotorSpeedPercent(0.0f);
         driveBaseSystem.setRightMotorSpeedPercent(0.0f);
+        leftJoystickOffset = driver.getRawAxis(1);
+        rightJoystickOffset = driver.getRawAxis(5);
     }
 
     /**
@@ -222,13 +227,27 @@ public class Robot extends IterativeRobot
     public void teleopPeriodic() 
     {
         Scheduler.getInstance().run();
-        driveBaseSystem.setLeftMotorSpeedPercent(driver.getRawAxis(1));
-        driveBaseSystem.setRightMotorSpeedPercent(driver.getRawAxis(5));
+        
+        double leftDrive = driver.getRawAxis(1);
+        double rightDrive = driver.getRawAxis(5);
+        if(Math.abs(leftDrive) < 0.07){
+        	leftDrive = 0.0;
+        }
+        if(Math.abs(rightDrive) < 0.07){
+        	rightDrive = 0.0;
+        }
+        driveBaseSystem.setLeftMotorSpeedPercent(leftDrive);
+        driveBaseSystem.setRightMotorSpeedPercent(rightDrive);
         
         SmartDashboard.putNumber("rvel", encoderRight.getRate());
         SmartDashboard.putNumber("lvel", encoderLeft.getRate());
         SmartDashboard.putNumber("rpos", encoderRight.getDistance());
         SmartDashboard.putNumber("lpos", encoderLeft.getDistance());
+        
+        SmartDashboard.putNumber("l_setpt", driveBaseSystem.GetLeftSpeedSetpoint());
+        SmartDashboard.putNumber("r_setpt", driveBaseSystem.GetRightSpeedSetpoint());
+        SmartDashboard.putNumber("l_drive", baseFrontLeft.get());
+        SmartDashboard.putNumber("r_drive", baseFrontRight.get());
     
     }
 

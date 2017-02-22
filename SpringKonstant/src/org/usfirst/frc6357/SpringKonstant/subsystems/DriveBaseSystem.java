@@ -64,6 +64,8 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
     {
     	leftSide.SetPositionMode();
     	rightSide.SetPositionMode();
+    	leftEncoder.reset();
+    	rightEncoder.reset();
     	isInVelocityMode = false;
     }
     
@@ -71,6 +73,8 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
     {
     	leftSide.SetVelocityMode();
     	rightSide.SetVelocityMode();
+    	leftEncoder.reset();
+    	rightEncoder.reset();
     	isInVelocityMode = true;
     }
     

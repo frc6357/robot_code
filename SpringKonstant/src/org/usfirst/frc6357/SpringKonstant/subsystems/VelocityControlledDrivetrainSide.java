@@ -33,6 +33,11 @@ public class VelocityControlledDrivetrainSide implements PIDOutput {
 	
 	public void SetSpeedAbsoluteFps(double speed){
 		myPidController.setSetpoint(speed);
+		if(speed < 0.01)
+		{
+			speed = 0.0;
+			mySpeedController.set(0.0);
+		}
 	}
 	
 	public void SetSpeedPercent(double percent){
