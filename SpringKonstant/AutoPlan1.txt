@@ -1,6 +1,11 @@
-{
-	"distance": 10
-
-
-
-}
+[
+	{
+		Step : 1
+		Action : "Drive"
+		Value : 5
+		
+		Step : 2
+		Action : "Rotate"
+		Value : -90
+	}
+]
