@@ -11,7 +11,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 
-import org.usfirst.frc6357.SpringKonstant.Auto;
+import org.usfirst.frc6357.SpringKonstant.AutonomousMatchController;
 import org.usfirst.frc6357.SpringKonstant.Robot;
 import org.usfirst.frc6357.SpringKonstant.subsystems.DriveBaseSystem;
 import org.usfirst.frc6357.SpringKonstant.subsystems.PositionAndVelocityControlledDrivetrainSide;
@@ -86,6 +86,6 @@ public class AutoPlanParser
     
     public void sendValues()
     {
-    	Auto auto = new Auto(stepNum, actions, values);
+    	//AutonomousMatchController auto = new AutonomousMatchController(stepNum, actions, values);
     }
 }
