@@ -53,7 +53,10 @@ public class Robot extends IterativeRobot
     public static Joystick operator;
     
     // Actuators
-    public static DoubleSolenoid doubleSolenoid1;
+    public static DoubleSolenoid gearDoubleSolenoidRight;
+    public static DoubleSolenoid gearDoubleSolenoidLeft;
+    public static DoubleSolenoid gearDoubleSolenoidPush;
+
     public static SpeedController baseFrontLeft;
     public static SpeedController baseCenterLeft;
     public static SpeedController baseBackLeft;
@@ -61,6 +64,7 @@ public class Robot extends IterativeRobot
     public static SpeedController baseCenterRight;
     public static SpeedController baseBackRight;
     public static Compressor compressor1;
+    
     //encoders
     public static Encoder encoderLeft;
 	public static Encoder encoderRight;
@@ -86,8 +90,14 @@ public class Robot extends IterativeRobot
     	compressor1 = new Compressor(0);
     	LiveWindow.addActuator("Compressor", "Compressor", compressor1);
     	
-        doubleSolenoid1 = new DoubleSolenoid(0, 0, 1);										
-        LiveWindow.addActuator("Gear Placement", "Double Solenoid 1", doubleSolenoid1);
+        gearDoubleSolenoidRight = new DoubleSolenoid(4, 5);										
+        LiveWindow.addActuator("Gear Placement", "Gear Double Solenoid Right", gearDoubleSolenoidRight);
+        
+        gearDoubleSolenoidLeft = new DoubleSolenoid(0, 1);										
+        LiveWindow.addActuator("Gear Placement", "Gear Double Solenoid Left", gearDoubleSolenoidLeft);
+        
+        gearDoubleSolenoidPush = new DoubleSolenoid(2, 3);
+        LiveWindow.addActuator("Gear Placement", "Gear Double Solenoid Push", gearDoubleSolenoidPush);
        
         
         
@@ -112,6 +122,7 @@ public class Robot extends IterativeRobot
         baseBackRight = new CANTalon(16);
         ((CANTalon)baseBackRight).changeControlMode(CANTalon.TalonControlMode.Follower);
         ((CANTalon)baseBackRight).set(((CANTalon)baseFrontRight).getDeviceID());
+        
     	
         //Encoders 
         encoderLeft = new Encoder(2, 3);
@@ -194,51 +205,6 @@ public class Robot extends IterativeRobot
         Scheduler.getInstance().run();
         driveBaseSystem.DriveStraight(5);			//drives 5 feet forward
         
-        if (driveBaseSystem.isRobotStopped())
-        	wait = myTimer.get() + 2;
-        
-        if (myTimer.get() > wait)
-        	driveBaseSystem.rotateRobot(90);		//rotates 90 degrees clockwise
-        
-        if (driveBaseSystem.isRobotStopped())
-        	wait = myTimer.get() + 2;
-        
-        if (myTimer.get() > wait)
-        	driveBaseSystem.DriveStraight(1);		//drives 1 foot to the right
-        
-        if (driveBaseSystem.isRobotStopped())
-        	wait = myTimer.get() + 2;
-        
-        if (myTimer.get() > wait)
-        	driveBaseSystem.rotateRobot(-450);		//rotates 450 degrees counter clockwise
-        	
-        if (driveBaseSystem.isRobotStopped())
-        	wait = myTimer.get() + 2;
-        
-        if (myTimer.get() > wait)
-        	driveBaseSystem.DriveStraight(-5);		//drives 5 feet backwards
-        
-        if (driveBaseSystem.isRobotStopped())
-        	wait = myTimer.get() + 2;
-        
-        if (myTimer.get() > wait)
-        	driveBaseSystem.rotateRobot(90);		//rotates 90 degrees clockwise
-        
-        if (driveBaseSystem.isRobotStopped())
-        	wait = myTimer.get() + 2;
-        
-        if (myTimer.get() > wait)
-        	driveBaseSystem.DriveStraight(-1);		//drives 1 foot backwards to the left
-        
-        if (driveBaseSystem.isRobotStopped())
-        	wait = myTimer.get() + 2;
-        
-        if (myTimer.get() > wait)
-        	driveBaseSystem.rotateRobot(-90);		//rotates 90 degrees counter clockwise
-        
-        	
-        //driveBaseSystem.rotateRobot(45);
-        //driveBaseSystem.DriveStraight(10.0f);
         
         SmartDashboard.putNumber("rvel", encoderRight.getRate());
         SmartDashboard.putNumber("lvel", encoderLeft.getRate());

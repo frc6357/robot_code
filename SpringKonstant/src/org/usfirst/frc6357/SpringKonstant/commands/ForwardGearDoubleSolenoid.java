@@ -11,7 +11,6 @@
 
 package org.usfirst.frc6357.SpringKonstant.commands;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc6357.SpringKonstant.Robot;
 /**
@@ -20,11 +19,14 @@ import org.usfirst.frc6357.SpringKonstant.Robot;
 public class ForwardGearDoubleSolenoid extends Command 
 {
 	
-	private final DoubleSolenoid gearDoubleSolenoid = Robot.doubleSolenoid1;
+	private final DoubleSolenoid gearDoubleSolenoidLeft;
+	private final DoubleSolenoid gearDoubleSolenoidRight;
 	
-    public ForwardGearDoubleSolenoid() 
+    public ForwardGearDoubleSolenoid(DoubleSolenoid gearDoubleSolenoidLeftin, DoubleSolenoid gearDoubleSolenoidRightin) 
     {
         //requires(Robot.gearDeploymentSystem);
+    	gearDoubleSolenoidLeft = gearDoubleSolenoidLeftin;
+    	gearDoubleSolenoidRight = gearDoubleSolenoidRightin;
     }
 
     // Called just before this Command runs the first time
@@ -36,7 +38,8 @@ public class ForwardGearDoubleSolenoid extends Command
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
-    	gearDoubleSolenoid.set(DoubleSolenoid.Value.kForward);													//Solenoids should go off in the different time
+    	gearDoubleSolenoidLeft.set(DoubleSolenoid.Value.kForward);
+    	gearDoubleSolenoidRight.set(DoubleSolenoid.Value.kForward);
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -19,12 +19,13 @@ import org.usfirst.frc6357.SpringKonstant.Robot;
  */
 public class ReverseGearDoubleSolenoid extends Command 
 {
+	private final DoubleSolenoid gearDoubleSolenoidLeft;
+	private final DoubleSolenoid gearDoubleSolenoidRight;
 	
-	private final DoubleSolenoid gearDoubleSolenoid = Robot.doubleSolenoid1;
-	
-    public ReverseGearDoubleSolenoid() 
+    public ReverseGearDoubleSolenoid(DoubleSolenoid gearDoubleSolenoidLeftin, DoubleSolenoid gearDoubleSolenoidRightin) 
     {
-        //requires(Robot.gearDeploymentSystem);
+    	gearDoubleSolenoidLeft = gearDoubleSolenoidLeftin;
+    	gearDoubleSolenoidRight = gearDoubleSolenoidRightin;
     }
 
     // Called just before this Command runs the first time
@@ -36,7 +37,8 @@ public class ReverseGearDoubleSolenoid extends Command
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
-    	gearDoubleSolenoid.set(DoubleSolenoid.Value.kReverse);	
+    	gearDoubleSolenoidLeft.set(DoubleSolenoid.Value.kReverse);
+    	gearDoubleSolenoidRight.set(DoubleSolenoid.Value.kReverse);	
     }
 
     // Make this return true when this Command no longer needs to run execute()

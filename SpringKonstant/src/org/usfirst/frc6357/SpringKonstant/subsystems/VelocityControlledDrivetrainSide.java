@@ -5,7 +5,8 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.SpeedController;
 
-public class VelocityControlledDrivetrainSide implements PIDOutput {
+public class VelocityControlledDrivetrainSide implements PIDOutput 
+{
 
 	private final SpeedController mySpeedController;
 	private final PIDSource mySpeedMeasurement;

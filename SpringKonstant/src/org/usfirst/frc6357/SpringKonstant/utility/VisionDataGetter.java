@@ -1,4 +1,4 @@
-package org.usfirst.frc6357.SpringKonstant.utility;
+/*package org.usfirst.frc6357.SpringKonstant.utility;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -37,4 +37,4 @@ public class VisionDataGetter {
 		}
 		return "None";
 	}
-}
+}*/

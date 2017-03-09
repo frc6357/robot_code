@@ -60,16 +60,16 @@ public class OI
         operator = new Joystick(1);
         driver = new Joystick(0);
 
-        a = new JoystickButton(driver, 1);
-        b = new JoystickButton(driver, 2);
-        x = new JoystickButton(driver, 3);
-        y = new JoystickButton(driver, 4);
+        a = new JoystickButton(operator, 1);
+        b = new JoystickButton(operator, 2);
+        x = new JoystickButton(operator, 3);
+        y = new JoystickButton(operator, 4);
         
         
-        a.whenPressed(new ForwardGearDoubleSolenoid());
-        b.whenPressed(new ReverseGearDoubleSolenoid());
-        x.whenPressed(new ForwardGearDoubleSolenoid());
-        y.whenPressed(new ReverseGearDoubleSolenoid());
+        a.whenPressed(new ForwardGearDoubleSolenoid(Robot.gearDoubleSolenoidLeft, Robot.gearDoubleSolenoidRight));
+        b.whenPressed(new ReverseGearDoubleSolenoid(Robot.gearDoubleSolenoidLeft, Robot.gearDoubleSolenoidRight));
+        x.whenPressed(new GearDoubleSolenoidPush(Robot.gearDoubleSolenoidPush));
+        //y.whenPressed(new ReverseGearDoubleSolenoid());
         
 
         // SmartDashboard Buttons
