@@ -11,8 +11,13 @@
 
 package org.usfirst.frc6357.SpringKonstant;
 
-import edu.wpi.first.wpilibj.Compressor;
+import org.usfirst.frc6357.SpringKonstant.commands.GearDoubleSolenoidPush;
+import org.usfirst.frc6357.SpringKonstant.subsystems.DriveBaseSystem;
+import org.usfirst.frc6357.SpringKonstant.subsystems.RopeClimbSystem;
 
+import com.ctre.CANTalon;
+
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -23,12 +28,6 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import org.usfirst.frc6357.SpringKonstant.subsystems.*;
-import org.usfirst.frc6357.SpringKonstant.utility.GitRevisionEvaluator;
-
-import com.analog.adis16448.frc.ADIS16448_IMU;
-import com.ctre.CANTalon;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -187,14 +186,16 @@ public class Robot extends IterativeRobot
 
     public void autonomousInit() 
     {
+    	autonomousCommand = new GearDoubleSolenoidPush(gearDoubleSolenoidPush);
         // schedule the autonomous command (example)
-        //if (autonomousCommand != null) autonomousCommand.start();
+        if (autonomousCommand != null) autonomousCommand.start();
         //gyro1.calibrate();
     	encoderRight.reset();
     	encoderLeft.reset();
     	driveBaseSystem.Enable();
     	driveBaseSystem.SetPositionMode();
     	myTimer.start();
+    	
     }
 
     /**
