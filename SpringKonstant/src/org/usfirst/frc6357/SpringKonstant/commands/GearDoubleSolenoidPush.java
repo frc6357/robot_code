@@ -6,13 +6,6 @@ import org.usfirst.frc6357.SpringKonstant.Robot;
 public class GearDoubleSolenoidPush extends Command 
 {
 	
-	private final DoubleSolenoid gearDoubleSolenoidPush;
-	
-	public GearDoubleSolenoidPush(DoubleSolenoid gearDoubleSolenoidPushin)
-	{
-    	gearDoubleSolenoidPush = gearDoubleSolenoidPushin;
-	}
-	
     // Called just before this Command runs the first time
     protected void initialize() 
     {
@@ -21,8 +14,7 @@ public class GearDoubleSolenoidPush extends Command
     
     protected void execute() 
     {
-    	gearDoubleSolenoidPush.set(DoubleSolenoid.Value.kForward);
-    	gearDoubleSolenoidPush.set(DoubleSolenoid.Value.kReverse);
+    	Robot.gearDeploymentSystem.pushGear();
     }
     
     protected boolean isFinished() 
@@ -33,7 +25,7 @@ public class GearDoubleSolenoidPush extends Command
     // Called once after isFinished returns true
     protected void end() 
     {
-    	
+    	Robot.gearDeploymentSystem.resetPush();
     }
     
     protected void interrupted() 

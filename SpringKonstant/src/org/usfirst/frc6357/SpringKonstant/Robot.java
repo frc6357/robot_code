@@ -13,6 +13,7 @@ package org.usfirst.frc6357.SpringKonstant;
 
 import org.usfirst.frc6357.SpringKonstant.commands.GearDoubleSolenoidPush;
 import org.usfirst.frc6357.SpringKonstant.subsystems.DriveBaseSystem;
+import org.usfirst.frc6357.SpringKonstant.subsystems.GearDeploymentSystem;
 import org.usfirst.frc6357.SpringKonstant.subsystems.RopeClimbSystem;
 
 import com.ctre.CANTalon;
@@ -43,7 +44,7 @@ public class Robot extends IterativeRobot
     public static OI oi;
     
     // Subsystems
-    //public static GearDeploymentSystem gearDeploymentSystem;
+    public static GearDeploymentSystem gearDeploymentSystem;
     public static RopeClimbSystem ropeClimbSystem;
     public static DriveBaseSystem driveBaseSystem;
     
@@ -62,6 +63,8 @@ public class Robot extends IterativeRobot
     public static SpeedController baseFrontRight;
     public static SpeedController baseCenterRight;
     public static SpeedController baseBackRight;
+    public static SpeedController ropeMotor1;
+    public static SpeedController ropeMotor2;
     public static Compressor compressor1;
     
     //encoders
@@ -86,17 +89,13 @@ public class Robot extends IterativeRobot
     public void robotInit() 
     {	
     	// Actuators
-    	compressor1 = new Compressor(0);
-    	LiveWindow.addActuator("Compressor", "Compressor", compressor1);
+    	compressor1 = new Compressor(1);
     	
-        gearDoubleSolenoidRight = new DoubleSolenoid(4, 5);										
-        LiveWindow.addActuator("Gear Placement", "Gear Double Solenoid Right", gearDoubleSolenoidRight);
+        gearDoubleSolenoidRight = new DoubleSolenoid(6, 4);					
         
-        gearDoubleSolenoidLeft = new DoubleSolenoid(0, 1);										
-        LiveWindow.addActuator("Gear Placement", "Gear Double Solenoid Left", gearDoubleSolenoidLeft);
+        gearDoubleSolenoidLeft = new DoubleSolenoid(1, 0);									
         
-        gearDoubleSolenoidPush = new DoubleSolenoid(2, 3);
-        LiveWindow.addActuator("Gear Placement", "Gear Double Solenoid Push", gearDoubleSolenoidPush);
+        gearDoubleSolenoidPush = new DoubleSolenoid(3, 2);
        
         
         
@@ -122,6 +121,14 @@ public class Robot extends IterativeRobot
         ((CANTalon)baseBackRight).changeControlMode(CANTalon.TalonControlMode.Follower);
         ((CANTalon)baseBackRight).set(((CANTalon)baseFrontRight).getDeviceID());
         
+        ropeMotor1 = new CANTalon(16);
+        ((CANTalon)ropeMotor1).changeControlMode(CANTalon.TalonControlMode.Follower);
+        ((CANTalon)ropeMotor1).set(((CANTalon)ropeMotor1).getDeviceID());
+        
+        ropeMotor2 = new CANTalon(16);
+        ((CANTalon)ropeMotor2).changeControlMode(CANTalon.TalonControlMode.Follower);
+        ((CANTalon)ropeMotor2).set(((CANTalon)ropeMotor2).getDeviceID());
+        
     	
         //Encoders 
         encoderLeft = new Encoder(2, 3);
@@ -134,8 +141,8 @@ public class Robot extends IterativeRobot
         encoderRight.setDistancePerPulse(DistancePerPulse);
         
     	// Subsystems
-    	//gearDeploymentSystem = new GearDeploymentSystem();
-    	ropeClimbSystem = new RopeClimbSystem();
+    	gearDeploymentSystem = new GearDeploymentSystem(gearDoubleSolenoidLeft, gearDoubleSolenoidRight, gearDoubleSolenoidPush);
+    	ropeClimbSystem = new RopeClimbSystem(ropeMotor1, ropeMotor2);
     	driveBaseSystem = new DriveBaseSystem(baseFrontLeft, baseFrontRight, encoderLeft, encoderRight);
         
     	//Auto
@@ -186,14 +193,17 @@ public class Robot extends IterativeRobot
 
     public void autonomousInit() 
     {
-    	autonomousCommand = new GearDoubleSolenoidPush(gearDoubleSolenoidPush);
+    	//autonomousCommand = new GearDoubleSolenoidPush(gearDoubleSolenoidPush);
         // schedule the autonomous command (example)
-        if (autonomousCommand != null) autonomousCommand.start();
+        //if (autonomousCommand != null) autonomousCommand.start();
         //gyro1.calibrate();
     	encoderRight.reset();
     	encoderLeft.reset();
     	driveBaseSystem.Enable();
     	driveBaseSystem.SetPositionMode();
+    	
+    	gearDeploymentSystem.resetSolenoids();
+    	
     	myTimer.start();
     	
     }
@@ -204,8 +214,7 @@ public class Robot extends IterativeRobot
     public void autonomousPeriodic() 
     {
         Scheduler.getInstance().run();
-        driveBaseSystem.DriveStraight(5);			//drives 5 feet forward
-        
+        driveBaseSystem.DriveStraight(10);		// drives forward 10 feet
         
         SmartDashboard.putNumber("rvel", encoderRight.getRate());
         SmartDashboard.putNumber("lvel", encoderLeft.getRate());
@@ -227,13 +236,11 @@ public class Robot extends IterativeRobot
         
         driver = oi.getDriver();
         operator = oi.getOperator();
-        //compressor1.start();
-        //compressor1.enabled();
+        compressor1.start();
+        compressor1.enabled();
         driveBaseSystem.SetVelocityMode();
         driveBaseSystem.setLeftMotorSpeedPercent(0.0f);
         driveBaseSystem.setRightMotorSpeedPercent(0.0f);
-        leftJoystickOffset = driver.getRawAxis(1);
-        rightJoystickOffset = driver.getRawAxis(5);
     }
 
     /**
@@ -243,14 +250,21 @@ public class Robot extends IterativeRobot
     {
         Scheduler.getInstance().run();
         
-        double leftDrive = driver.getRawAxis(1);
-        double rightDrive = driver.getRawAxis(5);
-        if(Math.abs(leftDrive) < 0.07){
-        	leftDrive = 0.0;
+        double leftDrive = -1 * driver.getRawAxis(1);
+        double rightDrive = -1 * driver.getRawAxis(5);
+        
+        compressor1.start();
+        
+        if(Math.abs(leftDrive) < 0.05)
+        {
+        	leftDrive = 0.0f;
         }
-        if(Math.abs(rightDrive) < 0.07){
-        	rightDrive = 0.0;
+        if(Math.abs(rightDrive) < 0.05)
+        {
+        	rightDrive = 0.0f;
         }
+        
+        
         driveBaseSystem.setLeftMotorSpeedPercent(leftDrive);
         driveBaseSystem.setRightMotorSpeedPercent(rightDrive);
         

@@ -13,6 +13,7 @@ package org.usfirst.frc6357.SpringKonstant.subsystems;
 
 import org.usfirst.frc6357.SpringKonstant.commands.*;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -24,6 +25,58 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class GearDeploymentSystem extends Subsystem 
 {
+	private final DoubleSolenoid gearDoubleSolenoidRight;
+	private final DoubleSolenoid gearDoubleSolenoidLeft;
+	private final DoubleSolenoid gearDoubleSolenoidPush;
+	
+    public GearDeploymentSystem(DoubleSolenoid gearDoubleSolenoidLeftin, DoubleSolenoid gearDoubleSolenoidRightin,
+    		DoubleSolenoid gearDoubleSolenoidPushin)
+    {
+    	gearDoubleSolenoidLeft = gearDoubleSolenoidLeftin;
+    	gearDoubleSolenoidRight = gearDoubleSolenoidRightin;
+    	gearDoubleSolenoidPush = gearDoubleSolenoidPushin;
+    	
+    }
+	
+    public void pushGear()
+    {
+    	gearDoubleSolenoidPush.set(DoubleSolenoid.Value.kForward);
+    }
+    
+    public void resetPush()
+    {
+    	gearDoubleSolenoidPush.set(DoubleSolenoid.Value.kReverse);
+    }
+    
+    public void gearSlideUp()
+    {
+    	gearDoubleSolenoidLeft.set(DoubleSolenoid.Value.kForward);
+    	gearDoubleSolenoidRight.set(DoubleSolenoid.Value.kForward);
+    }
+    
+    public void gearSlideDown()
+    {
+    	gearDoubleSolenoidLeft.set(DoubleSolenoid.Value.kReverse);
+    	gearDoubleSolenoidRight.set(DoubleSolenoid.Value.kReverse);
+    }
+    
+    public void resetSolenoids()
+    {
+    	resetPush();
+    	gearSlideDown();
+    }
+    
+    public void initDefaultCommand() 
+    {    	
+        // Set the default command for a subsystem here.
+        // setDefaultCommand(new MySpecialCommand());
+    }
+    
+    
+    
+	////////////////// STATE MACHINE ////////////////////
+	////////////////////////////////////////////////////
+	private gearState currentState;
 	
 	private enum gearState
     {
@@ -34,17 +87,6 @@ public class GearDeploymentSystem extends Subsystem
     	GEAR_PLACED
     };
 	
-	private gearState currentState;
-	
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
-
-    public void initDefaultCommand() 
-    {    	
-        // Set the default command for a subsystem here.
-        // setDefaultCommand(new MySpecialCommand());
-    }
-    
     public gearState getGearState()
     {
     	return currentState;
@@ -54,7 +96,8 @@ public class GearDeploymentSystem extends Subsystem
     {
     	currentState = state;
     }
-    
+    //////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////
 }
 
 

@@ -52,7 +52,7 @@ public class OI
     // button.whenReleased(new ExampleCommand());
 
 	public Joystick driver, operator;
-    public JoystickButton a, b, x, y;
+    public Button a, b, x, y, rb;
     
     public OI() 
     {
@@ -64,12 +64,14 @@ public class OI
         b = new JoystickButton(operator, 2);
         x = new JoystickButton(operator, 3);
         y = new JoystickButton(operator, 4);
+        rb = new JoystickButton(operator, 6);
         
+        a.whenPressed(new ForwardGearDoubleSolenoid());
+        b.whenPressed(new ReverseGearDoubleSolenoid());
+        x.whenPressed(new GearDoubleSolenoidPush());
+        y.whenPressed(new RopeUp());
+        rb.whenPressed(new RopeDown());
         
-        a.whenPressed(new ForwardGearDoubleSolenoid(Robot.gearDoubleSolenoidLeft, Robot.gearDoubleSolenoidRight));
-        b.whenPressed(new ReverseGearDoubleSolenoid(Robot.gearDoubleSolenoidLeft, Robot.gearDoubleSolenoidRight));
-        x.whenPressed(new GearDoubleSolenoidPush(Robot.gearDoubleSolenoidPush));
-        //y.whenPressed(new ReverseGearDoubleSolenoid());
         
 
         // SmartDashboard Buttons

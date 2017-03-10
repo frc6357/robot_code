@@ -13,7 +13,7 @@ package org.usfirst.frc6357.SpringKonstant.subsystems;
 
 import org.usfirst.frc6357.SpringKonstant.commands.*;
 import edu.wpi.first.wpilibj.Solenoid;
-
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 
@@ -23,7 +23,28 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class RopeClimbSystem extends Subsystem 
 {
 	
+	private final SpeedController ropeMotor1;
+	private final SpeedController ropeMotor2;
+	
+	public RopeClimbSystem(SpeedController ropeMotor1in, SpeedController ropeMotor2in)
+	{
+		ropeMotor1 = ropeMotor1in;
+		ropeMotor2 = ropeMotor2in;
+	}
 
+	public void winchUp()
+	{
+		ropeMotor1.set(.5);
+		ropeMotor2.set(.5);
+	}
+	
+	public void winchDown()
+	{
+		ropeMotor1.set(-.5);
+		ropeMotor2.set(-.5);
+	}
+	
+	
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
