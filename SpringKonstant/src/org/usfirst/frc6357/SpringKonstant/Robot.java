@@ -11,10 +11,14 @@
 
 package org.usfirst.frc6357.SpringKonstant;
 
-import org.usfirst.frc6357.SpringKonstant.commands.GearDoubleSolenoidPush;
+import org.usfirst.frc6357.SpringKonstant.commands.AutoPlan1;
+import org.usfirst.frc6357.SpringKonstant.commands.AutoPlan2;
+import org.usfirst.frc6357.SpringKonstant.commands.AutoPlan3;
+import org.usfirst.frc6357.SpringKonstant.commands.GearPush;
 import org.usfirst.frc6357.SpringKonstant.subsystems.DriveBaseSystem;
 import org.usfirst.frc6357.SpringKonstant.subsystems.GearDeploymentSystem;
 import org.usfirst.frc6357.SpringKonstant.subsystems.RopeClimbSystem;
+//import org.usfirst.frc6357.SpringKonstant.subsystems.GearDeploymentSystem.gearState;
 
 import com.ctre.CANTalon;
 
@@ -28,6 +32,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -40,6 +45,7 @@ public class Robot extends IterativeRobot
 {
 
     Command autonomousCommand;
+    SendableChooser<Command> autoChooser;
 
     public static OI oi;
     
@@ -66,19 +72,18 @@ public class Robot extends IterativeRobot
     public static SpeedController ropeMotor1;
     public static SpeedController ropeMotor2;
     public static Compressor compressor1;
-    
     //encoders
     public static Encoder encoderLeft;
 	public static Encoder encoderRight;
-	private double wait;
+	//private double wait;
 	//gyroscope
 	//public static ADIS16448_IMU myIMU;
 	
 	//Auto
 	public static AutonomousMatchController auto;
 	
-	private double leftJoystickOffset;
-	private double rightJoystickOffset;
+	//private double leftJoystickOffset;
+	//private double rightJoystickOffset;
 
 	private final Timer myTimer = new Timer();
     
@@ -91,11 +96,11 @@ public class Robot extends IterativeRobot
     	// Actuators
     	compressor1 = new Compressor(1);
     	
-        gearDoubleSolenoidRight = new DoubleSolenoid(6, 4);					
+        gearDoubleSolenoidRight = new DoubleSolenoid(1, 6, 4);					
         
-        gearDoubleSolenoidLeft = new DoubleSolenoid(1, 0);									
+        gearDoubleSolenoidLeft = new DoubleSolenoid(1, 1, 0);									
         
-        gearDoubleSolenoidPush = new DoubleSolenoid(3, 2);
+        gearDoubleSolenoidPush = new DoubleSolenoid(1, 3, 2);
        
         
         
@@ -121,13 +126,9 @@ public class Robot extends IterativeRobot
         ((CANTalon)baseBackRight).changeControlMode(CANTalon.TalonControlMode.Follower);
         ((CANTalon)baseBackRight).set(((CANTalon)baseFrontRight).getDeviceID());
         
-        ropeMotor1 = new CANTalon(16);
-        ((CANTalon)ropeMotor1).changeControlMode(CANTalon.TalonControlMode.Follower);
-        ((CANTalon)ropeMotor1).set(((CANTalon)ropeMotor1).getDeviceID());
+        ropeMotor1 = new CANTalon(20);
         
-        ropeMotor2 = new CANTalon(16);
-        ((CANTalon)ropeMotor2).changeControlMode(CANTalon.TalonControlMode.Follower);
-        ((CANTalon)ropeMotor2).set(((CANTalon)ropeMotor2).getDeviceID());
+        ropeMotor2 = new CANTalon(21);
         
     	
         //Encoders 
@@ -156,11 +157,7 @@ public class Robot extends IterativeRobot
         oi = new OI();
 
         // instantiate the command used for the autonomous period
-        
-
-        
-        
-    
+       
         //GyroScope 
         //myIMU = new ADIS16448_IMU();
         //myIMU.reset();
@@ -189,11 +186,17 @@ public class Robot extends IterativeRobot
         //SmartDashboard.putData("IMU", myIMU);
         driveBaseSystem.setLeftMotorSpeedPercent(0.0f);
         driveBaseSystem.setRightMotorSpeedPercent(0.0f);
+        
+        autoChooser = new SendableChooser<Command>();
+        autoChooser.addDefault("Middle", new AutoPlan1());
+        autoChooser.addObject("Left", new AutoPlan2());
+        autoChooser.addObject("Right", new AutoPlan3());
+        SmartDashboard.putData("Auto Plan Selector", autoChooser);       
     }
 
     public void autonomousInit() 
     {
-    	//autonomousCommand = new GearDoubleSolenoidPush(gearDoubleSolenoidPush);
+    	//autonomousCommand = (Command) autoChooser.getSelected();
         // schedule the autonomous command (example)
         //if (autonomousCommand != null) autonomousCommand.start();
         //gyro1.calibrate();
@@ -214,7 +217,7 @@ public class Robot extends IterativeRobot
     public void autonomousPeriodic() 
     {
         Scheduler.getInstance().run();
-        driveBaseSystem.DriveStraight(10);		// drives forward 10 feet
+        driveBaseSystem.DriveStraight(10);
         
         SmartDashboard.putNumber("rvel", encoderRight.getRate());
         SmartDashboard.putNumber("lvel", encoderLeft.getRate());
@@ -241,6 +244,8 @@ public class Robot extends IterativeRobot
         driveBaseSystem.SetVelocityMode();
         driveBaseSystem.setLeftMotorSpeedPercent(0.0f);
         driveBaseSystem.setRightMotorSpeedPercent(0.0f);
+        
+        gearDeploymentSystem.resetSolenoids();
     }
 
     /**
@@ -253,7 +258,7 @@ public class Robot extends IterativeRobot
         double leftDrive = -1 * driver.getRawAxis(1);
         double rightDrive = -1 * driver.getRawAxis(5);
         
-        compressor1.start();
+        //compressor1.start();
         
         if(Math.abs(leftDrive) < 0.05)
         {

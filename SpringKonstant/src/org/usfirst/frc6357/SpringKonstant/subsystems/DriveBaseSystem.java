@@ -31,6 +31,7 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
 	//private final VelocityControlledDrivetrainSide rightSide;
     //private final ADIS16448_IMU myIMU;
     private final double Kp_angleChange = 0.1;
+    private final double slowModeRate = 0.5;
     
     private final SpeedController leftSpeedController;
     private final SpeedController rightSpeedController;
@@ -39,6 +40,8 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
     private final Encoder rightEncoder;
 
     private boolean isInVelocityMode;
+    private boolean isInSlowMode;
+    
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     
@@ -85,6 +88,11 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
     	return isInVelocityMode;
     }
     
+    public boolean isInSlowMode()
+    {
+    	return isInSlowMode;
+    }
+    
     public void initDefaultCommand() 
     {
         // Set the default command for a subsystem here.
@@ -93,13 +101,25 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
     
     public boolean setLeftMotorSpeedPercent(double percent)
     {
-    	leftSide.SetSpeedPercent(percent);
+    	if(isInSlowMode){
+    		leftSide.SetSpeedPercent(slowModeRate*percent);
+    	}
+    	else{
+    		leftSide.SetSpeedPercent(percent);
+    	}
     	return true;
     }
     
     public boolean setRightMotorSpeedPercent(double percent)
     {
-    	rightSide.SetSpeedPercent(percent);
+    	if(isInSlowMode)
+    	{
+    		rightSide.SetSpeedPercent(slowModeRate*percent);
+    	}
+    	else
+    	{
+    		rightSide.SetSpeedPercent(percent);
+    	}
     	return true;
     }
     
@@ -151,6 +171,16 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
     public boolean isRobotStopped()
     {
     	return (Math.abs(leftSpeedController.get()) < 0.01 && Math.abs(rightSpeedController.get()) < 0.01);
+    }
+    
+    public void setSlowMode()
+    {
+    	isInSlowMode = true;
+    }
+    
+    public void exitSlowMode()
+    {
+    	isInSlowMode = false;
     }
         
     public void Update()

@@ -3,8 +3,10 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc6357.SpringKonstant.Robot;
 
-public class GearDoubleSolenoidPush extends Command 
+public class GearPush extends Command 
 {
+	
+	private boolean isDone = true;
 	
     // Called just before this Command runs the first time
     protected void initialize() 
@@ -14,18 +16,20 @@ public class GearDoubleSolenoidPush extends Command
     
     protected void execute() 
     {
+    	isDone = false;
     	Robot.gearDeploymentSystem.pushGear();
+    	isDone = true;
     }
     
     protected boolean isFinished() 
     {
-        return false;
+        return isDone;
     }
     
     // Called once after isFinished returns true
     protected void end() 
     {
-    	Robot.gearDeploymentSystem.resetPush();
+    	
     }
     
     protected void interrupted() 

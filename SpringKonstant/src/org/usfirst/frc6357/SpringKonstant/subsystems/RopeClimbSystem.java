@@ -44,6 +44,11 @@ public class RopeClimbSystem extends Subsystem
 		ropeMotor2.set(-.5);
 	}
 	
+	public void stopMotors()
+	{
+		ropeMotor1.set(0);
+		ropeMotor2.set(0);
+	}
 	
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -51,7 +56,7 @@ public class RopeClimbSystem extends Subsystem
     public void initDefaultCommand() 
     {
         // Set the default command for a subsystem here.
-        // setDefaultCommand(new MySpecialCommand());
+        //setDefaultCommand(new WinchStop());
     }
 }
 

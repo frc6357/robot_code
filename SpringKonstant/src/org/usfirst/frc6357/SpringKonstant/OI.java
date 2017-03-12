@@ -52,7 +52,7 @@ public class OI
     // button.whenReleased(new ExampleCommand());
 
 	public Joystick driver, operator;
-    public Button a, b, x, y, rb;
+    public Button a, b, x, y, rb, lb, start, slowDrive, stopSlowDrive;
     
     public OI() 
     {
@@ -64,27 +64,34 @@ public class OI
         b = new JoystickButton(operator, 2);
         x = new JoystickButton(operator, 3);
         y = new JoystickButton(operator, 4);
-        rb = new JoystickButton(operator, 6);
+        rb = new JoystickButton(operator, 5);
+        lb = new JoystickButton(operator, 6);
+        start = new JoystickButton(operator, 8);
+        stopSlowDrive = new JoystickButton(driver, 5);
+        slowDrive = new JoystickButton(driver, 6);
         
         a.whenPressed(new ForwardGearDoubleSolenoid());
         b.whenPressed(new ReverseGearDoubleSolenoid());
-        x.whenPressed(new GearDoubleSolenoidPush());
-        y.whenPressed(new RopeUp());
+        x.whenPressed(new GearPush());
+        y.whenPressed(new GearPull());
         rb.whenPressed(new RopeDown());
-        
-        
+        lb.whenPressed(new RopeUp());
+        start.whenPressed(new WinchStop());
+        stopSlowDrive.whenPressed(new StopSlowDrive());
+        slowDrive.whenPressed(new SlowDrive());
 
-        // SmartDashboard Buttons
-        //SmartDashboard.putData("GearDeployment", new ReverseGearDoubleSolenoid());
-        //SmartDashboard.putData("GearPlacement", new ForwardGearDoubleSolenoid());
-        //SmartDashboard.putData("RopeCatch", new RopeCatch());
-        //SmartDashboard.putData("RopeClimb", new RopeClimb());
-        //SmartDashboard.putData("AutoPlan1", new AutoPlan1());
-        //SmartDashboard.putData("AutoPlan2", new AutoPlan2());
-        //SmartDashboard.putData("AutoPlan3", new AutoPlan3());
-        //SmartDashboard.putData("AutoPlan4", new AutoPlan4());
-        //SmartDashboard.putData("AutoPlan5", new AutoPlan5());
-        //SmartDashboard.putData("AutoPlan6", new AutoPlan6());
+
+       
+        
+        SmartDashboard.putData("Gear Slide Down", new ForwardGearDoubleSolenoid());
+        SmartDashboard.putData("Gear Slide Up", new ReverseGearDoubleSolenoid());
+        SmartDashboard.putData("Gear Push", new GearPush());
+        SmartDashboard.putData("Gear Pull", new GearPull());
+        SmartDashboard.putData("Rope Up", new RopeUp());
+        SmartDashboard.putData("Rope Down", new RopeDown());
+        SmartDashboard.putData("AutoPlan1", new AutoPlan1());
+        SmartDashboard.putData("AutoPlan2", new AutoPlan2());
+        SmartDashboard.putData("AutoPlan3", new AutoPlan3());
 
     }
 

@@ -48,16 +48,16 @@ public class GearDeploymentSystem extends Subsystem
     	gearDoubleSolenoidPush.set(DoubleSolenoid.Value.kReverse);
     }
     
-    public void gearSlideUp()
-    {
-    	gearDoubleSolenoidLeft.set(DoubleSolenoid.Value.kForward);
-    	gearDoubleSolenoidRight.set(DoubleSolenoid.Value.kForward);
-    }
-    
     public void gearSlideDown()
     {
     	gearDoubleSolenoidLeft.set(DoubleSolenoid.Value.kReverse);
     	gearDoubleSolenoidRight.set(DoubleSolenoid.Value.kReverse);
+    }
+    
+    public void gearSlideUp()
+    {
+    	gearDoubleSolenoidLeft.set(DoubleSolenoid.Value.kForward);
+    	gearDoubleSolenoidRight.set(DoubleSolenoid.Value.kForward);
     }
     
     public void resetSolenoids()
@@ -71,33 +71,7 @@ public class GearDeploymentSystem extends Subsystem
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());
     }
-    
-    
-    
-	////////////////// STATE MACHINE ////////////////////
-	////////////////////////////////////////////////////
-	private gearState currentState;
-	
-	private enum gearState
-    {
-    	GEAR_EMPTY,
-    	GEAR_RETREAVING,
-    	CARRING_GEAR,
-    	READY_TO_PLACE,
-    	GEAR_PLACED
-    };
-	
-    public gearState getGearState()
-    {
-    	return currentState;
-    }
-    
-    public void setGearState(gearState state)
-    {
-    	currentState = state;
-    }
-    //////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////
+
 }
 
 
