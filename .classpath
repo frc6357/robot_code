@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="SpringKonstant/src"/>
-	<classpathentry kind="lib" path="SpringKonstant/build/jars/cscore.jar"/>
-	<classpathentry kind="lib" path="SpringKonstant/build/jars/NetworkTables.jar"/>
-	<classpathentry kind="lib" path="SpringKonstant/build/jars/opencv.jar"/>
-	<classpathentry kind="lib" path="SpringKonstant/build/jars/WPILib.jar"/>
-	<classpathentry kind="lib" path="SpringKonstant/dist/FRCUserProgram.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/Users/magnahoo761/workspace/robot_code/gson-2.8.0-sources.jar"/>
-	<classpathentry kind="lib" path="/Users/magnahoo761/workspace/robot_code/gson-2.8.0.jar"/>
-	<classpathentry kind="lib" path="/Users/magnahoo761/wpilib/user/java/lib/CTRLib.jar"/>
-	<classpathentry kind="lib" path="/Users/magnahoo761/wpilib/user/java/lib/ADIS16448.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Steve/wpilib/java/current/lib/cscore.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Steve/wpilib/java/current/lib/cscore-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Steve/wpilib/java/current/lib/NetworkTables.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Steve/wpilib/java/current/lib/NetworkTables-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Steve/wpilib/java/current/lib/opencv.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Steve/wpilib/java/current/lib/opencv-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Steve/wpilib/java/current/lib/WPILib.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Steve/wpilib/java/current/lib/WPILib-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Steve/wpilib/java/current/ant/ant-classloadertask.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Steve/wpilib/java/current/ant/ant-contrib.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Steve/wpilib/java/current/ant/jsch-0.1.50.jar"/>
 	<classpathentry kind="output" path="SpringKonstant/bin"/>
 </classpath>
