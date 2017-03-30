@@ -193,7 +193,15 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
     {
     	isInSlowMode = false;
     }
-        
+    
+    public boolean isDriving()
+    {
+    	if(leftSpeedController.get() > 0.05)
+    		return true;
+    	else
+    		return false;
+    }
+    
     public void Update()
     {
     	// If we are in velocity mode, we don't update here

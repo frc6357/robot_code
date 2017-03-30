@@ -12,6 +12,7 @@ public class AutoPlan1 extends Command
 {
 	
 	Boolean isDone = true;
+	Boolean driving = false;
 	Timer timer;
 	
     public AutoPlan1() 
@@ -33,18 +34,18 @@ public class AutoPlan1 extends Command
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
-    	if(timer.get() == 3.0)
+    	if(timer.get() > 3.0 && !driving)
     	{
     		setGearState(gearState.READY_TO_PLACE);
     	}
     	
-    	if(getGearState() == gearState.READY_TO_PLACE)
+    	if(getGearState() == gearState.READY_TO_PLACE && !driving)
     	{
     		Robot.gearDeploymentSystem.pushGear();
     		setGearState(gearState.GEAR_PLACED);
     	}
     	
-    	if(timer.get() == 6.00)
+    	if(getGearState() == gearState.GEAR_PLACED)
     		setGearState(gearState.GEAR_EMPTY);
     	
     	if(getGearState() == gearState.GEAR_EMPTY)
@@ -52,6 +53,16 @@ public class AutoPlan1 extends Command
 			Robot.gearDeploymentSystem.resetPush();
 			isDone = true;
 		}
+    	
+    	if(!Robot.driveBaseSystem.isDriving())
+    	{
+    		driving = false;
+    	}
+    	
+    	if(Robot.driveBaseSystem.isDriving())
+    	{
+    		driving = true;
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
