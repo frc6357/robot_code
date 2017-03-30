@@ -258,9 +258,7 @@ public class Robot extends IterativeRobot
         double leftDrive = -1 * driver.getRawAxis(1);
         double rightDrive = -1 * driver.getRawAxis(5);
         
-        //compressor1.start();
-        
-        if(Math.abs(leftDrive) < 0.05)
+        if(Math.abs(leftDrive) < 0.05) // used to correct robot moving when its not supposed to
         {
         	leftDrive = 0.0f;
         }
@@ -270,8 +268,8 @@ public class Robot extends IterativeRobot
         }
         
         
-        driveBaseSystem.setLeftMotorSpeedPercent(leftDrive);
-        driveBaseSystem.setRightMotorSpeedPercent(rightDrive);
+        driveBaseSystem.setLeftSpeed(leftDrive);
+        driveBaseSystem.setRightSpeed(rightDrive);
         
         SmartDashboard.putNumber("rvel", encoderRight.getRate());
         SmartDashboard.putNumber("lvel", encoderLeft.getRate());

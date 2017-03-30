@@ -101,7 +101,8 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
     
     public boolean setLeftMotorSpeedPercent(double percent)
     {
-    	if(isInSlowMode){
+    	if(isInSlowMode)
+    	{
     		leftSide.SetSpeedPercent(slowModeRate*percent);
     	}
     	else{
@@ -133,6 +134,16 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
     {
     	rightSide.SetSpeedAbsolute(speed);
     	return true;
+    }
+    
+    public void setLeftSpeed(double speed)
+    {
+    	leftSpeedController.set(speed);
+    }
+    
+    public void setRightSpeed(double speed)
+    {
+    	rightSpeedController.set(speed);
     }
     
     public double getTurnDistance(double angle)								//Turns angle to the distance around the circle
