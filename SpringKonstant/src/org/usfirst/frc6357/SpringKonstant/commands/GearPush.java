@@ -6,7 +6,7 @@ import org.usfirst.frc6357.SpringKonstant.Robot;
 public class GearPush extends Command 
 {
 	
-	private boolean isDone = true;
+	private boolean isDone = false;
 	
     // Called just before this Command runs the first time
     protected void initialize() 

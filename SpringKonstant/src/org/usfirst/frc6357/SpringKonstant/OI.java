@@ -65,7 +65,7 @@ public class OI
         x = new JoystickButton(operator, 3);
         y = new JoystickButton(operator, 4);
         rb = new JoystickButton(operator, 5);
-        lb = new JoystickButton(operator, 6);
+        //lb = new JoystickButton(operator, 6);
         start = new JoystickButton(operator, 8);
         stopSlowDrive = new JoystickButton(driver, 5);
         slowDrive = new JoystickButton(driver, 6);
@@ -75,7 +75,7 @@ public class OI
         x.whenPressed(new GearPush());
         y.whenPressed(new GearPull());
         rb.whenPressed(new RopeDown());
-        lb.whenPressed(new RopeUp());
+        //lb.whenPressed(new RopeUp());
         start.whenPressed(new WinchStop());
         stopSlowDrive.whenPressed(new StopSlowDrive());
         slowDrive.whenPressed(new SlowDrive());

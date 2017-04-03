@@ -4,16 +4,17 @@ import org.usfirst.frc6357.SpringKonstant.Robot;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class AutoPlan1 extends Command 
+public class AutoPlan1 extends CommandGroup 
 {
 	
-	Boolean isDone = true;
-	Boolean driving = false;
-	Timer timer;
+	boolean isDone = true;
+	boolean driving = false;
 	
     public AutoPlan1() 
     {
@@ -24,47 +25,42 @@ public class AutoPlan1 extends Command
     // Called just before this Command runs the first time
     protected void initialize() 
     {
-    	timer.start();
+    	
     	isDone = false;
     	Robot.gearDeploymentSystem.resetSolenoids();
-    	setGearState(gearState.CARRING_GEAR);
-    	Robot.driveBaseSystem.DriveStraight(64.34/12);
+    	
+    	if(!isDone)
+    	{
+        	new Thread() 
+        	{
+       		     public void run() 
+       		     {
+       		          //Code to run here:
+       		          try     		          
+       		          {
+        		       	  Robot.driveBaseSystem.DriveStraight(73.800/12);
+        		       	  Thread.sleep(1);
+        		       	  //Robot.gearDeploymentSystem.pushGear();
+        		       	  //Thread.sleep(500);
+        		       	  //Robot.gearDeploymentSystem.resetPush(); 
+        		       	  isDone = true;
+        		      } 
+        		      catch (InterruptedException e) 
+        		      {
+        		    	  e.printStackTrace();
+        		      }
+        		 }
+        	} 
+        		.start();
+    	}
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
-    	if(timer.get() > 3.0 && !driving)
-    	{
-    		setGearState(gearState.READY_TO_PLACE);
-    	}
-    	
-    	if(getGearState() == gearState.READY_TO_PLACE && !driving)
-    	{
-    		Robot.gearDeploymentSystem.pushGear();
-    		setGearState(gearState.GEAR_PLACED);
-    	}
-    	
-    	if(getGearState() == gearState.GEAR_PLACED)
-    		setGearState(gearState.GEAR_EMPTY);
-    	
-    	if(getGearState() == gearState.GEAR_EMPTY)
-		{
-			Robot.gearDeploymentSystem.resetPush();
-			isDone = true;
-		}
-    	
-    	if(!Robot.driveBaseSystem.isDriving())
-    	{
-    		driving = false;
-    	}
-    	
-    	if(Robot.driveBaseSystem.isDriving())
-    	{
-    		driving = true;
-    	}
-    }
 
+    	
+    }
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() 
     {
@@ -74,7 +70,7 @@ public class AutoPlan1 extends Command
     // Called once after isFinished returns true
     protected void end() 
     {
-    	timer.stop();
+    	//timer.stop();
     }
 
     // Called when another command which requires one or more of the same
@@ -85,7 +81,7 @@ public class AutoPlan1 extends Command
     
     
     
-    
+    /*
 	////////////////// STATE MACHINE ////////////////////
 	////////////////////////////////////////////////////
 	private gearState currentState;
@@ -109,5 +105,5 @@ public class AutoPlan1 extends Command
     	currentState = state;
     }
     //////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////*/
 }

@@ -4,11 +4,12 @@ import org.usfirst.frc6357.SpringKonstant.Robot;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class AutoPlan3 extends Command 
+public class AutoPlan3 extends CommandGroup 
 {
 
 	Boolean isDone = true;
@@ -20,44 +21,49 @@ public class AutoPlan3 extends Command
         requires(Robot.driveBaseSystem);
     }
 
-    // Called just before this Command runs the first time
+	// Called just before this Command runs the first time
     protected void initialize() 
     {
-    	timer.start();
+    	
     	isDone = false;
     	Robot.gearDeploymentSystem.resetSolenoids();
-    	setGearState(gearState.CARRING_GEAR);
-    	Robot.driveBaseSystem.DriveStraight(69.84/12);
+    	
+    	if(!isDone)
+    	{
+        	new Thread() 
+        	{
+       		     public void run() 
+       		     {
+       		          //Code to run here:
+       		          try     		          
+       		          {
+       		        	  Robot.driveBaseSystem.DriveStraight(81.779/12);	
+      		       	  	  Thread.sleep(3000);
+      		       	  	  Robot.driveBaseSystem.rotateRobot(30);
+      		       	  	  Thread.sleep(2000);
+      		       	  	  Robot.driveBaseSystem.DriveStraight(45.293/12);
+      		       	  	  Thread.sleep(3000);
+      		       	  	  Robot.gearDeploymentSystem.pushGear();
+      		       	  	  Thread.sleep(500);
+      		       	  	  Robot.gearDeploymentSystem.resetPush(); 
+      		       	  	  isDone = true;
+        		      } 
+        		      catch (InterruptedException e) 
+        		      {
+        		    	  e.printStackTrace();
+        		      }
+        		 }
+        	} 
+        		.start();
+    	}
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
-    	if(timer.get() >= 3.0)
-    	{
-        	Robot.driveBaseSystem.rotateRobot(-60);
-    	}
-    	
-    	if(timer.get() >= 6.0)
-    	{
-    		Robot.driveBaseSystem.DriveStraight(54/12);
-    		setGearState(gearState.READY_TO_PLACE);
-    	}
-    	setGearState(gearState.READY_TO_PLACE);
-    	
-    	if(getGearState() == gearState.READY_TO_PLACE && timer.get() >= 7.0)
-    	{
-    		Robot.gearDeploymentSystem.pushGear();
-    		setGearState(gearState.GEAR_PLACED);
-    	}
-    	
-    	if(getGearState() == gearState.GEAR_PLACED && timer.get() >= 8.0)
-    	{
-    		Robot.gearDeploymentSystem.resetPush();
-    		isDone = true;
-    	}
-    }
 
+    	
+    }
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() 
     {
@@ -67,6 +73,7 @@ public class AutoPlan3 extends Command
     // Called once after isFinished returns true
     protected void end() 
     {
+    	//timer.stop();
     }
 
     // Called when another command which requires one or more of the same
@@ -77,7 +84,7 @@ public class AutoPlan3 extends Command
     
     
     
-    
+    /*
 	////////////////// STATE MACHINE ////////////////////
 	////////////////////////////////////////////////////
 	private gearState currentState;
@@ -101,5 +108,5 @@ public class AutoPlan3 extends Command
     	currentState = state;
     }
     //////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////}
+	//////////////////////////////////////////////////////*/
 }

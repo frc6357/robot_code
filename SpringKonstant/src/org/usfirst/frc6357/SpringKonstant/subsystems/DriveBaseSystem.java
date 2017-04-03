@@ -57,14 +57,22 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
         rightSide = new PositionAndVelocityControlledDrivetrainSide(rightSpeedController, rightEncoder);
         //leftSide = new VelocityControlledDrivetrainSide(leftSpeedController, new EncoderSpeedForPID(leftEncoder));
         //rightSide = new VelocityControlledDrivetrainSide(rightSpeedController, new EncoderSpeedForPID(rightEncoder));
-    	isInVelocityMode = true;
+    	//isInVelocityMode = true;
     }
-    
-    public void Enable(){
+ 
+    public void Enable()
+    {
     	leftSide.Enable();
     	rightSide.Enable();
     }
     
+    public void Disable()
+    {
+    	leftSide.Disable();
+    	rightSide.Disable();
+    }
+
+
     public void SetPositionMode()
     {
     	leftSide.SetPositionMode();
@@ -73,7 +81,7 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
     	rightEncoder.reset();
     	isInVelocityMode = false;
     }
-    
+    /*
     public void SetVelocityMode()
     {
     	leftSide.SetVelocityMode();
@@ -87,7 +95,7 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
     {
     	return isInVelocityMode;
     }
-    
+    */
     public boolean isInSlowMode()
     {
     	return isInSlowMode;
@@ -103,10 +111,10 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
     {
     	if(isInSlowMode)
     	{
-    		leftSide.SetSpeedPercent(slowModeRate*percent);
+    		leftSpeedController.set(slowModeRate*percent);
     	}
     	else{
-    		leftSide.SetSpeedPercent(percent);
+    		leftSpeedController.set(percent);
     	}
     	return true;
     }
@@ -115,15 +123,15 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
     {
     	if(isInSlowMode)
     	{
-    		rightSide.SetSpeedPercent(slowModeRate*percent);
+    		rightSpeedController.set(slowModeRate*percent);
     	}
     	else
     	{
-    		rightSide.SetSpeedPercent(percent);
+    		rightSpeedController.set(percent);
     	}
     	return true;
     }
-    
+    /*
     public boolean setLeftMotorSpeed(double speed)
     {
     	leftSide.SetSpeedAbsolute(speed);
@@ -135,15 +143,28 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
     	rightSide.SetSpeedAbsolute(speed);
     	return true;
     }
-    
+    */
     public void setLeftSpeed(double speed)
     {
-    	leftSpeedController.set(speed);
+    	if(isInSlowMode)
+    	{
+    		leftSpeedController.set(slowModeRate*speed);
+    	}
+    	else{
+    		leftSpeedController.set(speed);
+    	}
     }
     
     public void setRightSpeed(double speed)
     {
-    	rightSpeedController.set(speed);
+    	if(isInSlowMode)
+    	{
+    		rightSpeedController.set(slowModeRate*speed);
+    	}
+    	else
+    	{
+    		rightSpeedController.set(speed);
+    	}
     }
     
     public double getTurnDistance(double angle)								//Turns angle to the distance around the circle

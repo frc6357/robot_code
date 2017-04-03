@@ -1,12 +1,13 @@
 package org.usfirst.frc6357.SpringKonstant.commands;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc6357.SpringKonstant.Robot;
 
 public class GearPull extends Command 
 {
 	
-	private boolean isDone = true;
+	private boolean isDone = false;
 	
     // Called just before this Command runs the first time
     protected void initialize() 
