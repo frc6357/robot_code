@@ -2,10 +2,9 @@ package org.usfirst.frc6357.SpringKonstant.commands;
 
 import org.usfirst.frc6357.SpringKonstant.Robot;
 
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.Command;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 
 /**
  *
@@ -70,13 +69,14 @@ public class AutoPlan2 extends CommandGroup
     // Called once after isFinished returns true
     protected void end() 
     {
-    	//timer.stop();
+    	
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() 
     {
+    	
     }
     
     

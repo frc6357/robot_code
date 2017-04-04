@@ -80,9 +80,7 @@ public class OI
         stopSlowDrive.whenPressed(new StopSlowDrive());
         slowDrive.whenPressed(new SlowDrive());
 
-
-       
-        
+        //Smart Dashboard 
         SmartDashboard.putData("Gear Slide Down", new ForwardGearDoubleSolenoid());
         SmartDashboard.putData("Gear Slide Up", new ReverseGearDoubleSolenoid());
         SmartDashboard.putData("Gear Push", new GearPush());

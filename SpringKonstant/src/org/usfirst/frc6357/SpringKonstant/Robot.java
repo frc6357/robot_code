@@ -49,6 +49,7 @@ public class Robot extends IterativeRobot
     CommandGroup autonomousCommand;
     SendableChooser<CommandGroup> autoChooser;
 
+    // OI
     public static OI oi;
     
     // Subsystems
@@ -74,19 +75,12 @@ public class Robot extends IterativeRobot
     public static SpeedController ropeMotor1;
     public static SpeedController ropeMotor2;
     public static Compressor compressor1;
-    //encoders
+   
     public static Encoder encoderLeft;
 	public static Encoder encoderRight;
-	//private double wait;
-	//gyroscope
-	public static ADIS16448_IMU imu;
+
+	public static ADIS16448_IMU imu; //This is the Gyroscope
 	
-	//Auto
-	public static AutonomousMatchController auto;
-	
-	//private double leftJoystickOffset;
-	//private double rightJoystickOffset;
-    
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -101,17 +95,16 @@ public class Robot extends IterativeRobot
         gearDoubleSolenoidPush = new DoubleSolenoid(1, 3, 2);
         
         //Gyroscope
-        imu = new ADIS16448_IMU();
+        imu = new ADIS16448_IMU(); // **** NEEDS PORT NUMBER
         imu.reset();
 
-       
-        
-        
         //TALON SRX ASSIGNMENTS:
         // LEFT 10,11,15
         // RIGHT 12,14,16
         // THE TALONS ARE SET UP TO USE FOLLOWING, so we only need the front left and front right
         
+        
+        //LEFT DRIVE TALONS
         baseFrontLeft = new CANTalon(10);
         baseCenterLeft = new CANTalon(11);
         ((CANTalon)baseCenterLeft).changeControlMode(CANTalon.TalonControlMode.Follower);
@@ -120,6 +113,7 @@ public class Robot extends IterativeRobot
         ((CANTalon)baseBackLeft).changeControlMode(CANTalon.TalonControlMode.Follower);
         ((CANTalon)baseBackLeft).set(((CANTalon)baseFrontLeft).getDeviceID());
         
+        //RIGHT DRIVE TALONS
         baseFrontRight = new CANTalon(12);
         baseFrontRight.setInverted(true);
         baseCenterRight = new CANTalon(14);
@@ -129,10 +123,10 @@ public class Robot extends IterativeRobot
         ((CANTalon)baseBackRight).changeControlMode(CANTalon.TalonControlMode.Follower);
         ((CANTalon)baseBackRight).set(((CANTalon)baseFrontRight).getDeviceID());
         
+        //WENCH TALONS
         ropeMotor1 = new CANTalon(20);
         ropeMotor2 = new CANTalon(21);
         
-    	
         //Encoders 
         encoderLeft = new Encoder(2, 3);
         encoderRight = new Encoder(0, 1);
@@ -148,9 +142,6 @@ public class Robot extends IterativeRobot
     	ropeClimbSystem = new RopeClimbSystem(ropeMotor1, ropeMotor2);
     	driveBaseSystem = new DriveBaseSystem(baseFrontLeft, baseFrontRight, encoderLeft, encoderRight);
         
-    	//Auto
-        auto = new AutonomousMatchController(encoderRight, encoderLeft, driveBaseSystem);
-    	
         // OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be
         // constructed yet. Thus, their requires() statements may grab null
@@ -167,7 +158,7 @@ public class Robot extends IterativeRobot
      */
     public void disabledInit()
     {
-
+    	// Code can be put here to do things before match ends
     }
 
     public void disabledPeriodic() 
@@ -176,6 +167,7 @@ public class Robot extends IterativeRobot
         driveBaseSystem.setLeftMotorSpeedPercent(0.0f);
         driveBaseSystem.setRightMotorSpeedPercent(0.0f);
         
+        // Auto chooser for the smart dashboard
         autoChooser = new SendableChooser<CommandGroup>();
         autoChooser.addDefault("Middle NO Place", new AutoPlan1());
         autoChooser.addObject("Left Side", new AutoPlan3());
@@ -248,8 +240,7 @@ public class Robot extends IterativeRobot
         {
         	rightDrive = 0.0f;
         }
-        
-        
+       
         driveBaseSystem.setLeftSpeed(leftDrive);
         driveBaseSystem.setRightSpeed(rightDrive);
     
