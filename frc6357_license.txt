@@ -1,4 +1,4 @@
-* Copyright (c) 2009-2016 FRC6357 The Spring Konstant
+* Copyright (c) 2016-2017 FRC6357 The Spring Konstant
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms, with or without
