@@ -11,9 +11,12 @@
 
 package org.usfirst.frc6357.SpringKonstant;
 
+import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc6357.SpringKonstant.commands.AutoPlan1;
 import org.usfirst.frc6357.SpringKonstant.commands.AutoPlan2;
 import org.usfirst.frc6357.SpringKonstant.commands.AutoPlan3;
+import org.usfirst.frc6357.SpringKonstant.commands.AutoPlan4;
 import org.usfirst.frc6357.SpringKonstant.commands.GearPush;
 import org.usfirst.frc6357.SpringKonstant.subsystems.DriveBaseSystem;
 import org.usfirst.frc6357.SpringKonstant.subsystems.GearDeploymentSystem;
@@ -23,6 +26,10 @@ import org.usfirst.frc6357.SpringKonstant.subsystems.RopeClimbSystem;
 import com.analog.adis16448.frc.ADIS16448_IMU;
 import com.ctre.CANTalon;
 
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
@@ -103,6 +110,7 @@ public class Robot extends IterativeRobot
         //Gyroscope
         imu = new ADIS16448_IMU();
         imu.reset();
+        imu.calibrate();
 
        
         
@@ -149,14 +157,38 @@ public class Robot extends IterativeRobot
     	driveBaseSystem = new DriveBaseSystem(baseFrontLeft, baseFrontRight, encoderLeft, encoderRight);
         
     	//Auto
-        auto = new AutonomousMatchController(encoderRight, encoderLeft, driveBaseSystem);
+        //auto = new AutonomousMatchController(encoderRight, encoderLeft, driveBaseSystem);
     	
         // OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be
         // constructed yet. Thus, their requires() statements may grab null
         // pointers. Bad news. Don't move it.
         oi = new OI();
+        
+    	//CameraServer.getInstance().startAutomaticCapture();
 
+        /////////////////CAMERA FEED \\\\\\\\\\\\\\\\
+        
+        new Thread(() -> 
+    	{
+            UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+            camera.setResolution(720, 480);
+            
+            CvSink cvSink = CameraServer.getInstance().getVideo();
+            CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 720, 480);
+            
+            Mat source = new Mat();
+            Mat output = new Mat();
+            
+            while(!Thread.interrupted()) 
+            {
+                cvSink.grabFrame(source);
+                Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
+                outputStream.putFrame(output);
+            }
+        }).start();
+
+        /////////////////////////////////////////////////////////
         // instantiate the command used for the autonomous period
         
     }
@@ -180,6 +212,7 @@ public class Robot extends IterativeRobot
         autoChooser.addDefault("Middle NO Place", new AutoPlan1());
         autoChooser.addObject("Left Side", new AutoPlan3());
         autoChooser.addObject("Middle Place Gear", new AutoPlan2());
+        autoChooser.addObject("Right Side", new AutoPlan4());
         SmartDashboard.putData("Auto Plan Selector", autoChooser); 
              
     }
@@ -188,7 +221,7 @@ public class Robot extends IterativeRobot
     {
     	autonomousCommand = (CommandGroup) autoChooser.getSelected();
         // schedule the autonomous command (example)
-        
+            	
         //gyro1.calibrate();
     	encoderRight.reset();
     	encoderLeft.reset();

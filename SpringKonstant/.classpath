@@ -12,5 +12,25 @@
 	<classpathentry kind="var" path="USERLIBS_DIR/ADIS16448.jar"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/._gson-2.8.0.jar"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/gson-2.8.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/igord/wpilib/user/java/lib/commons-codec-1.9.jar"/>
+	<classpathentry kind="lib" path="C:/Users/igord/wpilib/user/java/lib/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/igord/wpilib/user/java/lib/fluent-hc-4.5.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/igord/wpilib/user/java/lib/httpclient-4.5.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/igord/wpilib/user/java/lib/httpclient-cache-4.5.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/igord/wpilib/user/java/lib/httpclient-win-4.5.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/igord/wpilib/user/java/lib/httpcore-4.4.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/igord/wpilib/user/java/lib/httpmime-4.5.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/igord/wpilib/user/java/lib/jna-4.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/igord/wpilib/user/java/lib/jna-platform-4.1.0.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/commons-codec-1.9.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/commons-logging-1.2.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/fluent-hc-4.5.3.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/httpclient-4.5.3.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/httpclient-cache-4.5.3.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/httpclient-win-4.5.3.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/httpcore-4.4.6.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/httpmime-4.5.3.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/jna-4.1.0.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/jna-platform-4.1.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

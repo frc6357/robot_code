@@ -9,11 +9,14 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
+
+// This is the Auto for the left side
+
+
 public class AutoPlan3 extends CommandGroup 
 {
 
-	Boolean isDone = true;
-	Timer timer;
+	boolean isDone = true;
 	
 	public AutoPlan3() 
     {
@@ -37,12 +40,14 @@ public class AutoPlan3 extends CommandGroup
        		          //Code to run here:
        		          try     		          
        		          {
-       		        	  Robot.driveBaseSystem.DriveStraight(81.779/12);	
+       		        	  Robot.driveBaseSystem.DriveStraight(94/12);	
       		       	  	  Thread.sleep(3000);
-      		       	  	  Robot.driveBaseSystem.rotateRobot(30);
-      		       	  	  Thread.sleep(2000);
-      		       	  	  Robot.driveBaseSystem.DriveStraight(45.293/12);
-      		       	  	  Thread.sleep(3000);
+      		       	  	  Robot.driveBaseSystem.SetPositionMode();
+      		       	  	  Robot.driveBaseSystem.rotateRobot(60);
+      		       	  	  Thread.sleep(4000);
+      		       	  	  Robot.driveBaseSystem.SetPositionMode();
+      		       	  	  Robot.driveBaseSystem.DriveStraight(46/12);
+      		       	  	  Thread.sleep(2500);
       		       	  	  Robot.gearDeploymentSystem.pushGear();
       		       	  	  Thread.sleep(500);
       		       	  	  Robot.gearDeploymentSystem.resetPush(); 

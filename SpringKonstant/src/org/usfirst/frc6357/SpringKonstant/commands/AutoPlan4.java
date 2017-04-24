@@ -5,29 +5,25 @@ import org.usfirst.frc6357.SpringKonstant.Robot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
 
+// This is the auto program for the Right side
 
-// This is the auto for the middle without placing 
-
-
-public class AutoPlan1 extends CommandGroup 
+public class AutoPlan4 extends CommandGroup 
 {
-	
+
 	boolean isDone = true;
-	boolean driving = false;
 	
-    public AutoPlan1() 
+	public AutoPlan4() 
     {
         requires(Robot.gearDeploymentSystem);
         requires(Robot.driveBaseSystem);
     }
 
-    // Called just before this Command runs the first time
+	// Called just before this Command runs the first time
     protected void initialize() 
     {
     	
@@ -43,9 +39,18 @@ public class AutoPlan1 extends CommandGroup
        		          //Code to run here:
        		          try     		          
        		          {
-        		       	  Robot.driveBaseSystem.DriveStraight(90/12);
-        		       	  Thread.sleep(1); 
-        		       	  isDone = true;
+       		        	  Robot.driveBaseSystem.DriveStraight(98/12);	
+      		       	  	  Thread.sleep(3500);
+      		       	  	  Robot.driveBaseSystem.SetPositionMode();
+      		       	  	  Robot.driveBaseSystem.rotateRobot(-65);
+      		       	  	  Thread.sleep(4000);
+      		       	  	  Robot.driveBaseSystem.SetPositionMode();
+      		       	  	  Robot.driveBaseSystem.DriveStraight(26/12);
+      		       	  	  Thread.sleep(1750);
+      		       	  	  Robot.gearDeploymentSystem.pushGear();
+      		       	  	  Thread.sleep(500);
+      		       	  	  Robot.gearDeploymentSystem.resetPush(); 
+      		       	  	  isDone = true;
         		      } 
         		      catch (InterruptedException e) 
         		      {

@@ -80,19 +80,6 @@ public class OI
         stopSlowDrive.whenPressed(new StopSlowDrive());
         slowDrive.whenPressed(new SlowDrive());
 
-
-       
-        
-        SmartDashboard.putData("Gear Slide Down", new ForwardGearDoubleSolenoid());
-        SmartDashboard.putData("Gear Slide Up", new ReverseGearDoubleSolenoid());
-        SmartDashboard.putData("Gear Push", new GearPush());
-        SmartDashboard.putData("Gear Pull", new GearPull());
-        SmartDashboard.putData("Rope Up", new RopeUp());
-        SmartDashboard.putData("Rope Down", new RopeDown());
-        SmartDashboard.putData("AutoPlan1", new AutoPlan1());
-        SmartDashboard.putData("AutoPlan2", new AutoPlan2());
-        SmartDashboard.putData("AutoPlan3", new AutoPlan3());
-
     }
 
     public Joystick getDriver() 

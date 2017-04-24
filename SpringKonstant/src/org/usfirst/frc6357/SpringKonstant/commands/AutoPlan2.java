@@ -10,6 +10,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
+
+// This is the auto for the middle with placing
+
+
 public class AutoPlan2 extends CommandGroup 
 {
 	
@@ -38,7 +42,7 @@ public class AutoPlan2 extends CommandGroup
        		          //Code to run here:
        		          try     		          
        		          {
-        		       	  Robot.driveBaseSystem.DriveStraight(73.800/12);
+        		       	  Robot.driveBaseSystem.DriveStraight(90/12);
         		       	  Thread.sleep(3000);
         		       	  Robot.gearDeploymentSystem.pushGear();
         		       	  Thread.sleep(500);
