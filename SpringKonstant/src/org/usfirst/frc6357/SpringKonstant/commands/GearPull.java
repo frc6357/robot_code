@@ -1,9 +1,10 @@
 package org.usfirst.frc6357.SpringKonstant.commands;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc6357.SpringKonstant.Robot;
 
-public class GearPush extends Command 
+public class GearPull extends Command 
 {
 	
 	private boolean isDone = false;
@@ -17,7 +18,7 @@ public class GearPush extends Command
     protected void execute() 
     {
     	isDone = false;
-    	Robot.gearDeploymentSystem.pushGear();
+    	Robot.gearDeploymentSystem.resetPush();
     	isDone = true;
     }
     

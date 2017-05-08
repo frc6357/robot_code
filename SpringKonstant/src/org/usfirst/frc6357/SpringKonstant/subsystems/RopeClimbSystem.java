@@ -34,14 +34,14 @@ public class RopeClimbSystem extends Subsystem
 
 	public void winchUp()
 	{
-		ropeMotor1.set(.5);
-		ropeMotor2.set(.5);
+		ropeMotor1.set(.7);
+		ropeMotor2.set(.7);
 	}
 	
 	public void winchDown()
 	{
-		ropeMotor1.set(-.5);
-		ropeMotor2.set(-.5);
+		ropeMotor1.set(-.7);
+		ropeMotor2.set(-.7);
 	}
 	
 	public void stopMotors()

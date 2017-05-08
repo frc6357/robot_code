@@ -20,6 +20,7 @@ import org.usfirst.frc6357.SpringKonstant.subsystems.GearDeploymentSystem;
 import org.usfirst.frc6357.SpringKonstant.subsystems.RopeClimbSystem;
 //import org.usfirst.frc6357.SpringKonstant.subsystems.GearDeploymentSystem.gearState;
 
+import com.analog.adis16448.frc.ADIS16448_IMU;
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.Compressor;
@@ -30,6 +31,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -44,9 +46,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot 
 {
 
-    Command autonomousCommand;
-    SendableChooser<Command> autoChooser;
+    CommandGroup autonomousCommand;
+    SendableChooser<CommandGroup> autoChooser;
 
+    // OI
     public static OI oi;
     
     // Subsystems
@@ -72,21 +75,12 @@ public class Robot extends IterativeRobot
     public static SpeedController ropeMotor1;
     public static SpeedController ropeMotor2;
     public static Compressor compressor1;
-    //encoders
+   
     public static Encoder encoderLeft;
 	public static Encoder encoderRight;
-	//private double wait;
-	//gyroscope
-	//public static ADIS16448_IMU myIMU;
-	
-	//Auto
-	public static AutonomousMatchController auto;
-	
-	//private double leftJoystickOffset;
-	//private double rightJoystickOffset;
 
-	private final Timer myTimer = new Timer();
-    
+	public static ADIS16448_IMU imu; //This is the Gyroscope
+	
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -96,19 +90,21 @@ public class Robot extends IterativeRobot
     	// Actuators
     	compressor1 = new Compressor(1);
     	
-        gearDoubleSolenoidRight = new DoubleSolenoid(1, 6, 4);					
-        
+        gearDoubleSolenoidRight = new DoubleSolenoid(1, 6, 4);				
         gearDoubleSolenoidLeft = new DoubleSolenoid(1, 1, 0);									
-        
         gearDoubleSolenoidPush = new DoubleSolenoid(1, 3, 2);
-       
         
-        
+        //Gyroscope
+        imu = new ADIS16448_IMU(); // **** NEEDS PORT NUMBER
+        imu.reset();
+
         //TALON SRX ASSIGNMENTS:
         // LEFT 10,11,15
         // RIGHT 12,14,16
         // THE TALONS ARE SET UP TO USE FOLLOWING, so we only need the front left and front right
         
+        
+        //LEFT DRIVE TALONS
         baseFrontLeft = new CANTalon(10);
         baseCenterLeft = new CANTalon(11);
         ((CANTalon)baseCenterLeft).changeControlMode(CANTalon.TalonControlMode.Follower);
@@ -117,6 +113,7 @@ public class Robot extends IterativeRobot
         ((CANTalon)baseBackLeft).changeControlMode(CANTalon.TalonControlMode.Follower);
         ((CANTalon)baseBackLeft).set(((CANTalon)baseFrontLeft).getDeviceID());
         
+        //RIGHT DRIVE TALONS
         baseFrontRight = new CANTalon(12);
         baseFrontRight.setInverted(true);
         baseCenterRight = new CANTalon(14);
@@ -126,11 +123,10 @@ public class Robot extends IterativeRobot
         ((CANTalon)baseBackRight).changeControlMode(CANTalon.TalonControlMode.Follower);
         ((CANTalon)baseBackRight).set(((CANTalon)baseFrontRight).getDeviceID());
         
+        //WENCH TALONS
         ropeMotor1 = new CANTalon(20);
-        
         ropeMotor2 = new CANTalon(21);
         
-    	
         //Encoders 
         encoderLeft = new Encoder(2, 3);
         encoderRight = new Encoder(0, 1);
@@ -146,10 +142,6 @@ public class Robot extends IterativeRobot
     	ropeClimbSystem = new RopeClimbSystem(ropeMotor1, ropeMotor2);
     	driveBaseSystem = new DriveBaseSystem(baseFrontLeft, baseFrontRight, encoderLeft, encoderRight);
         
-    	//Auto
-        //auto = new AutonomousMatchController(encoderRight, encoderLeft, driveBaseSystem);
-
-    	
         // OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be
         // constructed yet. Thus, their requires() statements may grab null
@@ -157,10 +149,6 @@ public class Robot extends IterativeRobot
         oi = new OI();
 
         // instantiate the command used for the autonomous period
-       
-        //GyroScope 
-        //myIMU = new ADIS16448_IMU();
-        //myIMU.reset();
         
     }
 
@@ -170,35 +158,29 @@ public class Robot extends IterativeRobot
      */
     public void disabledInit()
     {
-
+    	// Code can be put here to do things before match ends
     }
 
     public void disabledPeriodic() 
     {
         Scheduler.getInstance().run();
-        SmartDashboard.putNumber("rvel", encoderRight.getRate());
-        SmartDashboard.putNumber("lvel", encoderLeft.getRate());
-        SmartDashboard.putNumber("rpos", encoderRight.getDistance());
-        SmartDashboard.putNumber("lpos", encoderLeft.getDistance());
-        SmartDashboard.putNumber("l_setpt", driveBaseSystem.GetLeftSpeedSetpoint());
-        SmartDashboard.putNumber("r_setpt", driveBaseSystem.GetRightSpeedSetpoint());
-        //SmartDashboard.putString("git revision", GitRevisionEvaluator.GetGitRevision());
-        //SmartDashboard.putData("IMU", myIMU);
         driveBaseSystem.setLeftMotorSpeedPercent(0.0f);
         driveBaseSystem.setRightMotorSpeedPercent(0.0f);
         
-        autoChooser = new SendableChooser<Command>();
-        autoChooser.addDefault("Middle", new AutoPlan1());
-        autoChooser.addObject("Left", new AutoPlan2());
-        autoChooser.addObject("Right", new AutoPlan3());
-        SmartDashboard.putData("Auto Plan Selector", autoChooser);       
+        // Auto chooser for the smart dashboard
+        autoChooser = new SendableChooser<CommandGroup>();
+        autoChooser.addDefault("Middle NO Place", new AutoPlan1());
+        autoChooser.addObject("Left Side", new AutoPlan3());
+        autoChooser.addObject("Middle Place Gear", new AutoPlan2());
+        SmartDashboard.putData("Auto Plan Selector", autoChooser); 
+             
     }
 
     public void autonomousInit() 
     {
-    	//autonomousCommand = (Command) autoChooser.getSelected();
+    	autonomousCommand = (CommandGroup) autoChooser.getSelected();
         // schedule the autonomous command (example)
-        //if (autonomousCommand != null) autonomousCommand.start();
+        
         //gyro1.calibrate();
     	encoderRight.reset();
     	encoderLeft.reset();
@@ -207,7 +189,9 @@ public class Robot extends IterativeRobot
     	
     	gearDeploymentSystem.resetSolenoids();
     	
-    	myTimer.start();
+    	SmartDashboard.putData("IMU", imu);
+    	
+    	if (autonomousCommand != null) autonomousCommand.start();
     	
     }
 
@@ -217,16 +201,8 @@ public class Robot extends IterativeRobot
     public void autonomousPeriodic() 
     {
         Scheduler.getInstance().run();
-        driveBaseSystem.DriveStraight(10);
+        //driveBaseSystem.DriveStraight(6.5);
         
-        SmartDashboard.putNumber("rvel", encoderRight.getRate());
-        SmartDashboard.putNumber("lvel", encoderLeft.getRate());
-        SmartDashboard.putNumber("rpos", encoderRight.getDistance());
-        SmartDashboard.putNumber("lpos", encoderLeft.getDistance());
-        SmartDashboard.putNumber("l_setpt", driveBaseSystem.GetLeftSpeedSetpoint());
-        SmartDashboard.putNumber("r_setpt", driveBaseSystem.GetRightSpeedSetpoint());
-        SmartDashboard.putNumber("l_drive", baseFrontLeft.get());
-        SmartDashboard.putNumber("r_drive", baseFrontRight.get());
     }
 
     public void teleopInit() 
@@ -237,13 +213,11 @@ public class Robot extends IterativeRobot
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
         
+        driveBaseSystem.Disable();
         driver = oi.getDriver();
         operator = oi.getOperator();
         compressor1.start();
         compressor1.enabled();
-        driveBaseSystem.SetVelocityMode();
-        driveBaseSystem.setLeftMotorSpeedPercent(0.0f);
-        driveBaseSystem.setRightMotorSpeedPercent(0.0f);
         
         gearDeploymentSystem.resetSolenoids();
     }
@@ -258,9 +232,7 @@ public class Robot extends IterativeRobot
         double leftDrive = -1 * driver.getRawAxis(1);
         double rightDrive = -1 * driver.getRawAxis(5);
         
-        //compressor1.start();
-        
-        if(Math.abs(leftDrive) < 0.05)
+        if(Math.abs(leftDrive) < 0.05) // used to correct robot moving when its not supposed to
         {
         	leftDrive = 0.0f;
         }
@@ -268,20 +240,9 @@ public class Robot extends IterativeRobot
         {
         	rightDrive = 0.0f;
         }
-        
-        
-        driveBaseSystem.setLeftMotorSpeedPercent(leftDrive);
-        driveBaseSystem.setRightMotorSpeedPercent(rightDrive);
-        
-        SmartDashboard.putNumber("rvel", encoderRight.getRate());
-        SmartDashboard.putNumber("lvel", encoderLeft.getRate());
-        SmartDashboard.putNumber("rpos", encoderRight.getDistance());
-        SmartDashboard.putNumber("lpos", encoderLeft.getDistance());
-        
-        SmartDashboard.putNumber("l_setpt", driveBaseSystem.GetLeftSpeedSetpoint());
-        SmartDashboard.putNumber("r_setpt", driveBaseSystem.GetRightSpeedSetpoint());
-        SmartDashboard.putNumber("l_drive", baseFrontLeft.get());
-        SmartDashboard.putNumber("r_drive", baseFrontRight.get());
+       
+        driveBaseSystem.setLeftSpeed(leftDrive);
+        driveBaseSystem.setRightSpeed(rightDrive);
     
     }
 
