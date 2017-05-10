@@ -1,6 +1,6 @@
 sudo: false
 language: java
-install: git clone https://github.com/perSEVERE-5962/wpilib.git ~/wpilib
+install: git clone https://github.com/frc6357/wpilib.git ~/wpilib
 jdk: oraclejdk8
 ant: 1.10
 dist: trusty
