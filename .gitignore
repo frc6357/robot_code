@@ -13,3 +13,7 @@ hs_err_pid*
 
 # the entire bin directory
 /SpringKonstant/bin/*
+
+# the entire .metadata
+.metadata
+.metadata/*
