@@ -1,0 +1,4 @@
+﻿language: java
+script: ant test -f ./SpringKonstant/build.xml
+jdk:
+  - oraclejdk8
