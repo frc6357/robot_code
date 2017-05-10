@@ -80,6 +80,8 @@ public class OI
         stopSlowDrive.whenPressed(new StopSlowDrive());
         slowDrive.whenPressed(new SlowDrive());
 
+<<<<<<< HEAD
+=======
         //Smart Dashboard 
         SmartDashboard.putData("Gear Slide Down", new ForwardGearDoubleSolenoid());
         SmartDashboard.putData("Gear Slide Up", new ReverseGearDoubleSolenoid());
@@ -91,6 +93,7 @@ public class OI
         SmartDashboard.putData("AutoPlan2", new AutoPlan2());
         SmartDashboard.putData("AutoPlan3", new AutoPlan3());
 
+>>>>>>> 0a78ffa84d3cbca7743e8b3c6725d0d15e090fb3
     }
 
     public Joystick getDriver() 

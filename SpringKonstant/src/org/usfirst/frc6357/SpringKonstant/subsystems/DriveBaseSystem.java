@@ -144,6 +144,10 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
     	return true;
     }
     */
+    
+    
+    
+    // Controls motor speed \\
     public void setLeftSpeed(double speed)
     {
     	if(isInSlowMode)
@@ -166,6 +170,8 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
     		rightSpeedController.set(speed);
     	}
     }
+    ///   \\\\
+    
     
     public double getTurnDistance(double angle)								//Turns angle to the distance around the circle
     {
@@ -174,8 +180,9 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
     
     public void rotateRobot(double angle)									//Assign speed to the motors to execute the turn
     {
+    	
     	leftSide.SetDistanceTarget(getTurnDistance(angle));
-    	rightSide.SetDistanceTarget(-1 * getTurnDistance(angle));
+    	rightSide.SetDistanceTarget(-1.0 * getTurnDistance(angle));
     }
     
     public void AdjustAngle(double angle)									//Makes an adjustment in robot course in case of change in course

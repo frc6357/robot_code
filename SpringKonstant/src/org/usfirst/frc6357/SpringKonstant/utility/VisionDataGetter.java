@@ -1,4 +1,4 @@
-/*package org.usfirst.frc6357.SpringKonstant.utility;
+package org.usfirst.frc6357.SpringKonstant.utility;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,17 +9,19 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 
-public class VisionDataGetter {
+public class VisionDataGetter 
+{
 
 	private static final String url = "http://10.63.57.25/";
 	
-	static String GetVisionData(){
+	static String GetVisionData()
+	{
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpGet request = new HttpGet(url);
 		HttpResponse response;
-		try {
+		try 
+		{
 			response = client.execute(request);
-		
 		
 			// TODO: May want to change this to use the JSON parser
 			BufferedReader rd = new BufferedReader(
@@ -27,14 +29,17 @@ public class VisionDataGetter {
 
 			StringBuffer result = new StringBuffer();
 			String line = "";
-			while ((line = rd.readLine()) != null) {
+			while ((line = rd.readLine()) != null) 
+			{
 				result.append(line);
 			}	
 			return result.toString();
-		} catch (IOException e) {
+		} 
+		catch (IOException e) 
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return "None";
 	}
-}*/
+}
