@@ -28,20 +28,9 @@
 	</exec>
 	<echo>$${git.revision}=${git.revision}</echo>
 	
-
-	<property environment="env"/>
-	
-	<condition property="wpilib.root" value="lib" else="${user.home}">
-		<isset property="env.TRAVIS" />
-	</condition>
-
 	<property file="${wpilib.root}/wpilib/wpilib.properties"/>
 	<property file="build.properties"/>
 	<property file="${wpilib.root}/wpilib/java/${version}/ant/build.properties"/>
-
-	<condition property="wpilib.ant.dir" value="lib/wpilib/java/current/ant/" else="${user.home}/wpilib/java/${version}/ant/">
-		<isset property="env.TRAVIS" />
-	</condition>
 	
 	<import file="${wpilib.ant.dir}/build.xml"/>
 	
