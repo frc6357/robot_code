@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="FRC 6357 Unit Tests" default="test">
+
+	<import file="./SpringKonstant/build.xml"/>
+
+</project>
