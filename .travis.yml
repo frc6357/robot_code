@@ -1,4 +1,7 @@
-﻿language: java
-script: ant test -f ./SpringKonstant/build.xml
-jdk:
-  - oraclejdk8
+sudo: false
+language: java
+install: git clone https://github.com/frc6357/wpilib.git ~/wpilib
+jdk: oraclejdk8
+ant: 1.10
+dist: trusty
+script: ant -f ./SpringKonstant/build.xml test

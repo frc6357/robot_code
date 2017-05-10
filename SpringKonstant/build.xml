@@ -22,25 +22,17 @@
 	<!-- Any other property in build.properties can also be overridden. -->
 
 	<!-- Elements of this build file are from: https://github.com/246overclocked/frc-java-junit-template/blob/master/build.xml -->
-
+	<echo>Ant Version: ${ant.version}</echo>
 	<exec executable="git" outputproperty="git.revision">
 		<arg value="describe" />
 	</exec>
 	<echo>$${git.revision}=${git.revision}</echo>
-
-	<property environment="env"/>
 	
-	<condition property="wpilib.root" value="lib" else="${user.home}">
-		<isset property="env.TRAVIS" />
-	</condition>
-
-	<property file="${wpilib.root}/wpilib/wpilib.properties"/>
+	<property file="${user.home}/wpilib/wpilib.properties"/>
 	<property file="build.properties"/>
-	<property file="${wpilib.root}/wpilib/java/${version}/ant/build.properties"/>
-
-	<condition property="wpilib.ant.dir" value="lib/wpilib/java/current/ant/" else="${user.home}/wpilib/java/${version}/ant/">
-		<isset property="env.TRAVIS" />
-	</condition>
+	<property file="${user.home}/wpilib/java/${version}/ant/build.properties"/>
+	
+	<import file="${user.home}/wpilib/java/${version}/ant/build.xml"/>
 	
 	<property name="test.dir" value="test" />
 
@@ -65,6 +57,6 @@
 		</junit>
 	</target>
 
-	<import file="${wpilib.ant.dir}/build.xml"/>
+	
 
 </project>
