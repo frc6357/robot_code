@@ -2,3 +2,4 @@ sudo: false
 language: java
 jdk: oraclejdk8
 ant: 1.9
+dist: trusty
