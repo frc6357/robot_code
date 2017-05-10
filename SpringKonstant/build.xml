@@ -22,11 +22,12 @@
 	<!-- Any other property in build.properties can also be overridden. -->
 
 	<!-- Elements of this build file are from: https://github.com/246overclocked/frc-java-junit-template/blob/master/build.xml -->
-
+	<echo>Ant Version: ${ant.version}</echo>
 	<exec executable="git" outputproperty="git.revision">
 		<arg value="describe" />
 	</exec>
 	<echo>$${git.revision}=${git.revision}</echo>
+	
 
 	<property environment="env"/>
 	
