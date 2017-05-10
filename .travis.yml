@@ -4,4 +4,4 @@ install: git clone https://github.com/perSEVERE-5962/wpilib.git ~/wpilib
 jdk: oraclejdk8
 ant: 1.9
 dist: xenial
-script ant -f ./SpringKonstant/build.xml test
+script: ant -f ./SpringKonstant/build.xml test
