@@ -31,6 +31,8 @@
 	<property environment="env"/>
 	<condition property="wpilib.root" value="lib" else="${user.home}">
 		<isset property="env.TRAVIS" />
+	<condition property="wpilib.ant.dir" value="${wpilib.root}/wpilib/java/${version}/ant/" else="${wpilib.ant.dir}">
+		<isset property="env.TRAVIS" />
 	</condition>
 
 	<property file="${wpilib.root}/wpilib/wpilib.properties"/>
