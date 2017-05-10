@@ -150,12 +150,6 @@ public class Robot extends IterativeRobot
     	ropeClimbSystem = new RopeClimbSystem(ropeMotor1, ropeMotor2);
     	driveBaseSystem = new DriveBaseSystem(baseFrontLeft, baseFrontRight, encoderLeft, encoderRight);
         
-<<<<<<< HEAD
-    	//Auto
-        //auto = new AutonomousMatchController(encoderRight, encoderLeft, driveBaseSystem);
-    	
-=======
->>>>>>> 0a78ffa84d3cbca7743e8b3c6725d0d15e090fb3
         // OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be
         // constructed yet. Thus, their requires() statements may grab null
