@@ -1,31 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry exported="true" kind="var" path="wpilib" sourcepath="wpilib.sources"/>
-	<classpathentry exported="true" kind="var" path="networktables" sourcepath="networktables.sources"/>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry exported="true" kind="var" path="opencv" sourcepath="opencv.sources"/>
-	<classpathentry exported="true" kind="var" path="cscore" sourcepath="cscore.sources"/>
-	<classpathentry kind="lib" path="C:/Users/User/Desktop/github-code/robot_code/SpringKonstant/gson-2.8.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/User/Desktop/github-code/robot_code/SpringKonstant/gson-2.8.0-sources.jar"/>
-<<<<<<< HEAD
-	<classpathentry kind="var" path="USERLIBS_DIR/CTRLib.jar"/>
-	<classpathentry kind="var" path="USERLIBS_DIR/ADIS16448.jar"/>
+	<classpathentry kind="var" path="wpilib" sourcepath="wpilib.sources"/>
+	<classpathentry kind="var" path="networktables" sourcepath="networktables.sources"/>
+	<classpathentry kind="var" path="opencv" sourcepath="opencv.sources"/>
+	<classpathentry kind="var" path="cscore" sourcepath="cscore.sources"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/._gson-2.8.0.jar"/>
-	<classpathentry kind="var" path="USERLIBS_DIR/gson-2.8.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/igord/wpilib/user/java/lib/commons-codec-1.9.jar"/>
-	<classpathentry kind="lib" path="C:/Users/igord/wpilib/user/java/lib/commons-logging-1.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/igord/wpilib/user/java/lib/fluent-hc-4.5.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/igord/wpilib/user/java/lib/httpclient-4.5.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/igord/wpilib/user/java/lib/httpclient-cache-4.5.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/igord/wpilib/user/java/lib/httpclient-win-4.5.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/igord/wpilib/user/java/lib/httpcore-4.4.6.jar"/>
-	<classpathentry kind="lib" path="C:/Users/igord/wpilib/user/java/lib/httpmime-4.5.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/igord/wpilib/user/java/lib/jna-4.1.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/igord/wpilib/user/java/lib/jna-platform-4.1.0.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/ADIS16448.jar"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/commons-codec-1.9.jar"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/commons-logging-1.2.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/CTRLib.jar"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/fluent-hc-4.5.3.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/gson-2.8.0.jar"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/httpclient-4.5.3.jar"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/httpclient-cache-4.5.3.jar"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/httpclient-win-4.5.3.jar"/>
@@ -33,9 +18,5 @@
 	<classpathentry kind="var" path="USERLIBS_DIR/httpmime-4.5.3.jar"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/jna-4.1.0.jar"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/jna-platform-4.1.0.jar"/>
-=======
-	<classpathentry exported="true" kind="var" path="USERLIBS_DIR/CTRLib.jar"/>
-	<classpathentry exported="true" kind="var" path="USERLIBS_DIR/ADIS16448.jar"/>
->>>>>>> 0a78ffa84d3cbca7743e8b3c6725d0d15e090fb3
 	<classpathentry kind="output" path="bin"/>
 </classpath>
