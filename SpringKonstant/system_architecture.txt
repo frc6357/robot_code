@@ -2,3 +2,9 @@ Robot Software - System Architecture
 ------------------------------------
 
 Lots of useful information about the overall software architecture for the robot...
+
+Notes on porting from 2017 to 2018 WPILib
+-----------------------------------------
+
+The 2018 version of WPILib removes the CANTalon class and replaces it with WPI_TalonSRX which now comes from a new Phoenix Framework library supplied by CTRE. Details can be found at https://github.com/CrossTheRoadElec/Phoenix-Documentation#phoenix-framework-for-non-windows-machines. You will also find a link to the migration guide explaining changes between the CANTalon and WPI_TalonSRX classes.
+
