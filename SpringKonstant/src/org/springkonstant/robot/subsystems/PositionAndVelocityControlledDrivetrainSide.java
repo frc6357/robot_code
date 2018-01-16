@@ -26,9 +26,9 @@ public class PositionAndVelocityControlledDrivetrainSide
 		myVelocityControl = new VelocityControlledDrivetrainSide(mySpeedController, new EncoderSpeedForPID(inEncoder));
 		
 		myPidController = new PIDController(Kp, Ki, Kd, 
-				new EncoderPositionForPID(myEncoder), 
-				myVelocityControl
-				);
+				                            new EncoderPositionForPID(myEncoder), 
+				                            myVelocityControl
+				                           );
 		myPidController.setOutputRange(-5.0, 5.0);
 		myPidController.disable();
 		

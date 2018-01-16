@@ -23,7 +23,8 @@ import org.springkonstant.robot.subsystems.GearDeploymentSystem;
 import org.springkonstant.robot.subsystems.RopeClimbSystem;
 
 import com.analog.adis16448.frc.ADIS16448_IMU;
-import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.*;
 
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
@@ -112,27 +113,23 @@ public class Robot extends IterativeRobot
         
         
         //LEFT DRIVE TALONS
-        baseFrontLeft = new CANTalon(10);
-        baseCenterLeft = new CANTalon(11);
-        ((CANTalon)baseCenterLeft).changeControlMode(CANTalon.TalonControlMode.Follower);
-        ((CANTalon)baseCenterLeft).set(((CANTalon)baseFrontLeft).getDeviceID());
-        baseBackLeft = new CANTalon(15);
-        ((CANTalon)baseBackLeft).changeControlMode(CANTalon.TalonControlMode.Follower);
-        ((CANTalon)baseBackLeft).set(((CANTalon)baseFrontLeft).getDeviceID());
+        baseFrontLeft = new WPI_TalonSRX(10);
+        baseCenterLeft = new WPI_TalonSRX(11);
+        ((WPI_TalonSRX)baseCenterLeft).set(ControlMode.Follower, ((WPI_TalonSRX)baseFrontLeft).getDeviceID());
+        baseBackLeft = new WPI_TalonSRX(15);
+        ((WPI_TalonSRX)baseBackLeft).set(ControlMode.Follower, ((WPI_TalonSRX)baseFrontLeft).getDeviceID());
         
         //RIGHT DRIVE TALONS
-        baseFrontRight = new CANTalon(12);
+        baseFrontRight = new WPI_TalonSRX(12);
         baseFrontRight.setInverted(true);
-        baseCenterRight = new CANTalon(14);
-        ((CANTalon)baseCenterRight).changeControlMode(CANTalon.TalonControlMode.Follower);
-        ((CANTalon)baseCenterRight).set(((CANTalon)baseFrontRight).getDeviceID());
-        baseBackRight = new CANTalon(16);
-        ((CANTalon)baseBackRight).changeControlMode(CANTalon.TalonControlMode.Follower);
-        ((CANTalon)baseBackRight).set(((CANTalon)baseFrontRight).getDeviceID());
+        baseCenterRight = new WPI_TalonSRX(14);
+        ((WPI_TalonSRX)baseCenterRight).set(ControlMode.Follower, ((WPI_TalonSRX)baseFrontRight).getDeviceID());
+        baseBackRight = new WPI_TalonSRX(16);
+        ((WPI_TalonSRX)baseBackRight).set(ControlMode.Follower, ((WPI_TalonSRX)baseFrontRight).getDeviceID());
         
         //WENCH TALONS
-        ropeMotor1 = new CANTalon(20);
-        ropeMotor2 = new CANTalon(21);
+        ropeMotor1 = new WPI_TalonSRX(20);
+        ropeMotor2 = new WPI_TalonSRX(21);
         
         //Encoders 
         encoderLeft = new Encoder(2, 3);

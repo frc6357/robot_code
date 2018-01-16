@@ -53,10 +53,10 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
     	rightSpeedController = baseFrontRight;
     	leftEncoder = baseLeftEncoder;
     	rightEncoder = baseRightEncoder;
-        leftSide = new PositionAndVelocityControlledDrivetrainSide(leftSpeedController,leftEncoder);
-        rightSide = new PositionAndVelocityControlledDrivetrainSide(rightSpeedController, rightEncoder);
-        //leftSide = new VelocityControlledDrivetrainSide(leftSpeedController, new EncoderSpeedForPID(leftEncoder));
-        //rightSide = new VelocityControlledDrivetrainSide(rightSpeedController, new EncoderSpeedForPID(rightEncoder));
+    leftSide = new PositionAndVelocityControlledDrivetrainSide(leftSpeedController,leftEncoder);
+    rightSide = new PositionAndVelocityControlledDrivetrainSide(rightSpeedController, rightEncoder);
+    //leftSide = new VelocityControlledDrivetrainSide(leftSpeedController, new EncoderSpeedForPID(leftEncoder));
+    //rightSide = new VelocityControlledDrivetrainSide(rightSpeedController, new EncoderSpeedForPID(rightEncoder));
     	//isInVelocityMode = true;
     }
  
