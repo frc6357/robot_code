@@ -9,20 +9,20 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class StopSlowDrive extends Command {
 
-    public StopSlowDrive() 
+    public StopSlowDrive()
     {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.driveBaseSystem);
     }
 
     // Called just before this Command runs the first time
-    protected void initialize() 
+    protected void initialize()
     {
-    	Robot.driveBaseSystem.exitSlowMode();
+        Robot.driveBaseSystem.exitSlowMode();
     }
 
     // Called repeatedly when this Command is scheduled to run
-    protected void execute() 
+    protected void execute()
     {
     }
 

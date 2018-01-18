@@ -8,17 +8,15 @@
 // update. Deleting the comments indicating the section will prevent
 // it from being updated in the future.
 
-
 package org.springkonstant.robot.subsystems;
 
-import org.springkonstant.robot.Robot;
+//import org.springkonstant.robot.Robot;
 
-import com.analog.adis16448.frc.ADIS16448_IMU;
+//import com.analog.adis16448.frc.ADIS16448_IMU;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
-
 
 /**
  *
@@ -27,218 +25,174 @@ public class DriveBaseSystem extends Subsystem // MARK: BreakPoint
 {
     private final PositionAndVelocityControlledDrivetrainSide leftSide;
     private final PositionAndVelocityControlledDrivetrainSide rightSide;
-	//private final VelocityControlledDrivetrainSide leftSide;
-	//private final VelocityControlledDrivetrainSide rightSide;
-    //private final ADIS16448_IMU myIMU;
-    private final double Kp_angleChange = 0.1;
+    // private final VelocityControlledDrivetrainSide leftSide;
+    // private final VelocityControlledDrivetrainSide rightSide;
+    // private final ADIS16448_IMU myIMU;
+    // private final double Kp_angleChange = 0.1;
     private final double slowModeRate = 0.5;
-    
+
     private final SpeedController leftSpeedController;
     private final SpeedController rightSpeedController;
-    
+
     private final Encoder leftEncoder;
     private final Encoder rightEncoder;
 
     private boolean isInVelocityMode;
     private boolean isInSlowMode;
-    
+
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-    
-    public DriveBaseSystem(SpeedController baseFrontLeft, SpeedController baseFrontRight, 
-    					   Encoder baseLeftEncoder, Encoder baseRightEncoder)
-    {
-    	super();
-    	leftSpeedController = baseFrontLeft;
-    	rightSpeedController = baseFrontRight;
-    	leftEncoder = baseLeftEncoder;
-    	rightEncoder = baseRightEncoder;
-        leftSide = new PositionAndVelocityControlledDrivetrainSide(leftSpeedController,leftEncoder);
+
+    public DriveBaseSystem(SpeedController baseFrontLeft, SpeedController baseFrontRight, Encoder baseLeftEncoder,
+            Encoder baseRightEncoder) {
+        super();
+        leftSpeedController = baseFrontLeft;
+        rightSpeedController = baseFrontRight;
+        leftEncoder = baseLeftEncoder;
+        rightEncoder = baseRightEncoder;
+        leftSide = new PositionAndVelocityControlledDrivetrainSide(leftSpeedController, leftEncoder);
         rightSide = new PositionAndVelocityControlledDrivetrainSide(rightSpeedController, rightEncoder);
-        //leftSide = new VelocityControlledDrivetrainSide(leftSpeedController, new EncoderSpeedForPID(leftEncoder));
-        //rightSide = new VelocityControlledDrivetrainSide(rightSpeedController, new EncoderSpeedForPID(rightEncoder));
-    	//isInVelocityMode = true;
-    }
- 
-    public void Enable()
-    {
-    	leftSide.Enable();
-    	rightSide.Enable();
-    }
-    
-    public void Disable()
-    {
-    	leftSide.Disable();
-    	rightSide.Disable();
+        // leftSide = new VelocityControlledDrivetrainSide(leftSpeedController, new
+        // EncoderSpeedForPID(leftEncoder));
+        // rightSide = new VelocityControlledDrivetrainSide(rightSpeedController, new
+        // EncoderSpeedForPID(rightEncoder));
+        // isInVelocityMode = true;
     }
 
-
-    public void SetPositionMode()
-    {
-    	leftSide.SetPositionMode();
-    	rightSide.SetPositionMode();
-    	leftEncoder.reset();
-    	rightEncoder.reset();
-    	isInVelocityMode = false;
+    public void Enable() {
+        leftSide.Enable();
+        rightSide.Enable();
     }
+
+    public void Disable() {
+        leftSide.Disable();
+        rightSide.Disable();
+    }
+
+    public void SetPositionMode() {
+        leftSide.SetPositionMode();
+        rightSide.SetPositionMode();
+        leftEncoder.reset();
+        rightEncoder.reset();
+        isInVelocityMode = false;
+    }
+
     /*
-    public void SetVelocityMode()
-    {
-    	leftSide.SetVelocityMode();
-    	rightSide.SetVelocityMode();
-    	leftEncoder.reset();
-    	rightEncoder.reset();
-    	isInVelocityMode = true;
+     * public void SetVelocityMode() { leftSide.SetVelocityMode();
+     * rightSide.SetVelocityMode(); leftEncoder.reset(); rightEncoder.reset();
+     * isInVelocityMode = true; }
+     *
+     * public boolean IsInVelocityMode() { return isInVelocityMode; }
+     */
+    public boolean isInSlowMode() {
+        return isInSlowMode;
     }
-    
-    public boolean IsInVelocityMode()
-    {
-    	return isInVelocityMode;
-    }
-    */
-    public boolean isInSlowMode()
-    {
-    	return isInSlowMode;
-    }
-    
-    public void initDefaultCommand() 
-    {
+
+    public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());
     }
-    
-    public boolean setLeftMotorSpeedPercent(double percent)
-    {
-    	if(isInSlowMode)
-    	{
-    		leftSpeedController.set(slowModeRate*percent);
-    	}
-    	else{
-    		leftSpeedController.set(percent);
-    	}
-    	return true;
+
+    public boolean setLeftMotorSpeedPercent(double percent) {
+        if (isInSlowMode) {
+            leftSpeedController.set(slowModeRate * percent);
+        } else {
+            leftSpeedController.set(percent);
+        }
+        return true;
     }
-    
-    public boolean setRightMotorSpeedPercent(double percent)
-    {
-    	if(isInSlowMode)
-    	{
-    		rightSpeedController.set(slowModeRate*percent);
-    	}
-    	else
-    	{
-    		rightSpeedController.set(percent);
-    	}
-    	return true;
+
+    public boolean setRightMotorSpeedPercent(double percent) {
+        if (isInSlowMode) {
+            rightSpeedController.set(slowModeRate * percent);
+        } else {
+            rightSpeedController.set(percent);
+        }
+        return true;
     }
     /*
-    public boolean setLeftMotorSpeed(double speed)
-    {
-    	leftSide.SetSpeedAbsolute(speed);
-    	return true;
-    }
-    
-    public boolean setRightMotorSpeed(double speed)
-    {
-    	rightSide.SetSpeedAbsolute(speed);
-    	return true;
-    }
-    */
-    
-    
-    
-    // Controls motor speed \\
-    public void setLeftSpeed(double speed)
-    {
-    	if(isInSlowMode)
-    	{
-    		leftSpeedController.set(slowModeRate*speed);
-    	}
-    	else{
-    		leftSpeedController.set(speed);
-    	}
-    }
-    
-    public void setRightSpeed(double speed)
-    {
-    	if(isInSlowMode)
-    	{
-    		rightSpeedController.set(slowModeRate*speed);
-    	}
-    	else
-    	{
-    		rightSpeedController.set(speed);
-    	}
-    }
-    ///   \\\\
-    
-    
-    public double getTurnDistance(double angle)								//Turns angle to the distance around the circle
-    {
-    	return (2 * Math.PI *11.125 /(12))*(angle/360.0);
-    }
-    
-    public void rotateRobot(double angle)									//Assign speed to the motors to execute the turn
-    {
-    	
-    	leftSide.SetDistanceTarget(getTurnDistance(angle));
-    	rightSide.SetDistanceTarget(-1.0 * getTurnDistance(angle));
-    }
-    
-    public void AdjustAngle(double angle)									//Makes an adjustment in robot course in case of change in course
-    {
-    	//double angleError = angle - myIMU.getAngleY();
-    	
-    }
-    
-    public void DriveStraight(double distance)								//Drives straight during autonomous
-    {
-    	leftSide.SetDistanceTarget(distance);
-    	rightSide.SetDistanceTarget(distance);
-    }
-    
-    public double GetLeftSpeedSetpoint()
-    {
-    	return leftSide.GetSpeedSetpoint();
-    }
-    
-    public double GetRightSpeedSetpoint()
-    {
-    	return rightSide.GetSpeedSetpoint();
-    }
-    
-    public boolean isRobotStopped()
-    {
-    	return (Math.abs(leftSpeedController.get()) < 0.01 && Math.abs(rightSpeedController.get()) < 0.01);
-    }
-    
-    public void setSlowMode()
-    {
-    	isInSlowMode = true;
-    }
-    
-    public void exitSlowMode()
-    {
-    	isInSlowMode = false;
-    }
-    
-    public boolean isDriving()
-    {
-    	if(leftSpeedController.get() > 0.05)
-    		return true;
-    	else
-    		return false;
-    }
-    
-    public void Update()
-    {
-    	// If we are in velocity mode, we don't update here
-    	// But if we are not, then we are in position mode and need to correct for drift
-    	if(!isInVelocityMode)
-    	{
-    		
-    	}
-    }
-    
-}
+     * public boolean setLeftMotorSpeed(double speed) {
+     * leftSide.SetSpeedAbsolute(speed); return true; }
+     *
+     * public boolean setRightMotorSpeed(double speed) {
+     * rightSide.SetSpeedAbsolute(speed); return true; }
+     */
 
+    // Controls motor speed \\
+    public void setLeftSpeed(double speed) {
+        if (isInSlowMode) {
+            leftSpeedController.set(slowModeRate * speed);
+        } else {
+            leftSpeedController.set(speed);
+        }
+    }
+
+    public void setRightSpeed(double speed) {
+        if (isInSlowMode) {
+            rightSpeedController.set(slowModeRate * speed);
+        } else {
+            rightSpeedController.set(speed);
+        }
+    }
+    /// \\\\
+
+    public double getTurnDistance(double angle) // Turns angle to the distance around the circle
+    {
+        return (2 * Math.PI * 11.125 / (12)) * (angle / 360.0);
+    }
+
+    public void rotateRobot(double angle) // Assign speed to the motors to execute the turn
+    {
+
+        leftSide.SetDistanceTarget(getTurnDistance(angle));
+        rightSide.SetDistanceTarget(-1.0 * getTurnDistance(angle));
+    }
+
+    public void AdjustAngle(double angle) // Makes an adjustment in robot course in case of change in course
+    {
+        // double angleError = angle - myIMU.getAngleY();
+
+    }
+
+    public void DriveStraight(double distance) // Drives straight during autonomous
+    {
+        leftSide.SetDistanceTarget(distance);
+        rightSide.SetDistanceTarget(distance);
+    }
+
+    public double GetLeftSpeedSetpoint() {
+        return leftSide.GetSpeedSetpoint();
+    }
+
+    public double GetRightSpeedSetpoint() {
+        return rightSide.GetSpeedSetpoint();
+    }
+
+    public boolean isRobotStopped() {
+        return (Math.abs(leftSpeedController.get()) < 0.01 && Math.abs(rightSpeedController.get()) < 0.01);
+    }
+
+    public void setSlowMode() {
+        isInSlowMode = true;
+    }
+
+    public void exitSlowMode() {
+        isInSlowMode = false;
+    }
+
+    public boolean isDriving() {
+        if (leftSpeedController.get() > 0.05)
+            return true;
+        else
+            return false;
+    }
+
+    public void Update() {
+        // If we are in velocity mode, we don't update here
+        // But if we are not, then we are in position mode and need to correct for drift
+        if (!isInVelocityMode) {
+
+        }
+    }
+
+}

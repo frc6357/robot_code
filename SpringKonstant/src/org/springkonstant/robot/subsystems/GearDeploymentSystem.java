@@ -11,63 +11,58 @@
 
 package org.springkonstant.robot.subsystems;
 
-import org.springkonstant.robot.commands.*;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 
 /**
  *
  */
-public class GearDeploymentSystem extends Subsystem 
+public class GearDeploymentSystem extends Subsystem
 {
-	private final DoubleSolenoid gearDoubleSolenoidRight;
-	private final DoubleSolenoid gearDoubleSolenoidLeft;
-	private final DoubleSolenoid gearDoubleSolenoidPush;
-	
+    private final DoubleSolenoid gearDoubleSolenoidRight;
+    private final DoubleSolenoid gearDoubleSolenoidLeft;
+    private final DoubleSolenoid gearDoubleSolenoidPush;
+
     public GearDeploymentSystem(DoubleSolenoid gearDoubleSolenoidLeftin, DoubleSolenoid gearDoubleSolenoidRightin,
-    		DoubleSolenoid gearDoubleSolenoidPushin)
+            DoubleSolenoid gearDoubleSolenoidPushin)
     {
-    	gearDoubleSolenoidLeft = gearDoubleSolenoidLeftin;
-    	gearDoubleSolenoidRight = gearDoubleSolenoidRightin;
-    	gearDoubleSolenoidPush = gearDoubleSolenoidPushin;
-    	
+        gearDoubleSolenoidLeft = gearDoubleSolenoidLeftin;
+        gearDoubleSolenoidRight = gearDoubleSolenoidRightin;
+        gearDoubleSolenoidPush = gearDoubleSolenoidPushin;
+
     }
-	
+
     public void pushGear()
     {
-    	gearDoubleSolenoidPush.set(DoubleSolenoid.Value.kForward);
+        gearDoubleSolenoidPush.set(DoubleSolenoid.Value.kForward);
     }
-    
+
     public void resetPush()
     {
-    	gearDoubleSolenoidPush.set(DoubleSolenoid.Value.kReverse);
+        gearDoubleSolenoidPush.set(DoubleSolenoid.Value.kReverse);
     }
-    
+
     public void gearSlideDown()
     {
-    	gearDoubleSolenoidLeft.set(DoubleSolenoid.Value.kReverse);
-    	gearDoubleSolenoidRight.set(DoubleSolenoid.Value.kReverse);
+        gearDoubleSolenoidLeft.set(DoubleSolenoid.Value.kReverse);
+        gearDoubleSolenoidRight.set(DoubleSolenoid.Value.kReverse);
     }
-    
+
     public void gearSlideUp()
     {
-    	gearDoubleSolenoidLeft.set(DoubleSolenoid.Value.kForward);
-    	gearDoubleSolenoidRight.set(DoubleSolenoid.Value.kForward);
+        gearDoubleSolenoidLeft.set(DoubleSolenoid.Value.kForward);
+        gearDoubleSolenoidRight.set(DoubleSolenoid.Value.kForward);
     }
-    
+
     public void resetSolenoids()
     {
-    	resetPush();
-    	gearSlideDown();
+        resetPush();
+        gearSlideDown();
     }
-    
-    public void initDefaultCommand() 
-    {    	
+
+    public void initDefaultCommand()
+    {
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());
     }

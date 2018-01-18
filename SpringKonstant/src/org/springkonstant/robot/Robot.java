@@ -17,7 +17,6 @@ import org.springkonstant.robot.commands.AutoPlan1;
 import org.springkonstant.robot.commands.AutoPlan2;
 import org.springkonstant.robot.commands.AutoPlan3;
 import org.springkonstant.robot.commands.AutoPlan4;
-import org.springkonstant.robot.commands.GearPush;
 import org.springkonstant.robot.subsystems.DriveBaseSystem;
 import org.springkonstant.robot.subsystems.GearDeploymentSystem;
 import org.springkonstant.robot.subsystems.RopeClimbSystem;
@@ -35,13 +34,12 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -49,7 +47,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-public class Robot extends IterativeRobot 
+public class Robot extends IterativeRobot
 {
 
     CommandGroup autonomousCommand;
@@ -57,16 +55,16 @@ public class Robot extends IterativeRobot
 
     // OI
     public static OI oi;
-    
+
     // Subsystems
     public static GearDeploymentSystem gearDeploymentSystem;
     public static RopeClimbSystem ropeClimbSystem;
     public static DriveBaseSystem driveBaseSystem;
-    
+
     // Joysticks
     public static Joystick driver;
     public static Joystick operator;
-    
+
     // Actuators
     public static DoubleSolenoid gearDoubleSolenoidRight;
     public static DoubleSolenoid gearDoubleSolenoidLeft;
@@ -81,25 +79,25 @@ public class Robot extends IterativeRobot
     public static SpeedController ropeMotor1;
     public static SpeedController ropeMotor2;
     public static Compressor compressor1;
-   
-    public static Encoder encoderLeft;
-	public static Encoder encoderRight;
 
-	public static ADIS16448_IMU imu; //This is the Gyroscope
-	
+    public static Encoder encoderLeft;
+    public static Encoder encoderRight;
+
+    public static ADIS16448_IMU imu; //This is the Gyroscope
+
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
-    public void robotInit() 
-    {	
-    	// Actuators
-    	compressor1 = new Compressor(1);
-    	
-        gearDoubleSolenoidRight = new DoubleSolenoid(1, 6, 4);				
-        gearDoubleSolenoidLeft = new DoubleSolenoid(1, 1, 0);									
+    public void robotInit()
+    {
+        // Actuators
+        compressor1 = new Compressor(1);
+
+        gearDoubleSolenoidRight = new DoubleSolenoid(1, 6, 4);
+        gearDoubleSolenoidLeft = new DoubleSolenoid(1, 1, 0);
         gearDoubleSolenoidPush = new DoubleSolenoid(1, 3, 2);
-        
+
         //Gyroscope
         imu = new ADIS16448_IMU(); // **** NEEDS PORT NUMBER
         imu.reset();
@@ -109,8 +107,8 @@ public class Robot extends IterativeRobot
         // LEFT 10,11,15
         // RIGHT 12,14,16
         // THE TALONS ARE SET UP TO USE FOLLOWING, so we only need the front left and front right
-        
-        
+
+
         //LEFT DRIVE TALONS
         baseFrontLeft = new CANTalon(10);
         baseCenterLeft = new CANTalon(11);
@@ -119,7 +117,7 @@ public class Robot extends IterativeRobot
         baseBackLeft = new CANTalon(15);
         ((CANTalon)baseBackLeft).changeControlMode(CANTalon.TalonControlMode.Follower);
         ((CANTalon)baseBackLeft).set(((CANTalon)baseFrontLeft).getDeviceID());
-        
+
         //RIGHT DRIVE TALONS
         baseFrontRight = new CANTalon(12);
         baseFrontRight.setInverted(true);
@@ -129,48 +127,48 @@ public class Robot extends IterativeRobot
         baseBackRight = new CANTalon(16);
         ((CANTalon)baseBackRight).changeControlMode(CANTalon.TalonControlMode.Follower);
         ((CANTalon)baseBackRight).set(((CANTalon)baseFrontRight).getDeviceID());
-        
+
         //WENCH TALONS
         ropeMotor1 = new CANTalon(20);
         ropeMotor2 = new CANTalon(21);
-        
-        //Encoders 
+
+        //Encoders
         encoderLeft = new Encoder(2, 3);
         encoderRight = new Encoder(0, 1);
-        
+
         // IMPORTANT CONVENTION: ALWYAS FEET PER SECOND
         final double DistancePerPulse = (3.1415926539*4.0/12.0)/384.0;
-        
+
         encoderLeft.setDistancePerPulse(DistancePerPulse);
         encoderRight.setDistancePerPulse(DistancePerPulse);
-        
-    	// Subsystems
-    	gearDeploymentSystem = new GearDeploymentSystem(gearDoubleSolenoidLeft, gearDoubleSolenoidRight, gearDoubleSolenoidPush);
-    	ropeClimbSystem = new RopeClimbSystem(ropeMotor1, ropeMotor2);
-    	driveBaseSystem = new DriveBaseSystem(baseFrontLeft, baseFrontRight, encoderLeft, encoderRight);
-        
+
+        // Subsystems
+        gearDeploymentSystem = new GearDeploymentSystem(gearDoubleSolenoidLeft, gearDoubleSolenoidRight, gearDoubleSolenoidPush);
+        ropeClimbSystem = new RopeClimbSystem(ropeMotor1, ropeMotor2);
+        driveBaseSystem = new DriveBaseSystem(baseFrontLeft, baseFrontRight, encoderLeft, encoderRight);
+
         // OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be
         // constructed yet. Thus, their requires() statements may grab null
         // pointers. Bad news. Don't move it.
         oi = new OI();
-        
-    	//CameraServer.getInstance().startAutomaticCapture();
+
+        //CameraServer.getInstance().startAutomaticCapture();
 
         /////////////////CAMERA FEED \\\\\\\\\\\\\\\\
-        
-        new Thread(() -> 
-    	{
+
+        new Thread(() ->
+        {
             UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
             camera.setResolution(720, 480);
-            
+
             CvSink cvSink = CameraServer.getInstance().getVideo();
             CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 720, 480);
-            
+
             Mat source = new Mat();
             Mat output = new Mat();
-            
-            while(!Thread.interrupted()) 
+
+            while(!Thread.interrupted())
             {
                 cvSink.grabFrame(source);
                 Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
@@ -180,7 +178,7 @@ public class Robot extends IterativeRobot
 
         /////////////////////////////////////////////////////////
         // instantiate the command used for the autonomous period
-        
+
     }
 
     /**
@@ -189,99 +187,99 @@ public class Robot extends IterativeRobot
      */
     public void disabledInit()
     {
-    	// Code can be put here to do things before match ends
+        // Code can be put here to do things before match ends
     }
 
-    public void disabledPeriodic() 
+    public void disabledPeriodic()
     {
         Scheduler.getInstance().run();
         driveBaseSystem.setLeftMotorSpeedPercent(0.0f);
         driveBaseSystem.setRightMotorSpeedPercent(0.0f);
-        
+
         // Auto chooser for the smart dashboard
         autoChooser = new SendableChooser<CommandGroup>();
         autoChooser.addDefault("Middle NO Place", new AutoPlan1());
         autoChooser.addObject("Left Side", new AutoPlan3());
         autoChooser.addObject("Middle Place Gear", new AutoPlan2());
         autoChooser.addObject("Right Side", new AutoPlan4());
-        SmartDashboard.putData("Auto Plan Selector", autoChooser); 
-             
+        SmartDashboard.putData("Auto Plan Selector", autoChooser);
+
     }
 
-    public void autonomousInit() 
+    public void autonomousInit()
     {
-    	autonomousCommand = (CommandGroup) autoChooser.getSelected();
+        autonomousCommand = (CommandGroup) autoChooser.getSelected();
         // schedule the autonomous command (example)
-            	
+
         //gyro1.calibrate();
-    	encoderRight.reset();
-    	encoderLeft.reset();
-    	driveBaseSystem.Enable();
-    	driveBaseSystem.SetPositionMode();
-    	
-    	gearDeploymentSystem.resetSolenoids();
-    	
-    	SmartDashboard.putData("IMU", imu);
-    	
-    	if (autonomousCommand != null) autonomousCommand.start();
-    	
+        encoderRight.reset();
+        encoderLeft.reset();
+        driveBaseSystem.Enable();
+        driveBaseSystem.SetPositionMode();
+
+        gearDeploymentSystem.resetSolenoids();
+
+        SmartDashboard.putData("IMU", imu);
+
+        if (autonomousCommand != null) autonomousCommand.start();
+
     }
 
     /**
      * This function is called periodically during autonomous
      */
-    public void autonomousPeriodic() 
+    public void autonomousPeriodic()
     {
         Scheduler.getInstance().run();
         //driveBaseSystem.DriveStraight(6.5);
-        
+
     }
 
-    public void teleopInit() 
+    public void teleopInit()
     {
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
-        
+
         driveBaseSystem.Disable();
         driver = oi.getDriver();
         operator = oi.getOperator();
         compressor1.start();
         compressor1.enabled();
-        
+
         gearDeploymentSystem.resetSolenoids();
     }
 
     /**
      * This function is called periodically during operator control
      */
-    public void teleopPeriodic() 
+    public void teleopPeriodic()
     {
         Scheduler.getInstance().run();
-        
+
         double leftDrive = -1 * driver.getRawAxis(1);
         double rightDrive = -1 * driver.getRawAxis(5);
-        
+
         if(Math.abs(leftDrive) < 0.05) // used to correct robot moving when its not supposed to
         {
-        	leftDrive = 0.0f;
+            leftDrive = 0.0f;
         }
         if(Math.abs(rightDrive) < 0.05)
         {
-        	rightDrive = 0.0f;
+            rightDrive = 0.0f;
         }
-       
+
         driveBaseSystem.setLeftSpeed(leftDrive);
         driveBaseSystem.setRightSpeed(rightDrive);
-    
+
     }
 
     /**
      * This function is called periodically during test mode
      */
-    public void testPeriodic() 
+    public void testPeriodic()
     {
         LiveWindow.run();
     }
